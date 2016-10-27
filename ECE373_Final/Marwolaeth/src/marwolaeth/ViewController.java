@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import marwolaeth.DrawableElements.*;
 
 public class ViewController {
 	

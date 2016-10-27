@@ -3,7 +3,8 @@ package marwolaeth;
 public class Sprite extends Drawable{
 
 	private boolean isMoving = false;
-	private int speed = 12;						//make only divisible by 2
+	//private int speed = 12;						//make only divisible by 2
+	private int speed = 30;						//make only divisible by 2
 	private int direction = 0;
 	
 	public Sprite() {

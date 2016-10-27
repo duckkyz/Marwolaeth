@@ -11,8 +11,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import marwolaeth.DrawableElements.*;
-
 public class PlayScreen extends GameState{
 
 	//only do reocurring math operations once

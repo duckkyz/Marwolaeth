@@ -9,8 +9,10 @@ import javax.imageio.ImageIO;
 
 public class Wizard extends Hero{
 	
-	public Wizard() {
+	public Wizard(int xPos, int yPos) {
 		try {
+			this.setXPos(xPos);
+			this.setYPos(yPos);
 			addGraphic(ImageIO.read(new File("DrawableImages/Wizard.png")));
 		} 
 		catch (IOException e) {
