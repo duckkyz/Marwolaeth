@@ -65,7 +65,7 @@ public abstract class Hero extends Sprite{
 			
 		}
 		else
-		
+		//test comment
 		
 		
 		move();
