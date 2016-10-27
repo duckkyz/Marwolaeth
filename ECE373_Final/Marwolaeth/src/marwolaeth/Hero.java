@@ -65,7 +65,6 @@ public abstract class Hero extends Sprite{
 			
 		}
 		else
-			//setIsMoving(false);
 		
 		
 		
