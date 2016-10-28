@@ -23,8 +23,10 @@ public class Drawable {
 
 	private int xPos;
 	private int yPos;
-	private int xTileSize;
-	private int yTileSize;
+	private int tileWidth;
+	private int tileHeight;
+	private int actionSequence = 0;									//The current row
+	private int actionStep = 0;										//The current column
 	private ArrayList<Image> graphicList = new ArrayList<Image>();
 	
 	public Drawable() {
@@ -45,12 +47,20 @@ public class Drawable {
 		return yPos;
 	}
 	
-	public int getXTileSize() {
-		return xTileSize;
+	public int getTileWidth() {
+		return tileWidth;
 	}
 	
-	public int getYTileSize() {
-		return yTileSize;
+	public int getTileHeight() {
+		return tileHeight;
+	}
+	
+	public int getActionSequence() {
+		return actionSequence;
+	}
+	
+	public int getActionStep() {
+		return actionStep;
 	}
 	
 	public void setXPos(int xPos) {
@@ -61,12 +71,20 @@ public class Drawable {
 		this.yPos = yPos;
 	}
 	
-	public void setXTileSize(int xTileSize) {
-		this.xTileSize = xTileSize;
+	public void setTileWidth(int tileWidth) {
+		this.tileWidth = tileWidth;
 	}
 	
-	public void setYTileSize(int yTileSize) {
-		this.yTileSize = yTileSize;
+	public void setTileHeight(int tileHeight) {
+		this.tileHeight = tileHeight;
+	}
+	
+	public void setActionSequence(int actionSequence) {
+		this.actionSequence = actionSequence;
+	}
+	
+	public void setActionStep(int actionStep) {
+		this.actionStep = actionStep;
 	}
 	
 	public void addGraphic(Image img){

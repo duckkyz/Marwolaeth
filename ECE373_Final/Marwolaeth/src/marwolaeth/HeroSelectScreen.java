@@ -22,6 +22,7 @@ public class HeroSelectScreen extends GameState{
 
 	public void keyPressed(KeyEvent keyEvent) {
 		if (keyEvent.getKeyCode()==KeyEvent.VK_S) {
+			Game.setHero(new Wizard(200,200));
 			PlayScreen playScreen = new PlayScreen();
 			getRootContainer().remove(this);
 			getRootContainer().add(playScreen);
@@ -29,6 +30,7 @@ public class HeroSelectScreen extends GameState{
 			getRootContainer().repaint();
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_A) {
+			Game.setHero(new Archer(200,200));
 			PlayScreen playScreen = new PlayScreen();
 			getRootContainer().remove(this);
 			getRootContainer().add(playScreen);

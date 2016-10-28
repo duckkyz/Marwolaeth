@@ -11,10 +11,10 @@ public class Wizard extends Hero{
 	
 	public Wizard(int xPos, int yPos) {
 		try {
-			this.setXPos(xPos);
-			this.setYPos(yPos);
-			setXTileSize(64);
-			setYTileSize(64);
+			setXPos(xPos);
+			setYPos(yPos);
+			setTileWidth(64);
+			setTileHeight(64);
 			addGraphic(ImageIO.read(new File("DrawableImages/Wizard.png")));
 		} 
 		catch (IOException e) {
@@ -26,5 +26,6 @@ public class Wizard extends Hero{
 		//The image is drawn at an offset of 1/2 image size so that the center of the image will correspond with the center of the screen.
 		//Collision checks should keep in mind that XPos is a reference to the top left corner and not the center.
 		imageGraphics.drawImage(getGraphic(getDirection()), getXPos(), getYPos(), null);
+		
 	}
 }

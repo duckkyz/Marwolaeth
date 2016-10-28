@@ -9,7 +9,6 @@ public class Game {
 	private static Hero hero;
 	
 	public Game() {
-		hero = new Wizard(200,200);
 		
 		//This makes the walls around the edge
 		for(int i=0;i<35;++i){
