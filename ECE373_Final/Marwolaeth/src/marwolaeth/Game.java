@@ -5,12 +5,12 @@ import java.util.Set;
 
 public class Game {
 
-	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
+	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private static Hero hero;
 	
 	public Game() {
 		
-		//This makes the walls around the edge
+		//This makes the walls around the edge.
 		for(int i=0;i<35;++i){
 			drawables.add(new Wall(32,(i*64) + 32));
 		}
@@ -29,6 +29,10 @@ public class Game {
 	
 	public static void setHero(Hero hero) {
 		Game.hero = hero;
+	}
+	
+	public static void addDrawable(Drawable drawable) {
+		Game.drawables.add(drawable);
 	}
 	
 	public void doGameLogic(Set keySet) {
@@ -137,7 +141,7 @@ public class Game {
 		//Move if not colliding
 		hero.move();
 		for(Drawable d : drawables) {
-			Sprite dummy = new Sprite();
+			Sprite dummy = new Sprite(0, 0, 0);
 			if(d.getClass() == dummy.getClass()){
 				dummy = (Sprite) d;
 				dummy.move();

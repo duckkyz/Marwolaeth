@@ -9,13 +9,12 @@ import javax.imageio.ImageIO;
 
 public class Archer extends Hero{
 	
-	public Archer(int xPos, int yPos) {
+	public Archer(int direction, int xPos, int yPos) {
+		super(direction, xPos, yPos);
+		setTileWidth(64);
+		setTileHeight(64);
 		try {
-			setXPos(xPos);
-			setYPos(yPos);
-			setTileWidth(64);
-			setTileHeight(64);
-			addGraphic(ImageIO.read(new File("DrawableImages/Archer.png")));
+			setGraphic(ImageIO.read(new File("DrawableImages/Archer.png")));
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -24,9 +23,7 @@ public class Archer extends Hero{
 
 	public void paint(Graphics imageGraphics) {
 		
-		imageGraphics.drawImage(getGraphic(getDirection()), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), 
-				getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), 
-				getActionSequence()*getTileHeight()+getTileHeight(), null);
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
 		
 	}
 }

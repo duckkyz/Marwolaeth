@@ -7,8 +7,10 @@ public class Sprite extends Drawable{
 	private int speed = 30;						//make only divisible by 2
 	private int direction = 0;
 	
-	public Sprite() {
-		// TODO Auto-generated constructor stub
+	public Sprite(int direction, int spawnX, int spawnY) {
+		setDirection(direction);
+		setXPos(spawnX);
+		setYPos(spawnY);
 	}
 	
 	public int getSpeed() {

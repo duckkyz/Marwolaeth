@@ -25,9 +25,9 @@ public class Drawable {
 	private int yPos;
 	private int tileWidth;
 	private int tileHeight;
-	private int actionSequence = 0;									//The current row
-	private int actionStep = 0;										//The current column
-	private ArrayList<Image> graphicList = new ArrayList<Image>();
+	private int actionSequence = 0;									//The current row.
+	private int actionStep = 0;										//The current column.
+	private Image graphic;
 	
 	public Drawable() {
 		this.xPos = 0;
@@ -87,18 +87,12 @@ public class Drawable {
 		this.actionStep = actionStep;
 	}
 	
-	public void addGraphic(Image img){
-		graphicList.add(img);
+	public void setGraphic(Image graphic){
+		this.graphic = graphic;
 	}
 	
-	public void setImage(Image img){
-		graphicList.add(img);
-	}
-	
-	public Image getGraphic(int Direction){
-		//Test line
-		int dummyDirection = 0;
-		return this.graphicList.get(dummyDirection);
+	public Image getGraphic(){
+		return graphic;
 	}
 	
 	

@@ -8,8 +8,8 @@ public abstract class Hero extends Sprite{
 	
 	private boolean spaceBar = false;																							//while held, space prevents the hero from changing directional actionSequences. Note the direction is still changing.
 	
-	public Hero() {
-		
+	public Hero(int direction, int spawnX, int spawnY) {
+		super(direction, spawnX, spawnY);
 	}
 	
 	public void doLogic(Set keySet) {
