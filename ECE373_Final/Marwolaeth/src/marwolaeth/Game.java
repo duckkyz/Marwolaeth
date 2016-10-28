@@ -12,10 +12,12 @@ public class Game {
 		
 		//This makes the walls around the edge.
 		for(int i=0;i<35;++i){
-			drawables.add(new Wall(32,(i*64) + 32));
+			drawables.add(new Wall(0,(i*64)));
+			drawables.add(new Wall((2*1920)-64,(i*64)));
 		}
-		for(int i=0;i<35;++i){
-			drawables.add(new Wall(1920-32,(i*64) + 32));
+		for(int i=0; i<60; ++i){
+			drawables.add(new Wall((i*64),0));
+			drawables.add(new Wall((i*64),(2*1080)-64));
 		}
 	}
 	
@@ -27,12 +29,12 @@ public class Game {
 		return drawables;
 	}
 	
-	public static void setHero(Hero hero) {
-		Game.hero = hero;
+	public static void setHero(Hero newHero) {
+		hero = newHero;
 	}
 	
 	public static void addDrawable(Drawable drawable) {
-		Game.drawables.add(drawable);
+		drawables.add(drawable);
 	}
 	
 	public void doGameLogic(Set keySet) {
@@ -97,10 +99,10 @@ public class Game {
 			newY -= ((int)Math.floor(hero.getSpeed()/1.414));
 			break;	
 		}
-		int newMinX = newX - 32;	//Left
-		int newMaxX = newX + 32;	//Right
-		int newMinY = newY - 32;	//Top
-		int newMaxY = newY + 32;	//Bottom
+		int newMinX = newX;	//Left
+		int newMaxX = newX + 64;	//Right
+		int newMinY = newY;	//Top
+		int newMaxY = newY + 64;	//Bottom
 		
 		//Check for collision
 		for(Drawable d : drawables) {
@@ -113,7 +115,7 @@ public class Game {
 			switch(hero.getDirection()){
 			case 0:		//Moving up
 				//TODO: Fix this shit, its kind of hard and then make it look pretty
-				if(newMinY < (d.getYPos() + 32) & ((newMinX < (d.getYPos() - 32)) | (newMaxX > (d.getYPos() + 32)))){
+				if(newMinY == (d.getYPos() + 64) & ((newMinX == d.getXPos()) & (newMaxX == (d.getXPos() + 64)))){
 					hero.setIsMoving(false);
 				}
 				break;
@@ -131,9 +133,6 @@ public class Game {
 				break;
 			case 315:	//Moving up left
 				break;	
-			}
-			if(newMinX < (d.getXPos() + 32) & (newMinY == d.getYPos())){
-				hero.setIsMoving(false);
 			}
 		}
 		

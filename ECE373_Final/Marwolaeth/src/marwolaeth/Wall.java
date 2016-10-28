@@ -21,6 +21,6 @@ public class Wall extends Drawable {
 	}
 	
 	public void paint(Graphics imageGraphics){
-		imageGraphics.drawImage(getGraphic(), getXPos()-(getGraphic().getWidth(null)/2), getYPos()-(getGraphic().getHeight(null)/2), null);
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), null);
 	}
 }
