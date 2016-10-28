@@ -23,7 +23,7 @@ public class ViewController {
 	private JPanel rootContainer;
 	
 	private Timer timer;
-	private final int timerDelay = 10;
+	private final int timerDelay = 1;
 	
 	
 	public ViewController() {
