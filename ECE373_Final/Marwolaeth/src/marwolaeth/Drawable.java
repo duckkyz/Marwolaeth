@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////
 // Drawables are the parent class for every thing //
 // that will get drawn to the screen:			  //
-//   # Walls									  //
+//   # Walls								.	  //
 //	 # Other terrain							  //
 //	 # Sprites									  //
 //												  //
@@ -23,6 +23,8 @@ public class Drawable {
 
 	private int xPos;
 	private int yPos;
+	private int xTileSize;
+	private int yTileSize;
 	private ArrayList<Image> graphicList = new ArrayList<Image>();
 	
 	public Drawable() {
@@ -43,12 +45,28 @@ public class Drawable {
 		return yPos;
 	}
 	
+	public int getXTileSize() {
+		return xTileSize;
+	}
+	
+	public int getYTileSize() {
+		return yTileSize;
+	}
+	
 	public void setXPos(int xPos) {
 		this.xPos = xPos;
 	}
 	
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
+	}
+	
+	public void setXTileSize(int xTileSize) {
+		this.xTileSize = xTileSize;
+	}
+	
+	public void setYTileSize(int yTileSize) {
+		this.yTileSize = yTileSize;
 	}
 	
 	public void addGraphic(Image img){

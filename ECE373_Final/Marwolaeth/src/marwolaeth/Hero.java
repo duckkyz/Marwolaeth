@@ -7,7 +7,7 @@ import java.util.Set;
 public abstract class Hero extends Sprite{
 	
 	public Hero() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public void doLogic(Set keySet) {

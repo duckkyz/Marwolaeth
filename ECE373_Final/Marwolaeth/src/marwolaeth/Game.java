@@ -6,7 +6,7 @@ import java.util.Set;
 public class Game {
 
 	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
-	private Hero hero;
+	private static Hero hero;
 	
 	public Game() {
 		hero = new Wizard(200,200);
@@ -20,12 +20,16 @@ public class Game {
 		}
 	}
 	
-	public Hero getHero() {
+	public static Hero getHero() {
 		return hero;
 	}
 	
 	public ArrayList<Drawable> getDrawables() {
 		return drawables;
+	}
+	
+	public static void setHero(Hero hero) {
+		Game.hero = hero;
 	}
 	
 	public void doGameLogic(Set keySet) {

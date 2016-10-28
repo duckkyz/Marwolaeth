@@ -66,7 +66,7 @@ public class PlayScreen extends GameState{
 
 	
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub.
 		
 	}
 
@@ -94,7 +94,7 @@ public class PlayScreen extends GameState{
 		super.paint(graphics);
 		
 		if(getFullScreen()==true) {
-			graphics.drawImage(getBlankImage(), (int) ((-1)*heroX/(scaling)+getImageWidth()/2+halfDiffDisImgWidth), (int) ((-1)*heroY/(scaling)+getImageHeight()/2+halfDiffDisImgHeight), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+			graphics.drawImage(getBlankImage(), (int) ((-1)*(heroX)/(scaling)+getImageWidth()/2+halfDiffDisImgWidth), (int) ((-1)*(heroY)/(scaling)+getImageHeight()/2+halfDiffDisImgHeight), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
 			graphics.setColor(Color.black);
 			graphics.fillRect(0, 0, getMonitorWidth(), halfDiffDisImgHeight);																			//top
 			graphics.fillRect(0, bottomBarYLocation, getMonitorWidth(), halfDiffDisImgHeight);														//bottom
@@ -102,7 +102,7 @@ public class PlayScreen extends GameState{
 			graphics.fillRect(rightBarXLocation, 0, halfDiffDisImgWidth, getMonitorHeight());															//right
 		}
 		else
-			graphics.drawImage(getBlankImage(), (int) ((-1)*heroX/(scaling)+getImageWidth()/2), (int) ((-1)*heroY/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+			graphics.drawImage(getBlankImage(), (int) ((-1)*(heroX)/(scaling)+getImageWidth()/2), (int) ((-1)*(heroY)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
 		
 	}
 }

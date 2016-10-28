@@ -28,6 +28,13 @@ public class HeroSelectScreen extends GameState{
 			getRootContainer().doLayout();
 			getRootContainer().repaint();
 		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_A) {
+			PlayScreen playScreen = new PlayScreen();
+			getRootContainer().remove(this);
+			getRootContainer().add(playScreen);
+			getRootContainer().doLayout();
+			getRootContainer().repaint();
+		}
 		else if(keyEvent.getKeyCode()==KeyEvent.VK_ESCAPE) {
 				TitleScreen titleScreen = new TitleScreen();
 				getRootContainer().remove(this);

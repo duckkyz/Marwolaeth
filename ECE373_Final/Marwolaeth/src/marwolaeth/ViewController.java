@@ -32,7 +32,7 @@ public class ViewController {
 		rootContainer = new JPanel();
 		rootContainer.setLayout(new BorderLayout());
 		frame.getContentPane().add(rootContainer, BorderLayout.CENTER);
-		frame.setResizable(false);										//Prevents user from manually resizing frame
+		frame.setResizable(false);										//Prevents user from manually resizing frame.
 		GameState titleScreen = new TitleScreen(frame, rootContainer);
 		rootContainer.add(titleScreen);
 		
