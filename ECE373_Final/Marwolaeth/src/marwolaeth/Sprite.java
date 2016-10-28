@@ -61,11 +61,8 @@ public class Sprite extends Drawable{
 			case 315:
 				this.setXPos(getXPos()+(-1)*((int)Math.floor(this.speed/1.414)));
 				this.setYPos(getYPos()+(-1)*((int)Math.floor(this.speed/1.414)));
-				break;
-				
-				
+				break;	
 			}
 		}
 	}
-
 }

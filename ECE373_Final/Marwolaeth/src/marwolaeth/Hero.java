@@ -64,11 +64,11 @@ public abstract class Hero extends Sprite{
 		else if (keySet.contains(KeyEvent.VK_P)) {
 			
 		}
-		else
+		//else
 		//test comment
 		
 		
-		move();
+		//move();
 		
 		
 	}
