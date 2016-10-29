@@ -64,11 +64,11 @@ public class Arrow extends Projectile{
 		this.move();									//this should actually be done in game. also needs logic to get deleted
 	}
 	
-	public void paint(Graphics imageGraphics) {
+	public void paint(Graphics imageGraphics) {			//this code can be the same for each projectile assuming you want it to spawn centered with who created it. (note the spawnX/Y passed to the constructer are from the center of the sprite
 		if(getActionSequence() == 0)		//Left and Right
 			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
 		else if(getActionSequence() == 1)	//Up and Down
-			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), 5, getActionStep()*getTileWidth()+getTileWidth(), 5+getTileHeight(), null);
+			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getTileWidth(), getActionStep()*getTileWidth()+getTileWidth(), getTileWidth()+getTileHeight(), null);
 
 	}
 

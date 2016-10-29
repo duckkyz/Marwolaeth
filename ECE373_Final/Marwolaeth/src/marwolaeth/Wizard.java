@@ -27,4 +27,22 @@ public class Wizard extends Hero{
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), null);
 		
 	}
+
+	
+	public void continueSequence() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability1_setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability1_execute(int direction) {
+		// TODO Auto-generated method stub
+		
+	}
 }

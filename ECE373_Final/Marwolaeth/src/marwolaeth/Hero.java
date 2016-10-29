@@ -26,6 +26,9 @@ public abstract class Hero extends Sprite{
 		}
 	}
 	
+	public abstract void ability1_setup();
+	public abstract void ability1_execute(int direction);
+	
 	public void doLogic(Set keySet) {
 		if(keySet.contains(KeyEvent.VK_SPACE)) 
 			spaceBar = true;
@@ -33,75 +36,11 @@ public abstract class Hero extends Sprite{
 			spaceBar = false;
 		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
-			setActionStep(getActionStep()+1);
-			setIsMoving(false);
-			if(getActionStep() == 9) {						//frame 9 matches arrow release
-				int actionSequenceToDirection = 0;
-				switch(getActionSequence()) {
-					case 16:
-						actionSequenceToDirection = 0;
-						break;
-					case 17:
-						actionSequenceToDirection = 270;
-						break;
-					case 18:
-						actionSequenceToDirection = 180;
-						break;
-					case 19:
-						actionSequenceToDirection = 90;
-						break;
-				}
-				Arrow arrow = new Arrow(actionSequenceToDirection, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
-				Game.addDrawable(arrow);
-			}
-			if(getActionStep()>12) {
-				switch(getActionSequence()){																					//returns to idle in the correct direction
-					case 16:
-						setActionSequence(8);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 17:
-						setActionSequence(9);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 18:
-						setActionSequence(10);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 19:
-						setActionSequence(11);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-				}
-			}
-
+			continueSequence();
 		}
 		else if(keySet.contains(KeyEvent.VK_Q)) {
-			setActionStep(0);
-			if(this instanceof Archer) {																				//this should check the class of the hero and assign an ActionSequence appropriate of the attack
-				setCompleteingSequence(true);
-				switch(getActionSequence()){																						
-					case 8:
-						setActionSequence(16);
-						break;
-					case 9:
-						setActionSequence(17);
-						break;
-					case 10:
-						setActionSequence(18);
-						break;
-					case 11:
-						setActionSequence(19);
-						break;
-					default:
-						setActionSequence(16);
-						break;
-				}
-			}
+			setInvokedAbility(1);
+			ability1_setup();
 		}
 		else if ((keySet.contains(KeyEvent.VK_UP)) && (!keySet.contains(KeyEvent.VK_DOWN))) {
 			if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
@@ -273,6 +212,148 @@ public abstract class Hero extends Sprite{
 				setActionStep(0);
 		}
 		
+	}
+	
+	public void continueSequence() {
+		setActionStep(getActionStep()+1);										//goes to the next step of the animation
+		
+		if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
+			setIsMoving(false);
+			if(getActionStep()>12) {
+				switch(getActionSequence()){									//Sequence ends, returns to idle in the correct direction
+					case 16:
+						setActionSequence(8);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 17:
+						setActionSequence(9);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 18:
+						setActionSequence(10);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 19:
+						setActionSequence(11);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+				}
+			}
+			if(getActionStep() == 9) {											//frame 9 matches arrow release
+				if(getInvokedAbility()==1)
+					ability1_execute(getEffectiveDirection());
+				/*																//add in ability executes as number of abilities increases
+				else if(getInvokedAbility()==2)
+					ability2_execute(actionSequenceToDirection);
+					*/
+			}
+		}
+		
+		else if(getActionSequence() >= 0 & getActionSequence() <= 3) {					//spell-casting
+			if(getActionStep()>6) {
+				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
+					case 0:
+						setActionSequence(8);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 1:
+						setActionSequence(9);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 2:
+						setActionSequence(10);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 3:
+						setActionSequence(11);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+				}
+			}
+		}
+		
+		else if(getActionSequence() >= 4 & getActionSequence() <= 7) {					//thrusting 
+			if(getActionStep()>7) {
+				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
+					case 4:
+						setActionSequence(8);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 5:
+						setActionSequence(9);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 6:
+						setActionSequence(10);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 7:
+						setActionSequence(11);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+				}
+			}
+		}
+		
+		else if(getActionSequence() >= 12 & getActionSequence() <= 15) {				//slash
+			if(getActionStep()>7) {
+				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
+					case 12:
+						setActionSequence(8);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 13:
+						setActionSequence(9);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 14:
+						setActionSequence(10);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 15:
+						setActionSequence(11);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+				}
+			}
+		}
+		
+		else if(getActionSequence() == 20) {				//death
+			if(getActionStep()>5) {
+				//game ends
+			}
+		}
+	}
+	
+	public int getEffectiveDirection() {			//gets the direction the hero is facing
+		switch(getActionSequence()%4) {
+			case 0:
+				return 0;
+			case 1:
+				return 270;
+			case 2:
+				return 180;
+			case 3:
+				return 90;
+			default:
+				return 0;
+			}
 	}
 	
 
