@@ -3,12 +3,11 @@ import java.awt.Graphics;
 
 public abstract class Projectile extends Sprite{
 	
-	public Projectile(int direction, int spawnX, int spawnY) {
+	private boolean heroProjectile;					//if projectile belongs to hero
+	
+	public Projectile(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY);
-		//setTileWidth(tileWidth);
-		//setTileHeight(tileHeight);
-		//this.xLocationInFile = xLocationInFile;
-		//this.yLocationInFile = yLocationInFile;
+		this.heroProjectile = heroProjectile;
 		
 	}
 	

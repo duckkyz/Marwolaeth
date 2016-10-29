@@ -18,10 +18,10 @@ public abstract class Hero extends Sprite{
 		else
 			spaceBar = false;
 		
-		if(getActionSequence()==16 | getActionSequence()==17 | getActionSequence()==18 | getActionSequence()==19) {				//prevents other actions while performing ability
+		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
 			setActionStep(getActionStep()+1);
 			setIsMoving(false);
-			if(getActionStep() == 9) {
+			if(getActionStep() == 9) {						//frame 9 matches arrow release
 				int actionSequenceToDirection = 0;
 				switch(getActionSequence()) {
 					case 16:
@@ -37,7 +37,7 @@ public abstract class Hero extends Sprite{
 						actionSequenceToDirection = 90;
 						break;
 				}
-				Arrow arrow = new Arrow(actionSequenceToDirection, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2);	//math gives the created object a reference to the center of the hero
+				Arrow arrow = new Arrow(actionSequenceToDirection, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
 				Game.addDrawable(arrow);
 			}
 			if(getActionStep()>12) {
@@ -45,18 +45,22 @@ public abstract class Hero extends Sprite{
 					case 16:
 						setActionSequence(8);
 						setActionStep(0);
+						setCompleteingSequence(false);
 						break;
 					case 17:
 						setActionSequence(9);
 						setActionStep(0);
+						setCompleteingSequence(false);
 						break;
 					case 18:
 						setActionSequence(10);
 						setActionStep(0);
+						setCompleteingSequence(false);
 						break;
 					case 19:
 						setActionSequence(11);
 						setActionStep(0);
+						setCompleteingSequence(false);
 						break;
 				}
 			}
@@ -64,7 +68,8 @@ public abstract class Hero extends Sprite{
 		}
 		else if(keySet.contains(KeyEvent.VK_Q)) {
 			setActionStep(0);
-			if(this instanceof Archer)																				//this should check the class of the hero and assign an ActionSequence appropriate of the attack
+			if(this instanceof Archer) {																				//this should check the class of the hero and assign an ActionSequence appropriate of the attack
+				setCompleteingSequence(true);
 				switch(getActionSequence()){																						
 					case 8:
 						setActionSequence(16);
@@ -79,6 +84,7 @@ public abstract class Hero extends Sprite{
 						setActionSequence(19);
 						break;
 				}
+			}
 		}
 		else if ((keySet.contains(KeyEvent.VK_UP)) && (!keySet.contains(KeyEvent.VK_DOWN))) {
 			if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {

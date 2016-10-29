@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 
 public class Arrow extends Projectile{
 
-	public Arrow(int direction, int spawnX, int spawnY) {
-		super(direction, spawnX, spawnY);
+	public Arrow(int direction, int spawnX, int spawnY, boolean heroProjectile) {
+		super(direction, spawnX, spawnY, heroProjectile);
 		try{
 			setGraphic(ImageIO.read(new File("DrawableImages/Arrows.png")));
 		}

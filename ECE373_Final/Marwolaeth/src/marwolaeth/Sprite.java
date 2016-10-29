@@ -3,14 +3,19 @@ package marwolaeth;
 public class Sprite extends Drawable{
 
 	private boolean isMoving = false;
+	private boolean completeingSequence = false;	//if the sprite needs to finish performing current action before performing others
 	//private int speed = 12;						//make only divisible by 2
-	private int speed = 30;						//make only divisible by 2
+	private int speed = 30;							//make only divisible by 2
 	private int direction = 0;
 	
 	public Sprite(int direction, int spawnX, int spawnY) {
 		setDirection(direction);
 		setXPos(spawnX);
 		setYPos(spawnY);
+	}
+	
+	public boolean getCompleteingSequence() {
+		return completeingSequence;
 	}
 	
 	public int getSpeed() {
@@ -23,6 +28,10 @@ public class Sprite extends Drawable{
 	
 	public void setIsMoving(Boolean isMoving) {
 		this.isMoving = isMoving;
+	}
+	
+	public void setCompleteingSequence(boolean completeingSequence) {
+		this.completeingSequence = completeingSequence;
 	}
 	
 	public void setSpeed(int speed) {
