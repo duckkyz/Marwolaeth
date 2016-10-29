@@ -16,6 +16,7 @@ public class Arrow extends Projectile{
 		catch(IOException ex){
 			
 		}
+		setIsMoving(true);
 		if(direction == 0) {
 			setTileWidth(5);
 			setTileHeight(33);
