@@ -22,18 +22,22 @@ public abstract class Hero extends Sprite{
 			setActionStep(getActionStep()+1);
 			setIsMoving(false);
 			if(getActionStep() == 9) {
-				int projectileDirection = 0;
+				int actionSequenceToDirection = 0;
 				switch(getActionSequence()) {
 					case 16:
-						projectileDirection = 0;
+						actionSequenceToDirection = 0;
+						break;
 					case 17:
-						projectileDirection = 270;
+						actionSequenceToDirection = 270;
+						break;
 					case 18:
-						projectileDirection = 180;
+						actionSequenceToDirection = 180;
+						break;
 					case 19:
-						projectileDirection = 90;
+						actionSequenceToDirection = 90;
+						break;
 				}
-				Arrow arrow = new Arrow(projectileDirection, getXPos(), getYPos());
+				Arrow arrow = new Arrow(actionSequenceToDirection, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2);	//math gives the created object a reference to the center of the hero
 				Game.addDrawable(arrow);
 			}
 			if(getActionStep()>12) {
@@ -240,9 +244,11 @@ public abstract class Hero extends Sprite{
 			setDirection(90);
 			setIsMoving(true);
 		}
-		else
+		else {
 			setIsMoving(false);
-		
+			if(getActionStep()>0)
+				setActionStep(0);
+		}
 		
 	}
 	

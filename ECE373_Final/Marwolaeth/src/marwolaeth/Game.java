@@ -37,6 +37,10 @@ public class Game {
 		drawables.add(drawable);
 	}
 	
+	public static void removeDrawable(Drawable drawable) {
+		drawables.remove(drawable);
+	}
+	
 	public void doGameLogic(Set keySet) {
 		//Check for colisions
 		//ArrayList<Drawable> tempList = new ArrayList<Drawable>();
