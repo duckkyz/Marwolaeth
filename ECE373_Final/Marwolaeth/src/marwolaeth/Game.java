@@ -64,6 +64,7 @@ public class Game {
 		hero.doLogic(keySet);
 		for(Drawable d : drawables) {
 			d.doLogic();
+			
 		}
 		
 		int newX = hero.getXPos();
@@ -106,6 +107,7 @@ public class Game {
 		
 		//Check for collision
 		for(Drawable d : drawables) {
+			d.doLogic();						//temp added for arrowmovement. needs replaced
 			//Collision types:
 			//top: newMinX < (d.getXPos() + 32)
 			//topLeft: (newMinX < (d.getXPos() + 32)) & (newMinY > 

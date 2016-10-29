@@ -21,6 +21,21 @@ public abstract class Hero extends Sprite{
 		if(getActionSequence()==16 | getActionSequence()==17 | getActionSequence()==18 | getActionSequence()==19) {				//prevents other actions while performing ability
 			setActionStep(getActionStep()+1);
 			setIsMoving(false);
+			if(getActionStep() == 9) {
+				int projectileDirection = 0;
+				switch(getActionSequence()) {
+					case 16:
+						projectileDirection = 0;
+					case 17:
+						projectileDirection = 270;
+					case 18:
+						projectileDirection = 180;
+					case 19:
+						projectileDirection = 90;
+				}
+				Arrow arrow = new Arrow(projectileDirection, getXPos(), getYPos());
+				Game.addDrawable(arrow);
+			}
 			if(getActionStep()>12) {
 				switch(getActionSequence()){																					//returns to idle in the correct direction
 					case 16:
