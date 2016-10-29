@@ -66,9 +66,8 @@ public class Game {
 		
 		//Set up movements
 		hero.doLogic(keySet);
-		for(Drawable d : drawables) {
-			d.doLogic();
-			
+		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
+			drawables.get(x).doLogic();
 		}
 		
 		int newX = hero.getXPos();
@@ -110,8 +109,8 @@ public class Game {
 		int newMaxY = newY + 64;	//Bottom
 		
 		//Check for collision
-		for(Drawable d : drawables) {
-			d.doLogic();						//temp added for arrowmovement. needs replaced
+		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
+			drawables.get(x).doLogic();						//temp added for arrowmovement. needs replaced
 			//Collision types:
 			//top: newMinX < (d.getXPos() + 32)
 			//topLeft: (newMinX < (d.getXPos() + 32)) & (newMinY > 
@@ -121,7 +120,7 @@ public class Game {
 			switch(hero.getDirection()){
 			case 0:		//Moving up
 				//TODO: Fix this shit, its kind of hard and then make it look pretty
-				if(newMinY == (d.getYPos() + 64) & ((newMinX == d.getXPos()) & (newMaxX == (d.getXPos() + 64)))){
+				if(newMinY == (drawables.get(x).getYPos() + 64) & ((newMinX == drawables.get(x).getXPos()) & (newMaxX == (drawables.get(x).getXPos() + 64)))){
 					hero.setIsMoving(false);
 				}
 				break;
@@ -145,10 +144,10 @@ public class Game {
 		
 		//Move if not colliding
 		hero.move();
-		for(Drawable d : drawables) {
+		for(int x=0;drawables.size()>x;x++) {
 			Sprite dummy = new Sprite(0, 0, 0);
-			if(d.getClass() == dummy.getClass()){
-				dummy = (Sprite) d;
+			if(drawables.get(x).getClass() == dummy.getClass()){
+				dummy = (Sprite) drawables.get(x);
 				dummy.move();
 			}
 		}

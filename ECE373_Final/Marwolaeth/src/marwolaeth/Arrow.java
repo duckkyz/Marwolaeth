@@ -52,6 +52,15 @@ public class Arrow extends Projectile{
 	}
 
 	public void doLogic() {
+		if(getXPos() > 10000)							//arrow destroys itself if moves too far away
+			Game.removeDrawable(this);
+		else if(getXPos() < -10000)
+			Game.removeDrawable(this);
+		else if(getYPos() > 10000)
+			Game.removeDrawable(this);
+		else if(getYPos() < -10000) {
+			Game.removeDrawable(this);
+		}
 		this.move();									//this should actually be done in game. also needs logic to get deleted
 	}
 	

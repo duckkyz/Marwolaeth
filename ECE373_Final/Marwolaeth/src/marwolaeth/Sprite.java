@@ -7,6 +7,8 @@ public class Sprite extends Drawable{
 	//private int speed = 12;						//make only divisible by 2
 	private int speed = 30;							//make only divisible by 2
 	private int direction = 0;
+	private int health = 100;
+	private int mana = 100;
 	
 	public Sprite(int direction, int spawnX, int spawnY) {
 		setDirection(direction);
@@ -26,6 +28,14 @@ public class Sprite extends Drawable{
 		return direction;
 	}
 	
+	public int getHealth() {
+		return health;
+	}
+	
+	public int getMana() {
+		return mana;
+	}
+	
 	public void setIsMoving(Boolean isMoving) {
 		this.isMoving = isMoving;
 	}
@@ -40,6 +50,14 @@ public class Sprite extends Drawable{
 	
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+	
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	
+	public void setMana(int mana) {
+		this.mana = mana;
 	}
 	
 	public void move() {

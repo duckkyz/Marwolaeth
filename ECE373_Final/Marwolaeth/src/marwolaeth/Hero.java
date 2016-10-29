@@ -10,6 +10,20 @@ public abstract class Hero extends Sprite{
 	
 	public Hero(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
+		switch(direction) {									//draws the hero in the direction it was created in
+		case 0:
+			setActionSequence(8);
+			break;
+		case 90:
+			setActionSequence(11);
+			break;
+		case 180:
+			setActionSequence(10);
+			break;
+		case 270:
+			setActionSequence(9);
+			break;
+		}
 	}
 	
 	public void doLogic(Set keySet) {
@@ -82,6 +96,9 @@ public abstract class Hero extends Sprite{
 						break;
 					case 11:
 						setActionSequence(19);
+						break;
+					default:
+						setActionSequence(16);
 						break;
 				}
 			}
