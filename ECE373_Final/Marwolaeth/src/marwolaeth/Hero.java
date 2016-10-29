@@ -254,6 +254,7 @@ public abstract class Hero extends Sprite{
 		}
 		
 		else if(getActionSequence() >= 0 & getActionSequence() <= 3) {					//spell-casting
+			setIsMoving(false);
 			if(getActionStep()>6) {
 				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
 					case 0:
@@ -277,6 +278,14 @@ public abstract class Hero extends Sprite{
 						setCompleteingSequence(false);
 						break;
 				}
+			}
+			if(getActionStep() == 5) {											//frame 9 matches arrow release
+				if(getInvokedAbility()==1)
+					ability1_execute(getEffectiveDirection());
+				/*																//add in ability executes as number of abilities increases
+				else if(getInvokedAbility()==2)
+					ability2_execute(actionSequenceToDirection);
+					*/
 			}
 		}
 		
