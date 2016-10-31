@@ -27,8 +27,9 @@ import javax.swing.JPanel;
 public class TitleScreen extends GameState{
 
 	public TitleScreen() {
+		//TODO why is this here if theres already a constructor for TitleScreen?
 		try {
-			setBackgroundImage(ImageIO.read(new File("BackgroundImages/Title.png")));
+			setBackgroundImage(ImageIO.read(new File("Background_Images/Title.png")));
 		} 
 		catch(IOException ex) {
 			System.out.println("I'm catching");
@@ -42,7 +43,7 @@ public class TitleScreen extends GameState{
 		setFrame(frame);
 		setRootContainer(rootContainer);
 		try {
-			setBackgroundImage(ImageIO.read(new File("BackgroundImages/Title.png")));
+			setBackgroundImage(ImageIO.read(new File("Background_Images/Title.png")));
 		} 
 		catch(IOException ex) {
 			

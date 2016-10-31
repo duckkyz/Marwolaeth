@@ -14,7 +14,7 @@ public class HeroSelectScreen extends GameState{
 
 	public HeroSelectScreen() {
 		try {
-			setBackgroundImage(ImageIO.read(new File("BackgroundImages/HeroSelect.png")));
+			setBackgroundImage(ImageIO.read(new File("Background_Images/HeroSelect.png")));
 		} catch(IOException ex) {}
 		
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));

@@ -13,7 +13,7 @@ public class Wall extends Drawable {
 		try{
 			this.setXPos(x);
 			this.setYPos(y);
-			setGraphic(ImageIO.read(new File("DrawableImages/Wall.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Wall.png")));
 		}
 		catch(IOException ex){
 			

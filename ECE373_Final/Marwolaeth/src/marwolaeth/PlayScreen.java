@@ -34,7 +34,7 @@ public class PlayScreen extends GameState{
 	
 	public PlayScreen() {
 		try {
-			setBackgroundImage(ImageIO.read(new File("BackgroundImages/Map.png")));
+			setBackgroundImage(ImageIO.read(new File("Background_Images/Map.png")));
 			heroResources = ImageIO.read(new File("UI_Images/HeroResources.png"));
 		} 
 		catch(IOException ex) {

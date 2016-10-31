@@ -11,7 +11,7 @@ public class Arrow extends Projectile{
 	public Arrow(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY, heroProjectile);
 		try{
-			setGraphic(ImageIO.read(new File("DrawableImages/Arrow.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Arrow.png")));
 		}
 		catch(IOException ex){
 			

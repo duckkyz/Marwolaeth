@@ -11,7 +11,7 @@ public class Fireball extends Projectile{
 	public Fireball(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY, heroProjectile);
 		try{
-			setGraphic(ImageIO.read(new File("DrawableImages/Fireball.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Fireball.png")));
 		}
 		catch(IOException ex){
 			

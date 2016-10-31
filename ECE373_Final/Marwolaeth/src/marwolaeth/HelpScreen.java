@@ -14,7 +14,7 @@ public class HelpScreen extends GameState{
 
 	public HelpScreen() {
 		try {
-			setBackgroundImage(ImageIO.read(new File("BackgroundImages/Help.png")));
+			setBackgroundImage(ImageIO.read(new File("Background_Images/Help.png")));
 		} catch(IOException ex) {}
 		
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));

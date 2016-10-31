@@ -14,7 +14,7 @@ public class Archer extends Hero{
 		setTileWidth(64);
 		setTileHeight(64);
 		try {
-			setGraphic(ImageIO.read(new File("DrawableImages/Archer.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Archer.png")));
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
