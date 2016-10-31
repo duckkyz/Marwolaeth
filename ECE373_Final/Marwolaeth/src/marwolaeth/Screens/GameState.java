@@ -1,4 +1,4 @@
-package marwolaeth;
+package marwolaeth.Screens;
 
 import java.awt.Graphics;
 import java.awt.Image;

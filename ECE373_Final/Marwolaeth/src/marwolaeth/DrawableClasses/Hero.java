@@ -1,10 +1,12 @@
-package marwolaeth;
+package marwolaeth.DrawableClasses;
 
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Hero extends Sprite{
+import marwolaeth.Interfaces.willAttack;
+
+public abstract class Hero extends Sprite implements willAttack{
 	
 	private boolean spaceBar = false;																							//while held, space prevents the hero from changing directional actionSequences. Note the direction is still changing.
 	
@@ -26,8 +28,38 @@ public abstract class Hero extends Sprite{
 		}
 	}
 	
-	public abstract void ability1_setup();
-	public abstract void ability1_execute(int direction);
+	public abstract void ability1Setup();
+	
+	public abstract void ability1Execute(int direction);
+	
+	public abstract void ability2Setup();
+	
+	public abstract void ability2Execute(int direction);
+	
+	public abstract void ability3Setup();
+	
+	public abstract void ability3Execute(int direction);
+	
+	public abstract void ability4Setup();
+	
+	public abstract void ability4Execute(int direction);
+	
+	public void executeAbility(int direction){
+		switch(this.getInvokedAbility()){
+		case 1: 
+			ability1Execute(direction);
+			break;
+		case 2:
+			ability2Execute(direction);
+			break;
+		case 3:
+			ability3Execute(direction);
+			break;
+		case 4:
+			ability4Execute(direction);
+			break;
+		}
+	}
 	
 	public void doLogic(Set keySet) {
 		if(keySet.contains(KeyEvent.VK_SPACE)) 
@@ -38,8 +70,21 @@ public abstract class Hero extends Sprite{
 		
 		if(keySet.contains(KeyEvent.VK_Q) & getCompleteingSequence() != true) {
 			setInvokedAbility(1);							//records that the current ability being used is Q
-			ability1_setup();
+			ability1Setup();
 		}
+		if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
+			setInvokedAbility(2);							//records that the current ability being used is W
+			ability2Setup();
+		}
+		if(keySet.contains(KeyEvent.VK_E) & getCompleteingSequence() != true) {
+			setInvokedAbility(3);							//records that the current ability being used is E
+			ability3Setup();
+		}
+		if(keySet.contains(KeyEvent.VK_R) & getCompleteingSequence() != true) {
+			setInvokedAbility(4);							//records that the current ability being used is R
+			ability4Setup();
+		}
+		
 		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
 			continueSequence();
@@ -279,13 +324,9 @@ public abstract class Hero extends Sprite{
 						break;
 				}
 			}
-			if(getActionStep() == 5) {											
-				if(getInvokedAbility()==1)
-					ability1_execute(getEffectiveDirection());
-				/*																//add in ability executes as number of abilities increases
-				else if(getInvokedAbility()==2)
-					ability2_execute(actionSequenceToDirection);
-					*/
+			if(getActionStep() == 5) {
+				//TODO : implement the rest of this so that it just goes and directly calls the right ability
+				executeAbility(getEffectiveDirection());
 			}
 		}
 		
@@ -363,8 +404,9 @@ public abstract class Hero extends Sprite{
 				}
 			}
 			if(getActionStep() == 9) {											//frame 9 matches arrow release
+				
 				if(getInvokedAbility()==1)
-					ability1_execute(getEffectiveDirection());
+					ability1Execute(getEffectiveDirection());
 				/*																//add in ability executes as number of abilities increases
 				else if(getInvokedAbility()==2)
 					ability2_execute(actionSequenceToDirection);
@@ -416,6 +458,4 @@ public abstract class Hero extends Sprite{
 			setActionSequence(20);
 		}
 	}
-	
-
 }

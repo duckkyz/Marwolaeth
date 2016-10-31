@@ -1,10 +1,13 @@
-package marwolaeth;
+package marwolaeth.ImplementedProjectiles;
 
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import marwolaeth.Game;
+import marwolaeth.DrawableClasses.Projectile;
 
 public class Arrow extends Projectile{
 

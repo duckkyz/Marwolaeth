@@ -3,6 +3,11 @@ package marwolaeth;
 import java.util.ArrayList;
 import java.util.Set;
 
+import marwolaeth.DrawableClasses.Drawable;
+import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.DrawableClasses.Sprite;
+import marwolaeth.ImplementedEntities.Wall;
+
 public class Game {
 
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();

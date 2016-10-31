@@ -1,4 +1,4 @@
-package marwolaeth;
+package marwolaeth.Listeners;
 
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
@@ -6,7 +6,9 @@ import java.awt.event.ContainerListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-class CustomContainerListener implements ContainerListener {
+import marwolaeth.Screens.PlayScreen;
+
+public class CustomContainerListener implements ContainerListener {
     
 	private JPanel rootContainer;
 	private Timer timer;

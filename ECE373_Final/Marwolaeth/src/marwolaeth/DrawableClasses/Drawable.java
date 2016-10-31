@@ -10,7 +10,7 @@
 ////////////////////////////////////////////////////
 
 
-package marwolaeth;
+package marwolaeth.DrawableClasses;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;

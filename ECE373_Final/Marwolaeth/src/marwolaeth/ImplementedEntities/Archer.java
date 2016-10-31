@@ -1,10 +1,14 @@
-package marwolaeth;
+package marwolaeth.ImplementedEntities;
 
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import marwolaeth.Game;
+import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.ImplementedProjectiles.Arrow;
 
 
 public class Archer extends Hero{
@@ -21,20 +25,42 @@ public class Archer extends Hero{
 		}
 	}
 
-	public void ability1_setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
+	public void ability1Setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
 		setMoveCasting(false);								//whether the hero can move while using this ability
 		setCompleteingSequence(true);
-		
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(4);
-		
 	}
 	
-	public void ability1_execute(int direction) {
+	public void ability2Setup() {							
+		//TODO implement this
+	}
+	
+	public void ability3Setup() {	
+		//TODO implement this
+	}
+	
+	public void ability4Setup() {
+		//TODO implement this
+	}
+	
+	
+	public void ability1Execute(int direction) {
 		Arrow arrow = new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
 		Game.addDrawable(arrow);
-		
+	}
+
+	public void ability2Execute(int direction) {
+		//TODO implement this
+	}
+	
+	public void ability3Execute(int direction) {
+		//TODO implement this
+	}
+	
+	public void ability4Execute(int direction) {
+		//TODO implement this
 	}
 	
 	public void paint(Graphics imageGraphics) {

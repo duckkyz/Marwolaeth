@@ -1,4 +1,4 @@
-package marwolaeth;
+package marwolaeth.DrawableClasses;
 
 public class Sprite extends Drawable{
 	//TODO : Hitboxes

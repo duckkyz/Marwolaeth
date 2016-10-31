@@ -1,4 +1,4 @@
-package marwolaeth;
+package marwolaeth.DrawableClasses;
 import java.awt.Graphics;
 
 public abstract class Projectile extends Sprite{

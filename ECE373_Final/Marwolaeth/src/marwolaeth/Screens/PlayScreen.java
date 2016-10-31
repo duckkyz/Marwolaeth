@@ -1,4 +1,4 @@
-package marwolaeth;
+package marwolaeth.Screens;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+
+import marwolaeth.DrawableClasses.Drawable;
+import marwolaeth.DrawableClasses.Hero;
 
 public class PlayScreen extends GameState{
 
