@@ -67,6 +67,8 @@ public class TitleScreen extends GameState{
 					break;
 				}
 		}
+		//TODO remove this later, I want it for testing.
+		getFrame().setSize(1024, 576);
 		
 		setImageWidth(getFrameWidth());
 		setImageHeight(getFrameHeight());

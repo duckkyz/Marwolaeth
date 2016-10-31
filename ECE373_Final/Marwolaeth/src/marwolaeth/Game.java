@@ -72,7 +72,8 @@ public class Game {
 		//Set up movements
 		hero.doLogic(keySet);
 		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
-			drawables.get(x).doLogic();
+			Drawable d = drawables.get(x);
+			d.doLogic();
 		}
 		
 		int newX = hero.getXPos();
@@ -108,26 +109,51 @@ public class Game {
 			newY -= ((int)Math.floor(hero.getSpeed()/1.414));
 			break;	
 		}
-		int newMinX = newX;	//Left
 		int newMaxX = newX + 64;	//Right
-		int newMinY = newY;	//Top
 		int newMaxY = newY + 64;	//Bottom
 		
 		//Check for collision
 		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
-			drawables.get(x).doLogic();						//temp added for arrowmovement. needs replaced
+			Drawable d = drawables.get(x);
 			//Collision types:
 			//top: newMinX < (d.getXPos() + 32)
 			//topLeft: (newMinX < (d.getXPos() + 32)) & (newMinY > 
 			//
 			//
 			
-			switch(hero.getDirection()){
-			case 0:		//Moving up
-				//TODO: Fix this shit, its kind of hard and then make it look pretty
-				if(newMinY == (drawables.get(x).getYPos() + 64) & ((newMinX == drawables.get(x).getXPos()) & (newMaxX == (drawables.get(x).getXPos() + 64)))){
-					hero.setIsMoving(false);
+			//TODO: Fix this shit, its kind of hard and then make it look pretty
+			//TODO: top colision works, but diagonals break for some reason
+			
+			
+			//Implements top colision
+			if((newY <= (d.getYPos() + 64)) & (newY > d.getYPos())){
+				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
+					if(hero.getDirection() == 0){
+						hero.setIsMoving(false);
+					}	
+					else if(hero.getDirection() == 45){
+						hero.setDirection(90);
+					}
+					else if(hero.getDirection() == 315){
+						hero.setDirection(270);
+					}
+				}	
+				else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
+					if(hero.getDirection() == 0){
+						hero.setIsMoving(false);
+					}	
+					else if(hero.getDirection() == 45){
+						hero.setDirection(90);
+					}
+					else if(hero.getDirection() == 315){
+						hero.setDirection(270);
+					}
 				}
+			}
+		
+			
+			switch(hero.getEffectiveDirection()){
+			case 0:		//Moving up
 				break;
 			case 45:	//Moving up right
 				break;
@@ -150,15 +176,24 @@ public class Game {
 		//Move if not colliding
 		hero.move();
 		for(int x=0;drawables.size()>x;x++) {
+			Drawable d = drawables.get(x);
 			Sprite dummy = new Sprite(0, 0, 0);
-			if(drawables.get(x).getClass() == dummy.getClass()){
-				dummy = (Sprite) drawables.get(x);
+			if(d.getClass() == dummy.getClass()){
+				dummy = (Sprite) d;
 				dummy.move();
 			}
 		}
 		
 		//Do attacks for everything
-		
+		hero.attack();
+		for(int x=0;drawables.size()>x;x++) {
+			Drawable d = drawables.get(x);
+			Sprite dummy = new Sprite(0, 0, 0);
+			if(d.getClass() == dummy.getClass()){
+				dummy = (Sprite) d;
+				dummy.attack();
+			}
+		}
 	}
 
 }

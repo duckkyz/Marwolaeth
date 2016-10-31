@@ -6,8 +6,8 @@ public class Sprite extends Drawable{
 	private boolean isMoving = false;
 	private boolean completeingSequence = false;	//if the sprite needs to finish performing current action before performing others
 	private int invokedAbility = 0;					//used to keep track of which ability was issued for cases when multiple abilities use the same actionSequence
-	//private int speed = 12;						//make only divisible by 2
-	private int speed = 30;							//make only divisible by 2
+	private int speed = 12;						//make only divisible by 2
+	//private int speed = 30;							//make only divisible by 2
 	private int direction = 0;
 	private int health = 100;
 	private int mana = 100;
@@ -116,5 +116,9 @@ public class Sprite extends Drawable{
 				break;	
 			}
 		}
+	}
+	
+	public void attack(){
+		
 	}
 }
