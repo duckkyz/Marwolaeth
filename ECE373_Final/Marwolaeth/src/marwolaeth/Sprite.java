@@ -1,7 +1,8 @@
 package marwolaeth;
 
 public class Sprite extends Drawable{
-
+	//TODO : Hitboxes
+	private boolean moveCasting = false;
 	private boolean isMoving = false;
 	private boolean completeingSequence = false;	//if the sprite needs to finish performing current action before performing others
 	private int invokedAbility = 0;					//used to keep track of which ability was issued for cases when multiple abilities use the same actionSequence
@@ -15,6 +16,14 @@ public class Sprite extends Drawable{
 		setDirection(direction);
 		setXPos(spawnX);
 		setYPos(spawnY);
+	}
+	
+	public boolean getMoveCasting() {
+		return moveCasting;
+	}
+	
+	public boolean getIsMoving() {
+		return isMoving;
 	}
 	
 	public boolean getCompleteingSequence() {
@@ -41,7 +50,12 @@ public class Sprite extends Drawable{
 		return mana;
 	}
 	
-	public void setIsMoving(Boolean isMoving) {
+	public void setMoveCasting(boolean moveCasting) {
+		this.moveCasting = moveCasting;
+		this.isMoving = moveCasting;					//this line is intentional
+	}
+	
+	public void setIsMoving(boolean isMoving) {
 		this.isMoving = isMoving;
 	}
 	

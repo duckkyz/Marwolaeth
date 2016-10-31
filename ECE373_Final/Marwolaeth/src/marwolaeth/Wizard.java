@@ -23,6 +23,7 @@ public class Wizard extends Hero{
 
 	public void ability1_setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
+		setMoveCasting(true);
 		setCompleteingSequence(true);
 		switch(getActionSequence()){																						
 			case 8:

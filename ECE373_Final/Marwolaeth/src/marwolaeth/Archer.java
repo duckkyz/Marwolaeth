@@ -23,24 +23,11 @@ public class Archer extends Hero{
 
 	public void ability1_setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
+		setMoveCasting(false);								//whether the hero can move while using this ability
 		setCompleteingSequence(true);
-		switch(getActionSequence()){																						
-			case 8:
-				setActionSequence(16);
-				break;
-			case 9:
-				setActionSequence(17);
-				break;
-			case 10:
-				setActionSequence(18);
-				break;
-			case 11:
-				setActionSequence(19);
-				break;
-			default:
-				setActionSequence(16);
-				break;
-		}
+		
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(4);
 		
 	}
 	

@@ -35,120 +35,172 @@ public abstract class Hero extends Sprite{
 		else
 			spaceBar = false;
 		
+		
+		if(keySet.contains(KeyEvent.VK_Q) & getCompleteingSequence() != true) {
+			setInvokedAbility(1);							//records that the current ability being used is Q
+			ability1_setup();
+		}
+		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
 			continueSequence();
 		}
-		else if(keySet.contains(KeyEvent.VK_Q)) {
-			setInvokedAbility(1);
-			ability1_setup();
-		}
-		else if ((keySet.contains(KeyEvent.VK_UP)) && (!keySet.contains(KeyEvent.VK_DOWN))) {
+		else
+			setIsMoving(true);
+		
+		if(getMoveCasting() == true)
+			setIsMoving(true);
+		
+		
+		if ((keySet.contains(KeyEvent.VK_UP)) && (!keySet.contains(KeyEvent.VK_DOWN))) {
 			if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
-				if(spaceBar == false) {
-					if(getActionSequence()!=9 & getActionSequence()!=8)												//if both keys are pressed at the same time, choose one of the directions
-						setActionSequence(8);
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
-						setActionStep(0);
-				}
-				else {
-					if(getActionStep()<=0)
-						setActionStep(8);
-					else
-						setActionStep(getActionStep()-1);
-				}
-				setDirection(315);
-				setIsMoving(true);
-			}
-			else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
-				if(spaceBar == false) {
-					if(getActionSequence()!=11 & getActionSequence()!=8)												//if both keys are pressed at the same time, choose one of the directions
-						setActionSequence(8);
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
-						setActionStep(0);
-				}
-				else {
-					if(getActionStep()<=0)
-						setActionStep(8);
-					else
-						setActionStep(getActionStep()-1);
-				}
-				setDirection(45);
-				setIsMoving(true);
-			}
-			else {
-				if(spaceBar == false) {
-					if(getActionSequence()==8) {
+				if(getCompleteingSequence() == false) {
+					setDirection(315);
+					if(spaceBar == false) {
+						if(getActionSequence()!=9 & getActionSequence()!=8)												//if both keys are pressed at the same time, choose one of the directions
+							setActionSequence(8);
 						if(getActionStep()<8)
 							setActionStep(getActionStep()+1);
 						else
 							setActionStep(0);
 					}
 					else {
-						setActionSequence(8);
-						setActionStep(0);
+						if(getActionStep()<=0)
+							setActionStep(8);
+						else
+							setActionStep(getActionStep()-1);
 					}
 				}
-				else {
-					if(getActionStep()<=0)
-						setActionStep(8);
-					else
-						setActionStep(getActionStep()-1);
+				if(getMoveCasting() == true)
+					setDirection(315);
+			}
+			else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
+				if(getCompleteingSequence() == false) {
+					setDirection(45);
+					if(spaceBar == false) {
+						if(getActionSequence()!=11 & getActionSequence()!=8)												//if both keys are pressed at the same time, choose one of the directions
+							setActionSequence(8);
+						if(getActionStep()<8)
+							setActionStep(getActionStep()+1);
+						else
+							setActionStep(0);
+					}
+					else {
+						if(getActionStep()<=0)
+							setActionStep(8);
+						else
+							setActionStep(getActionStep()-1);
+					}
 				}
-				setDirection(0);
-				setIsMoving(true);
+				if(getMoveCasting() == true)
+					setDirection(45);
+			}
+			else {
+				if(getCompleteingSequence() == false) {
+					setDirection(0);
+					if(spaceBar == false) {
+						if(getActionSequence()==8) {
+							if(getActionStep()<8)
+								setActionStep(getActionStep()+1);
+							else
+								setActionStep(0);
+						}
+						else {
+							setActionSequence(8);
+							setActionStep(0);
+						}
+					}
+					else {
+						if(getActionStep()<=0)
+							setActionStep(8);
+						else
+							setActionStep(getActionStep()-1);
+					}
+				}
+				if(getMoveCasting() == true)
+					setDirection(0);
 			}
 		}
 		else if ((!keySet.contains(KeyEvent.VK_UP)) && (keySet.contains(KeyEvent.VK_DOWN))) {
 			if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
-				if(spaceBar == false) {
-					if(getActionSequence()!=10 & getActionSequence()!=9)												//if both keys are pressed at the same time, choose one of the directions
-						setActionSequence(10);
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
-						setActionStep(0);
-				}
-				else {
-					if(getActionStep()<=0)
-						setActionStep(8);
-					else
-						setActionStep(getActionStep()-1);
-				}
-				setDirection(225);
-				setIsMoving(true);
-			}
-			else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
-				if(spaceBar == false) {
-					if(getActionSequence()!=11 & getActionSequence()!=10)												//if both keys are pressed at the same time, choose one of the directions
-						setActionSequence(10);
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
-						setActionStep(0);
-				}
-				else {
-					if(getActionStep()<=0)
-						setActionStep(8);
-					else
-						setActionStep(getActionStep()-1);
-				}
-				setDirection(135);
-				setIsMoving(true);
-			}
-			else {
-				if(spaceBar == false) {
-					if(getActionSequence()==10) {
+				if(getCompleteingSequence() == false) {
+					setDirection(225);
+					if(spaceBar == false) {
+						if(getActionSequence()!=10 & getActionSequence()!=9)												//if both keys are pressed at the same time, choose one of the directions
+							setActionSequence(10);
 						if(getActionStep()<8)
 							setActionStep(getActionStep()+1);
 						else
 							setActionStep(0);
 					}
 					else {
-						setActionSequence(10);
+						if(getActionStep()<=0)
+							setActionStep(8);
+						else
+							setActionStep(getActionStep()-1);
+					}
+				}
+				if(getMoveCasting() == true)
+					setDirection(225);
+			}
+			else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
+				if(getCompleteingSequence() == false) {
+					setDirection(135);
+					if(spaceBar == false) {
+						if(getActionSequence()!=11 & getActionSequence()!=10)												//if both keys are pressed at the same time, choose one of the directions
+							setActionSequence(10);
+						if(getActionStep()<8)
+							setActionStep(getActionStep()+1);
+						else
+							setActionStep(0);
+					}
+					else {
+						if(getActionStep()<=0)
+							setActionStep(8);
+						else
+							setActionStep(getActionStep()-1);
+					}
+				}
+				if(getMoveCasting() == true)
+					setDirection(135);
+			}
+			else {
+				if(getCompleteingSequence() == false) {
+					setDirection(180);
+					if(spaceBar == false) {
+						if(getActionSequence()==10) {
+							if(getActionStep()<8)
+								setActionStep(getActionStep()+1);
+							else
+								setActionStep(0);
+						}
+						else {
+							setActionSequence(10);
+							setActionStep(0);
+						}
+					}
+					else {
+						if(getActionStep()<=0)
+							setActionStep(8);
+						else
+							setActionStep(getActionStep()-1);
+					}
+				}
+				if(getMoveCasting() == true)
+					setDirection(180);
+			}
+		}
+		else if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
+			if(getCompleteingSequence() == false) {
+				setDirection(270);
+				if(spaceBar == false) {
+					if(getActionSequence()==9) {
+						if(getActionStep()<8)
+							setActionStep(getActionStep()+1);
+						else
+							setActionStep(0);
+					}
+					else {
+						setActionSequence(9);
 						setActionStep(0);
 					}
 				}
@@ -158,67 +210,134 @@ public abstract class Hero extends Sprite{
 					else
 						setActionStep(getActionStep()-1);
 				}
-				setDirection(180);
-				setIsMoving(true);
 			}
-		}
-		else if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
-			if(spaceBar == false) {
-				if(getActionSequence()==9) {
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
-						setActionStep(0);
-				}
-				else {
-					setActionSequence(9);
-					setActionStep(0);
-				}
-			}
-			else {
-				if(getActionStep()<=0)
-					setActionStep(8);
-				else
-					setActionStep(getActionStep()-1);
-			}
-			setDirection(270);
-			setIsMoving(true);
+			if(getMoveCasting() == true)
+				setDirection(270);
 		}
 		else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
-			if(spaceBar == false) {
-				if(getActionSequence()==11) {
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
+			if(getCompleteingSequence() == false) {
+				setDirection(90);
+				if(spaceBar == false) {
+					if(getActionSequence()==11) {
+						if(getActionStep()<8)
+							setActionStep(getActionStep()+1);
+						else
+							setActionStep(0);
+					}
+					else {
+						setActionSequence(11);
 						setActionStep(0);
+					}
 				}
 				else {
-					setActionSequence(11);
-					setActionStep(0);
+					if(getActionStep()<=0)
+						setActionStep(8);
+					else
+						setActionStep(getActionStep()-1);
 				}
 			}
-			else {
-				if(getActionStep()<=0)
-					setActionStep(8);
-				else
-					setActionStep(getActionStep()-1);
-			}
-			setDirection(90);
-			setIsMoving(true);
+			if(getMoveCasting() == true)
+				setDirection(90);
 		}
 		else {
 			setIsMoving(false);
-			if(getActionStep()>0)
-				setActionStep(0);
+			if(getCompleteingSequence() == false) {
+				if(getActionStep()>0)
+					setActionStep(0);
+			}
 		}
+		
+		
 		
 	}
 	
 	public void continueSequence() {
 		setActionStep(getActionStep()+1);										//goes to the next step of the animation
 		
-		if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
-			setIsMoving(false);
+		if(getActionSequence() >= 0 & getActionSequence() <= 3) {					//spell-casting
+			if(getActionStep()>6) {
+				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
+					case 0:
+						setActionSequence(8);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 1:
+						setActionSequence(9);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 2:
+						setActionSequence(10);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 3:
+						setActionSequence(11);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+				}
+			}
+			if(getActionStep() == 5) {											
+				if(getInvokedAbility()==1)
+					ability1_execute(getEffectiveDirection());
+				/*																//add in ability executes as number of abilities increases
+				else if(getInvokedAbility()==2)
+					ability2_execute(actionSequenceToDirection);
+					*/
+			}
+		}
+		
+		else if(getActionSequence() >= 4 & getActionSequence() <= 7) {					//thrusting 
+			if(getActionStep()>7) {
+				setActionStep(0);
+				setCompleteingSequence(false);
+				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
+					case 4:
+						setActionSequence(8);
+						break;
+					case 5:
+						setActionSequence(9);
+						break;
+					case 6:
+						setActionSequence(10);
+						break;
+					case 7:
+						setActionSequence(11);
+						break;
+				}
+			}
+		}
+		
+		else if(getActionSequence() >= 12 & getActionSequence() <= 15) {				//slash
+			if(getActionStep()>7) {
+				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
+					case 12:
+						setActionSequence(8);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 13:
+						setActionSequence(9);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 14:
+						setActionSequence(10);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+					case 15:
+						setActionSequence(11);
+						setActionStep(0);
+						setCompleteingSequence(false);
+						break;
+				}
+			}
+		}
+		
+		else if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
 			if(getActionStep()>12) {
 				switch(getActionSequence()){									//Sequence ends, returns to idle in the correct direction
 					case 16:
@@ -253,96 +372,6 @@ public abstract class Hero extends Sprite{
 			}
 		}
 		
-		else if(getActionSequence() >= 0 & getActionSequence() <= 3) {					//spell-casting
-			setIsMoving(false);
-			if(getActionStep()>6) {
-				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
-					case 0:
-						setActionSequence(8);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 1:
-						setActionSequence(9);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 2:
-						setActionSequence(10);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 3:
-						setActionSequence(11);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-				}
-			}
-			if(getActionStep() == 5) {											//frame 9 matches arrow release
-				if(getInvokedAbility()==1)
-					ability1_execute(getEffectiveDirection());
-				/*																//add in ability executes as number of abilities increases
-				else if(getInvokedAbility()==2)
-					ability2_execute(actionSequenceToDirection);
-					*/
-			}
-		}
-		
-		else if(getActionSequence() >= 4 & getActionSequence() <= 7) {					//thrusting 
-			if(getActionStep()>7) {
-				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
-					case 4:
-						setActionSequence(8);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 5:
-						setActionSequence(9);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 6:
-						setActionSequence(10);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 7:
-						setActionSequence(11);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-				}
-			}
-		}
-		
-		else if(getActionSequence() >= 12 & getActionSequence() <= 15) {				//slash
-			if(getActionStep()>7) {
-				switch(getActionSequence()){											//Sequence ends, returns to idle in the correct direction
-					case 12:
-						setActionSequence(8);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 13:
-						setActionSequence(9);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 14:
-						setActionSequence(10);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-					case 15:
-						setActionSequence(11);
-						setActionStep(0);
-						setCompleteingSequence(false);
-						break;
-				}
-			}
-		}
-		
 		else if(getActionSequence() == 20) {				//death
 			if(getActionStep()>5) {
 				//game ends
@@ -363,6 +392,29 @@ public abstract class Hero extends Sprite{
 			default:
 				return 0;
 			}
+	}
+	
+	public void abilitySetupHelper(int actionSelection) {
+		switch(getActionSequence()){																						
+			case 8:
+				setActionSequence(4*actionSelection);
+				break;
+			case 9:
+				setActionSequence(4*actionSelection+1);
+				break;
+			case 10:
+				setActionSequence(4*actionSelection+2);
+				break;
+			case 11:
+				setActionSequence(4*actionSelection+3);
+				break;
+			default:
+				setActionSequence(4*actionSelection);
+				break;
+		}
+		if(actionSelection == 5) {
+			setActionSequence(20);
+		}
 	}
 	
 
