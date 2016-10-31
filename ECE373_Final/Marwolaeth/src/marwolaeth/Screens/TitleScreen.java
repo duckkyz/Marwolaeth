@@ -101,20 +101,17 @@ public class TitleScreen extends GameState{
 
 	
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		//System.out.println(game.getRootContainer().getHeight());
+		
 	}
 	
 	public void paint(Graphics graphics) {

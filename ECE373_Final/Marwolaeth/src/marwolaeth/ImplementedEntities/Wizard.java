@@ -30,23 +30,8 @@ public class Wizard extends Hero{
 		setActionStep(0);
 		setMoveCasting(true);
 		setCompleteingSequence(true);
-		switch(getActionSequence()){																						
-			case 8:
-				setActionSequence(0);
-				break;
-			case 9:
-				setActionSequence(1);
-				break;
-			case 10:
-				setActionSequence(2);
-				break;
-			case 11:
-				setActionSequence(3);
-				break;
-			default:
-				setActionSequence(0);
-				break;
-		}
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(3);
 	}
 
 	public void ability2Setup() {							
