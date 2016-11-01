@@ -31,7 +31,7 @@ public class Wizard extends Hero{
 		setMoveCasting(true);
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(3);
+		abilitySetupHelper(0);
 	}
 
 	public void ability2Setup() {							
@@ -66,7 +66,6 @@ public class Wizard extends Hero{
 	public void paint(Graphics imageGraphics) {
 		
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
-		
 	}
 
 }

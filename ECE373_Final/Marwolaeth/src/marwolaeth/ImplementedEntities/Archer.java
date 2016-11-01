@@ -34,7 +34,11 @@ public class Archer extends Hero{
 	}
 	
 	public void ability2Setup() {							
-		//TODO implement this
+		setActionStep(0);
+		setMoveCasting(false);								//whether the hero can move while using this ability
+		setCompleteingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(4);
 	}
 	
 	public void ability3Setup() {	
@@ -52,7 +56,12 @@ public class Archer extends Hero{
 	}
 
 	public void ability2Execute(int direction) {
-		//TODO implement this
+		Arrow arrow1 = new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
+		Game.addDrawable(arrow1);
+		Arrow arrow2 = new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
+		Game.addDrawable(arrow2);
+		Arrow arrow3 = new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
+		Game.addDrawable(arrow3);
 	}
 	
 	public void ability3Execute(int direction) {

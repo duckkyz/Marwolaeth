@@ -13,6 +13,7 @@
 package marwolaeth.DrawableClasses;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class Drawable {
 	private int tileHeight;
 	private int actionSequence = 0;									//The current row.
 	private int actionStep = 0;										//The current column.
-	private Image graphic;
+	private BufferedImage graphic;
 	
 	public Drawable() {
 		this.xPos = 0;
@@ -87,11 +88,11 @@ public class Drawable {
 		this.actionStep = actionStep;
 	}
 	
-	public void setGraphic(Image graphic){
+	public void setGraphic(BufferedImage graphic){
 		this.graphic = graphic;
 	}
 	
-	public Image getGraphic(){
+	public BufferedImage getGraphic(){
 		return graphic;
 	}
 	

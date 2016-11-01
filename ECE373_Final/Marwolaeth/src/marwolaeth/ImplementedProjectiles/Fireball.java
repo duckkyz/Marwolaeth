@@ -14,7 +14,7 @@ public class Fireball extends Projectile{
 	public Fireball(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY, heroProjectile);
 		try{
-			setGraphic(ImageIO.read(new File("Drawable_Images/Fireball.png")));
+			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Fireball.png"))), 0));
 		}
 		catch(IOException ex){
 			
@@ -67,6 +67,6 @@ public class Fireball extends Projectile{
 	
 	public void paint(Graphics imageGraphics) {			//this code works when tileWidth=tileHeight
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
-		
+		//imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), null);
 	}
 }

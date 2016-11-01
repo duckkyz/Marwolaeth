@@ -1,5 +1,15 @@
 package marwolaeth.DrawableClasses;
 
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+
 public class Sprite extends Drawable{
 	//TODO : Hitboxes
 	private boolean moveCasting = false;
@@ -85,40 +95,49 @@ public class Sprite extends Drawable{
 	
 	public void move() {
 		if(isMoving == true) {
-			switch(direction){
-			case 0:
-				this.setYPos(getYPos()+(-1)*this.speed);
-				break;
-			case 45:
-				this.setXPos(getXPos()+((int)Math.floor(this.speed/1.414)));
-				this.setYPos(getYPos()+(-1)*((int)Math.floor(this.speed/1.414)));
-				break;
-			case 90:
-				this.setXPos(getXPos()+this.speed);
-				break;
-			case 135:
-				this.setXPos(getXPos()+((int)Math.floor(this.speed/1.414)));
-				this.setYPos(getYPos()+((int)Math.floor(this.speed/1.414)));
-				break;
-			case 180:
-				this.setYPos(getYPos()+this.speed);
-				break;
-			case 225:
-				this.setXPos(getXPos()+(-1)*((int)Math.floor(this.speed/1.414)));
-				this.setYPos(getYPos()+((int)Math.floor(this.speed/1.414)));
-				break;
-			case 270:
-				this.setXPos(getXPos()+(-1)*this.speed);
-				break;
-			case 315:
-				this.setXPos(getXPos()+(-1)*((int)Math.floor(this.speed/1.414)));
-				this.setYPos(getYPos()+(-1)*((int)Math.floor(this.speed/1.414)));
-				break;	
-			}
+			setXPos(getXPos()+(int)(Math.round(Math.sin(Math.toRadians(direction))*speed)));
+			setYPos(getYPos()+(int)(Math.round(Math.cos(Math.toRadians(direction))*speed*(-1))));
 		}
 	}
 	
 	public void attack(){
 		
 	}
+	
+	public BufferedImage rotate(BufferedImage image, float degreeOffset) 
+	{
+		float angle = getDirection()+degreeOffset;
+	    float radianAngle = (float) Math.toRadians(angle) ; 
+
+	    float sin = (float) Math.abs(Math.sin(radianAngle));
+	    float cos = (float) Math.abs(Math.cos(radianAngle));
+
+	    int w = image.getWidth() ;
+	    int h = image.getHeight();
+
+	    int neww = (int) Math.round(w * cos + h * sin);
+	    int newh = (int) Math.round(h * cos + w * sin);
+
+	    GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	    GraphicsDevice gd = ge.getDefaultScreenDevice();
+	    GraphicsConfiguration gc = gd.getDefaultConfiguration();
+
+	    BufferedImage result = gc.createCompatibleImage(neww, newh, Transparency.TRANSLUCENT);
+	    Graphics2D g = result.createGraphics();
+
+	    //-----------------------MODIFIED--------------------------------------
+	    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON) ;
+	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC) ;
+	    g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY) ;
+
+	    AffineTransform at = AffineTransform.getTranslateInstance((neww-w)/2, (newh-h)/2);
+	    at.rotate(radianAngle, w/2, h/2);
+	    //---------------------------------------------------------------------
+
+	    g.drawRenderedImage(image, at);
+	    g.dispose();
+
+	    return result;
+	}
+	
 }
