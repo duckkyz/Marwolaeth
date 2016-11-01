@@ -46,6 +46,18 @@ public class Game {
 		drawables.remove(drawable);
 	}
 	
+	public void stopUpMovement(){
+		if(hero.getDirection() == 0){
+			hero.setIsMoving(false);
+		}	
+		else if(hero.getDirection() == 45){
+			hero.setDirection(90);
+		}
+		else if(hero.getDirection() == 315){
+			hero.setDirection(270);
+		}
+	}
+	
 	public void doGameLogic(Set keySet) {
 		//Check for colisions
 		//ArrayList<Drawable> tempList = new ArrayList<Drawable>();
@@ -121,36 +133,36 @@ public class Game {
 			//
 			//
 			
-			//TODO: Fix this shit, its kind of hard and then make it look pretty
-			//TODO: top colision works, but diagonals break for some reason
-			
+			//TODO: Fix this shit, its kind of hard and then make it look pretty			
 			
 			//Implements top colision
 			if((newY <= (d.getYPos() + 64)) & (newY > d.getYPos())){
 				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
-					if(hero.getDirection() == 0){
-						hero.setIsMoving(false);
-					}	
-					else if(hero.getDirection() == 45){
-						hero.setDirection(90);
-					}
-					else if(hero.getDirection() == 315){
-						hero.setDirection(270);
-					}
+					stopUpMovement();
 				}	
 				else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
-					if(hero.getDirection() == 0){
-						hero.setIsMoving(false);
-					}	
-					else if(hero.getDirection() == 45){
-						hero.setDirection(90);
-					}
-					else if(hero.getDirection() == 315){
-						hero.setDirection(270);
-					}
+					stopUpMovement();
+				}
+				else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
+					stopUpMovement();
 				}
 			}
-		
+			
+			//TODO: Fix bot collision
+			//Bot collision
+			if(((newY + 64) >= (d.getYPos())) & (newY < d.getYPos())){
+				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
+					hero.setIsMoving(false);
+					//stopUpMovement();
+				}	
+				else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
+					stopUpMovement();
+				}
+				else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
+					stopUpMovement();
+				}
+			}
+			
 			
 			switch(hero.getEffectiveDirection()){
 			case 0:		//Moving up
