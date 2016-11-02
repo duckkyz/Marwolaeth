@@ -51,17 +51,13 @@ public class Archer extends Hero{
 	
 	
 	public void ability1Execute(int direction) {
-		Arrow arrow = new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
-		Game.addDrawable(arrow);
+		Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 	}
 
 	public void ability2Execute(int direction) {
-		Arrow arrow1 = new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
-		Game.addDrawable(arrow1);
-		Arrow arrow2 = new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
-		Game.addDrawable(arrow2);
-		Arrow arrow3 = new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
-		Game.addDrawable(arrow3);
+		Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 	}
 	
 	public void ability3Execute(int direction) {
@@ -70,12 +66,6 @@ public class Archer extends Hero{
 	
 	public void ability4Execute(int direction) {
 		//TODO implement this
-	}
-	
-	public void paint(Graphics imageGraphics) {
-		
-		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
-		
 	}
 
 }

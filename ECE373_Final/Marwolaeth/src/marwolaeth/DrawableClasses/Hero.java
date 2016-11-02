@@ -1,5 +1,6 @@
 package marwolaeth.DrawableClasses;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
@@ -284,4 +285,10 @@ public abstract class Hero extends Sprite implements willAttack{
 			setActionSequence(20);
 		}
 	}
+	
+	public void paint(Graphics imageGraphics) {
+		
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+	}
+
 }

@@ -13,4 +13,9 @@ public abstract class Projectile extends Sprite{
 	
 	public abstract void doLogic();
 	
+	public void paint(Graphics imageGraphics) {			//this code works when tileWidth=tileHeight
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+		//imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), null);
+	}
+	
 }
