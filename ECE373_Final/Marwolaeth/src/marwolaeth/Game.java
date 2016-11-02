@@ -24,6 +24,12 @@ public class Game {
 			drawables.add(new Wall((i*64),0));
 			drawables.add(new Wall((i*64),(2*1080)-64));
 		}
+		
+		//Testing walls
+		for(int i=0;i<10;++i){
+			drawables.add(new Wall((2*250)-64,(i*64)));
+			drawables.add(new Wall((i*64),(2*250)-64));
+		}
 	}
 	
 	public static Hero getHero() {
@@ -55,6 +61,42 @@ public class Game {
 		}
 		else if(hero.getDirection() == 315){
 			hero.setDirection(270);
+		}
+	}
+
+	public void stopDownMovement(){
+		if(hero.getDirection() == 180){
+			hero.setIsMoving(false);
+		}	
+		else if(hero.getDirection() == 135){
+			hero.setDirection(90);
+		}
+		else if(hero.getDirection() == 225){
+			hero.setDirection(270);
+		}
+	}
+	
+	public void stopLeftMovement(){
+		if(hero.getDirection() == 270){
+			hero.setIsMoving(false);
+		}	
+		else if(hero.getDirection() == 315){
+			hero.setDirection(0);
+		}
+		else if(hero.getDirection() == 225){
+			hero.setDirection(180);
+		}
+	}
+	
+	public void stopRightMovement(){
+		if(hero.getDirection() == 90){
+			hero.setIsMoving(false);
+		}	
+		else if(hero.getDirection() == 45){
+			hero.setDirection(0);
+		}
+		else if(hero.getDirection() == 135){
+			hero.setDirection(180);
 		}
 	}
 	
@@ -148,22 +190,44 @@ public class Game {
 				}
 			}
 			
-			//TODO: Fix bot collision
 			//Bot collision
-			if(((newY + 64) >= (d.getYPos())) & (newY < d.getYPos())){
+			if(((newMaxY) >= (d.getYPos())) & (newY < d.getYPos())){
 				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
-					hero.setIsMoving(false);
-					//stopUpMovement();
+					stopDownMovement();
 				}	
 				else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
-					stopUpMovement();
+					stopDownMovement();
 				}
 				else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
-					stopUpMovement();
+					stopDownMovement();
 				}
 			}
 			
+			//Right Collision
+			if(((newMaxX) >= (d.getXPos())) & (newX < d.getXPos())){
+				if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
+					stopRightMovement();
+				}	
+				else if((newY < (d.getYPos() + 64)) & (newMaxY > (d.getYPos() + 64))){
+					stopRightMovement();
+				}
+				else if((newY == (d.getYPos())) & (newMaxY == (d.getYPos() + 64))){
+					stopRightMovement();
+				}
+			}
 			
+			//Left Collision
+			if(((newX) <= (d.getXPos()) + 64) & (newMaxX > (d.getXPos()) + 64)){
+				if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
+					stopLeftMovement();
+				}	
+				else if((newY < (d.getYPos() + 64)) & (newMaxY > (d.getYPos() + 64))){
+					stopLeftMovement();
+				}
+				else if((newY == (d.getYPos())) & (newMaxY == (d.getYPos() + 64))){
+					stopLeftMovement();
+				}
+			}			
 			switch(hero.getEffectiveDirection()){
 			case 0:		//Moving up
 				break;
