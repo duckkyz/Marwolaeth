@@ -287,7 +287,6 @@ public abstract class Hero extends Sprite implements willAttack{
 	}
 	
 	public void paint(Graphics imageGraphics) {
-		
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
 	}
 

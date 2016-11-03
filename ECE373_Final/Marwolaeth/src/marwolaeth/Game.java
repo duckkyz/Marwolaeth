@@ -26,10 +26,10 @@ public class Game {
 		}
 		
 		//Testing walls
-		//for(int i=0;i<10;++i){
-		//	drawables.add(new Wall((2*250)-64,(i*64)));
-		//	drawables.add(new Wall((i*64),(2*250)-64));
-		//}
+		for(int i=0;i<10;++i){
+			drawables.add(new Wall((2*250)-64,(i*64)));
+			drawables.add(new Wall((i*64),(2*250)-64));
+		}
 	}
 	
 	public static Hero getHero() {
@@ -57,9 +57,11 @@ public class Game {
 			hero.setIsMoving(false);
 		}	
 		else if(hero.getDirection() == 45){
+			hero.setIsMoving(true);
 			hero.setDirection(90);
 		}
 		else if(hero.getDirection() == 315){
+			hero.setIsMoving(true);
 			hero.setDirection(270);
 		}
 	}
@@ -69,9 +71,11 @@ public class Game {
 			hero.setIsMoving(false);
 		}	
 		else if(hero.getDirection() == 135){
+			hero.setIsMoving(true);
 			hero.setDirection(90);
 		}
 		else if(hero.getDirection() == 225){
+			hero.setIsMoving(true);
 			hero.setDirection(270);
 		}
 	}
@@ -81,9 +85,11 @@ public class Game {
 			hero.setIsMoving(false);
 		}	
 		else if(hero.getDirection() == 315){
+			hero.setIsMoving(true);
 			hero.setDirection(0);
 		}
 		else if(hero.getDirection() == 225){
+			hero.setIsMoving(true);
 			hero.setDirection(180);
 		}
 	}
@@ -93,9 +99,11 @@ public class Game {
 			hero.setIsMoving(false);
 		}	
 		else if(hero.getDirection() == 45){
+			hero.setIsMoving(true);
 			hero.setDirection(0);
 		}
 		else if(hero.getDirection() == 135){
+			hero.setIsMoving(true);
 			hero.setDirection(180);
 		}
 	}
@@ -134,9 +142,7 @@ public class Game {
 		int newY = (hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection())) * hero.getSpeed() * (-1))));
 		int newMaxX = newX + 64;	//Right
 		int newMaxY = newY + 64;	//Bottom
-		System.out.println("x: " + newX + " nX: " + newMaxX);
-		System.out.println("y: " + newY + " nY: " + newMaxY);
-		System.out.println();
+
 
 		
 		//Check for collision
@@ -150,57 +156,89 @@ public class Game {
 			
 			//TODO: Fix this shit, its kind of hard and then make it look pretty			
 			
-			//Implements top colision
-			if((newY <= (d.getYPos() + 64)) & (newY > d.getYPos())){
-				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
-					stopUpMovement();
-				}	
-				else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
-					stopUpMovement();
-				}
-				else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
-					stopUpMovement();
+			//Implements top collision
+			if(d.getYPos() == 0){
+				if((newY < (d.getYPos() + 64)) & (newY > d.getYPos())){
+					if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
+						System.out.println("1. Wont move up because newY: " + newY + " <= d.getYPos + 64: " + (d.getYPos() + 64));
+						System.out.println();
+						stopUpMovement();
+					}	
+					else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
+						System.out.println("2. Wont move up because newY: " + newY + " <= d.getYPos + 64: " + (d.getYPos() + 64));
+						System.out.println();
+						stopUpMovement();
+					}
+					else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
+						System.out.println("3. Wont move up because newY: " + newY + " <= d.getYPos + 64: " + (d.getYPos() + 64));
+						System.out.println();
+						stopUpMovement();
+					}
 				}
 			}
 			
 			//Bot collision
-			if((newMaxY >= d.getYPos()) & (newY < d.getYPos())){
-				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
-					stopDownMovement();
-				}	
-				else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
-					stopDownMovement();
-				}
-				else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
-					stopDownMovement();
-				}
-			}
-			
-			//Right Collision
-			if((newMaxX >= d.getXPos()) & (newX < d.getXPos())){
-				if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
-					stopRightMovement();
-				}	
-				else if((newY < (d.getYPos() + 64)) & (newMaxY > (d.getYPos() + 64))){
-					stopRightMovement();
-				}
-				else if((newY == (d.getYPos())) & (newMaxY == (d.getYPos() + 64))){
-					stopRightMovement();
+			if(d.getYPos() == ((1080 * 2) - 64)){
+				if((newMaxY > d.getYPos()) & (newY < d.getYPos())){
+					if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
+						System.out.println("1. Wont move down because newMaxY: " + newMaxY + " >= d.getYPos: " + d.getYPos());
+						System.out.println();
+						stopDownMovement();
+					}	
+					else if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
+						System.out.println("2. Wont move down because newMaxY: " + newMaxY + " >= d.getYPos: " + d.getYPos());
+						System.out.println();
+						stopDownMovement();
+					}
+					else if((newX == (d.getXPos())) & (newMaxX == (d.getXPos() + 64))){
+						System.out.println("3. Wont move down because newMaxY: " + newMaxY + " >= d.getYPos: " + d.getYPos());
+						System.out.println();
+						stopDownMovement();
+					}
 				}
 			}
 			
-			//Left Collision
-			if((newX <= (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
-				if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
-					stopLeftMovement();
-				}	
-				else if((newY < (d.getYPos() + 64)) & (newMaxY > (d.getYPos() + 64))){
-					stopLeftMovement();
+			if(d.getXPos() == ((1920 * 2) - 64)){
+				//Right Collision
+				if((newMaxX > d.getXPos()) & (newX < d.getXPos())){
+					if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
+						System.out.println("1. Wont move right because newMaxX: " + newX + " >= d.getXPos: " + d.getXPos());
+						System.out.println();
+						stopRightMovement();
+					}	
+					else if((newY < (d.getYPos() + 64)) & (newMaxY > (d.getYPos() + 64))){
+						System.out.println("2. Wont move right because newMaxX: " + newX + " >= d.getXPos: " + d.getXPos());
+						System.out.println();
+						stopRightMovement();
+					}
+					else if((newY == (d.getYPos())) & (newMaxY == (d.getYPos() + 64))){
+						System.out.println("3. Wont move right because newMaxX: " + newX + " >= d.getXPos: " + d.getXPos());
+						System.out.println();
+						stopRightMovement();
+					}
 				}
-				else if((newY == (d.getYPos())) & (newMaxY == (d.getYPos() + 64))){
-					stopLeftMovement();
-				}
-			}			
+			}
+			
+			if(d.getXPos() == 0){
+				//Left Collision
+				if((newX < (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
+					if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
+						System.out.println("1. Wont move left because newX: " + newX + " <= d.getXPos + 64: " + (d.getXPos() + 64));
+						System.out.println();
+						stopLeftMovement();
+					}	
+					else if((newY < (d.getYPos() + 64)) & (newMaxY > (d.getYPos() + 64))){
+						System.out.println("2. Wont move left because newX: " + newX + " <= d.getXPos + 64: " + (d.getXPos() + 64));
+						System.out.println();
+						stopLeftMovement();
+					}
+					else if((newY == (d.getYPos())) & (newMaxY == (d.getYPos() + 64))){
+						System.out.println("3. Wont move left because newX: " + newX + " <= d.getXPos + 64: " + (d.getXPos() + 64));
+						System.out.println();
+						stopLeftMovement();
+					}
+				}			
+			}
 		}
 		
 		
