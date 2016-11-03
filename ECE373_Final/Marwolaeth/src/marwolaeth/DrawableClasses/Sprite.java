@@ -95,8 +95,8 @@ public class Sprite extends Drawable{
 	
 	public void move() {
 		if(isMoving == true) {
-			setXPos(getXPos()+(int)(Math.round(Math.sin(Math.toRadians(direction))*speed)));
-			setYPos(getYPos()+(int)(Math.round(Math.cos(Math.toRadians(direction))*speed*(-1))));
+			setXPos(getXPos() + (int)(Math.round(Math.sin(Math.toRadians(direction))*speed)));
+			setYPos(getYPos() + (int)(Math.round(Math.cos(Math.toRadians(direction))*speed*(-1))));
 		}
 	}
 	

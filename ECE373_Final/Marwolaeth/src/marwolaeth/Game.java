@@ -26,10 +26,10 @@ public class Game {
 		}
 		
 		//Testing walls
-		for(int i=0;i<10;++i){
-			drawables.add(new Wall((2*250)-64,(i*64)));
-			drawables.add(new Wall((i*64),(2*250)-64));
-		}
+		//for(int i=0;i<10;++i){
+		//	drawables.add(new Wall((2*250)-64,(i*64)));
+		//	drawables.add(new Wall((i*64),(2*250)-64));
+		//}
 	}
 	
 	public static Hero getHero() {
@@ -130,39 +130,8 @@ public class Game {
 			d.doLogic();
 		}
 		
-		int newX = hero.getXPos();
-		int newY = hero.getYPos();
-		
-		switch(hero.getDirection()){
-		case 0:		//Moving up
-			newY -= 1;
-			break;
-		case 45:	//Moving up right
-			newX += ((int)Math.floor(hero.getSpeed()/1.414));
-			newY -= ((int)Math.floor(hero.getSpeed()/1.414));
-			break;
-		case 90:	//Moving right
-			newX += 1;
-			break;
-		case 135:	//Moving down right
-			newX += ((int)Math.floor(hero.getSpeed()/1.414));
-			newY += ((int)Math.floor(hero.getSpeed()/1.414));
-			break;
-		case 180:	//Moving down
-			newY += 1;
-			break;
-		case 225:	//Moving down left
-			newX -= ((int)Math.floor(hero.getSpeed()/1.414));
-			newY += ((int)Math.floor(hero.getSpeed()/1.414));
-			break;
-		case 270:	//Moving left
-			newX -= 1;
-			break;
-		case 315:	//Moving up left
-			newX -= ((int)Math.floor(hero.getSpeed()/1.414));
-			newY -= ((int)Math.floor(hero.getSpeed()/1.414));
-			break;	
-		}
+		int newX = hero.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(hero.getDirection()))*hero.getSpeed()));
+		int newY = hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection()))*hero.getSpeed()*(-1)));
 		int newMaxX = newX + 64;	//Right
 		int newMaxY = newY + 64;	//Bottom
 		
@@ -191,7 +160,7 @@ public class Game {
 			}
 			
 			//Bot collision
-			if(((newMaxY) >= (d.getYPos())) & (newY < d.getYPos())){
+			if((newMaxY >= d.getYPos()) & (newY < d.getYPos())){
 				if((newX < d.getXPos()) & (newMaxX > d.getXPos())){
 					stopDownMovement();
 				}	
@@ -204,7 +173,7 @@ public class Game {
 			}
 			
 			//Right Collision
-			if(((newMaxX) >= (d.getXPos())) & (newX < d.getXPos())){
+			if((newMaxX >= d.getXPos()) & (newX < d.getXPos())){
 				if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
 					stopRightMovement();
 				}	
@@ -217,7 +186,7 @@ public class Game {
 			}
 			
 			//Left Collision
-			if(((newX) <= (d.getXPos()) + 64) & (newMaxX > (d.getXPos()) + 64)){
+			if((newX <= (d.getXPos() + 64)) & (newMaxX > (d.getXPos() + 64))){
 				if((newY < d.getYPos()) & (newMaxY > d.getYPos())){
 					stopLeftMovement();
 				}	
@@ -228,24 +197,6 @@ public class Game {
 					stopLeftMovement();
 				}
 			}			
-			switch(hero.getEffectiveDirection()){
-			case 0:		//Moving up
-				break;
-			case 45:	//Moving up right
-				break;
-			case 90:	//Moving right
-				break;
-			case 135:	//Moving down right
-				break;
-			case 180:	//Moving down
-				break;
-			case 225:	//Moving down left
-				break;
-			case 270:	//Moving left
-				break;
-			case 315:	//Moving up left
-				break;	
-			}
 		}
 		
 		
@@ -271,5 +222,4 @@ public class Game {
 			}
 		}
 	}
-
 }
