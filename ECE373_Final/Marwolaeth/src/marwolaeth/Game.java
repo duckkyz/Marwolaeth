@@ -109,12 +109,97 @@ public class Game {
 	}
 	
 	public void checkForMapEdgeCollision(ArrayList<Drawable> drawables, Hero hero){
+		
+		
+		
 		int newX = (hero.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(hero.getDirection())) * hero.getSpeed())));
 		int newY = (hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection())) * hero.getSpeed() * (-1))));
 		int newMaxX = newX + 64;	//Right
 		int newMaxY = newY + 64;	//Bottom
-		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
-			Drawable d = drawables.get(x);
+		boolean canGoUp = true;
+		boolean canGoDown = true;
+		boolean canGoLeft = true;
+		boolean canGoRight = true;
+
+		System.out.println("New cycle");
+		for(int x=0;drawables.size()>x;x++){		
+			Drawable d = drawables.get(x);	
+			
+			if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 		//Collision from the left
+				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){	//Collision from the bottom
+					System.out.println("Collision 1 for " + d.getXPos() + "," + d.getYPos());
+					canGoLeft = false;
+					canGoUp = false;
+					
+					/*if(hero.getDirection() == 270){
+						canGoLeft = false;
+						System.out.println("I'm trying to go left");
+					}
+					else if(hero.getDirection() == 315){
+						canGoLeft = false;
+						//hero.setDirection(0);
+						System.out.println("I'm trying to go up-left");
+					}
+					else if(hero.getDirection() == 225){
+						canGoLeft = false;
+						//hero.setDirection(180);
+						System.out.println("I'm trying to go down-left");
+					}		
+					else if(hero.getDirection() == 0){
+						canGoUp = false;
+					}
+					*/
+				}
+				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
+					System.out.println("Collision 2 for " + d.getXPos() + "," + d.getYPos());
+					canGoLeft = false;
+					canGoDown = false;
+					/*if(hero.getDirection() == 270){
+						canGoLeft = false;
+						System.out.println("I'm trying to go left");
+					}
+					else if(hero.getDirection() == 315){
+						canGoLeft = false;
+						//hero.setDirection(0);
+						System.out.println("I'm trying to go up-left");
+					}
+					else if(hero.getDirection() == 225){
+						canGoLeft = false;
+						//hero.setDirection(180);
+						System.out.println("I'm trying to go down-left");
+					}
+					*/		
+				}
+			}
+			else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
+				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
+					System.out.println("Collision 3 for " + d.getXPos() + "," + d.getYPos());
+					canGoRight = false;
+					canGoUp = false;
+					/*
+					if(hero.getDirection() == 90){
+						//hero.setIsMoving(false);
+						System.out.println("I'm trying to go right");
+					}
+					else if(hero.getDirection() == 45){
+						//hero.setDirection(0);
+						System.out.println("I'm trying to go up-right");
+					}
+					else if(hero.getDirection() == 135){
+						//hero.setDirection(180);
+						System.out.println("I'm trying to go down-right");
+					}		
+					else if(hero.getDirection() == 0){
+						canGoUp = false;
+					}
+					*/
+				}
+				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
+					System.out.println("Collision 4 for " + d.getXPos() + "," + d.getYPos());
+					canGoRight = false;
+					canGoDown = false;
+				}
+			}
 			//Collision types:
 			//top: newMinX < (d.getXPos() + 32)
 			//topLeft: (newMinX < (d.getXPos() + 32)) & (newMinY > 
@@ -122,6 +207,9 @@ public class Game {
 			//
 			
 			//TODO: Fix collision for non wall entities			
+			
+			/*
+			
 			
 			//Implements top collision
 			if(d.getYPos() == 0){
@@ -206,6 +294,79 @@ public class Game {
 					}
 				}			
 			}
+			*/
+		}
+
+		if(hero.getDirection() == 0){
+			if(canGoUp == false){
+				hero.setIsMoving(false);
+			}
+		}
+
+		else if(hero.getDirection() == 45){
+			if((canGoUp == false) & (canGoRight == false)){
+				hero.setIsMoving(false);
+			}
+			else if(canGoUp == false){
+				hero.setDirection(90);
+			}
+			else if(canGoRight == false){
+				hero.setDirection(0);
+			}
+		}
+		
+		else if(hero.getDirection() == 90){
+			if(canGoRight == false){
+				hero.setIsMoving(false);
+			}
+		}
+		
+		else if(hero.getDirection() == 135){
+			if((canGoDown == false) & (canGoRight == false)){
+				hero.setIsMoving(false);
+			}
+			else if(canGoDown == false){
+				hero.setDirection(90);
+			}
+			else if(canGoRight == false){
+				hero.setDirection(180);
+			}
+		}
+		
+		else if(hero.getDirection() == 180){
+			if(canGoDown == false){
+				hero.setIsMoving(false);
+			}
+		}
+		
+		else if(hero.getDirection() == 225){
+			if((canGoDown == false) & (canGoLeft == false)){
+				hero.setIsMoving(false);
+			}
+			else if(canGoDown == false){
+				hero.setDirection(270);
+			}
+			else if(canGoLeft == false){
+				hero.setDirection(180);
+			}
+		}
+		
+		else if(hero.getDirection() == 270){
+			if(canGoLeft == false){
+				hero.setIsMoving(false);
+			}
+		}
+		
+		else if(hero.getDirection() == 315){
+			if((canGoUp == false) & (canGoLeft == false)){
+				hero.setIsMoving(false);
+			}
+			else if(canGoUp == false){
+				hero.setDirection(270);
+			}
+			else if(canGoLeft == false){
+				hero.setDirection(0);
+			}
 		}
 	}
 	
@@ -218,6 +379,35 @@ public class Game {
 		}
 				
 		//Check for collision
+		/* Brainstorming a little:
+		 * A generic collision detection alg:
+		 * 	1. are you in this d?
+		 * 		a. if ((this.xPos >= d.xPos) and (this.xPos <= (d.xPos + 64))) 
+		 * 			i. if((this.yPos >= d.yPos) and (this.yPos <= (d.yPos + 64))){
+		 * 					//youre inside, you have problem
+		 * 				}
+		 * 		   ii. else if(((this.yPos + 64) >= (d.yPos)) and ((this.yPos +64) <= (d.yPos + 64))){
+		 * 					//youre inside, you have problem
+		 * 				}
+		 * 		b. else if (((this.xPos + 64) >= d.xPos) and ((this.xPos + 64) <= (d.xPos + 64)))
+		 * 			i. if((this.yPos >= d.yPos) and (this.yPos <= (d.yPos + 64))){
+		 * 					//youre inside, you have problem
+		 * 				}
+		 * 		   ii. else if(((this.yPos + 64) >= (d.yPos)) and ((this.yPos +64) <= (d.yPos + 64))){
+		 * 					//youre inside, you have problem
+		 * 				}
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */		
 		checkForMapEdgeCollision(drawables, hero);
 		
 		
