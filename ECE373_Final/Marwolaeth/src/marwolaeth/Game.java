@@ -130,8 +130,8 @@ public class Game {
 			d.doLogic();
 		}
 		
-		int newX = (hero.getXPos() + (int)(Math.floor(Math.sin(Math.toRadians(hero.getDirection())) * hero.getSpeed())));
-		int newY = (hero.getYPos() + (int)(Math.floor(Math.cos(Math.toRadians(hero.getDirection())) * hero.getSpeed() * (-1))));
+		int newX = (hero.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(hero.getDirection())) * hero.getSpeed())));
+		int newY = (hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection())) * hero.getSpeed() * (-1))));
 		int newMaxX = newX + 64;	//Right
 		int newMaxY = newY + 64;	//Bottom
 		System.out.println("x: " + newX + " nX: " + newMaxX);
