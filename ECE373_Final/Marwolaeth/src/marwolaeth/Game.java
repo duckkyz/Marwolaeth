@@ -134,6 +134,10 @@ public class Game {
 		int newY = hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection()))*hero.getSpeed()*(-1)));
 		int newMaxX = newX + 64;	//Right
 		int newMaxY = newY + 64;	//Bottom
+		System.out.println("x: " + newX + "nX: " + newMaxX);
+		System.out.println("y: " + newY + "nY: " + newMaxY);
+		System.out.println();
+
 		
 		//Check for collision
 		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
