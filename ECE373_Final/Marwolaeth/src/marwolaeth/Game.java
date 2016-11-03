@@ -108,44 +108,11 @@ public class Game {
 		}
 	}
 	
-	public void doGameLogic(Set keySet) {
-		//Check for colisions
-		//ArrayList<Drawable> tempList = new ArrayList<Drawable>();
-		//for(Drawable entity : this.getDrawables()){
-
-		//}
-		
-		
-		/*
-		 * Colision is when the new coord will equal another sprites current location (image wise)
-		 * So it should call each sprite to draw, if the new coords will result in colision 
-		 * change the coords to their original placement
-		 * temps:
-		 * 	xpos, ypos
-		 * 
-		 * Sequence:
-		 * 		1. Move to new coords
-		 * 		2. Check to see if this matches any other objects coords
-		 * 		3. if true : set to old coords
-		 * 			  else : leave it and move on to next object
-		 * 
-		 */
-		
-		//Set up movements
-		hero.doLogic(keySet);
-		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
-			Drawable d = drawables.get(x);
-			d.doLogic();
-		}
-		
+	public void checkForMapEdgeCollision(ArrayList<Drawable> drawables, Hero hero){
 		int newX = (hero.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(hero.getDirection())) * hero.getSpeed())));
 		int newY = (hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection())) * hero.getSpeed() * (-1))));
 		int newMaxX = newX + 64;	//Right
 		int newMaxY = newY + 64;	//Bottom
-
-
-		
-		//Check for collision
 		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
 			Drawable d = drawables.get(x);
 			//Collision types:
@@ -154,7 +121,7 @@ public class Game {
 			//
 			//
 			
-			//TODO: Fix this shit, its kind of hard and then make it look pretty			
+			//TODO: Fix collision for non wall entities			
 			
 			//Implements top collision
 			if(d.getYPos() == 0){
@@ -240,6 +207,18 @@ public class Game {
 				}			
 			}
 		}
+	}
+	
+	public void doGameLogic(Set keySet) {
+		//Set up movements
+		hero.doLogic(keySet);
+		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
+			Drawable d = drawables.get(x);
+			d.doLogic();
+		}
+				
+		//Check for collision
+		checkForMapEdgeCollision(drawables, hero);
 		
 		
 		//Move if not colliding
