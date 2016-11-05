@@ -17,10 +17,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 
-public class Drawable {
+public class Drawable implements Comparable<Drawable>{
 
 	private int xPos;
 	private int yPos;
@@ -96,6 +97,19 @@ public class Drawable {
 		return graphic;
 	}
 	
+	public int compareTo(Drawable compareDrawable){
+		int compareXPos = ((Drawable) compareDrawable).getXPos();
+		
+		return this.getXPos() - compareXPos;
+		
+	}
+	
+	public static Comparator<Drawable> PosComparator = new Comparator<Drawable>(){
+		public int compare(Drawable d1, Drawable d2){
+			return d1.compareTo(d2);
+		}
+	};
+
 	
 	public void doLogic() {
 		

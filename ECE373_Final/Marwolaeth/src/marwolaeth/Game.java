@@ -1,6 +1,9 @@
 package marwolaeth;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Set;
 
 import marwolaeth.DrawableClasses.Drawable;
@@ -20,7 +23,8 @@ public class Game {
 			drawables.add(new Wall(0,(i*64)));
 			drawables.add(new Wall((2*1920)-64,(i*64)));
 		}
-		for(int i=0; i<60; ++i){
+		//for(int i=0; i<60; ++i){
+		for(int i=60; i>0; --i){
 			drawables.add(new Wall((i*64),0));
 			drawables.add(new Wall((i*64),(2*1080)-64));
 		}
@@ -53,7 +57,7 @@ public class Game {
 	}
 	
 	public void checkForMapEdgeCollision(ArrayList<Drawable> drawables, Hero hero){
-		
+		Collections.sort(drawables, Drawable.PosComparator);
 		
 		
 		int newX = (hero.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(hero.getDirection())) * hero.getSpeed())));
@@ -82,6 +86,9 @@ public class Game {
 					else if(hero.getDirection() == 225){
 						canGoLeft = false;
 					}
+					else if(hero.getDirection() == 270){
+						canGoLeft = false;
+					}
 				}
 				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
 					System.out.println("Collision 2 for " + d.getXPos() + "," + d.getYPos());
@@ -94,6 +101,12 @@ public class Game {
 					else if(hero.getDirection() == 315){
 						canGoLeft = false;
 					}	
+					else if(hero.getDirection() == 180){
+						canGoDown = false;
+					}
+					else if(hero.getDirection() == 225){
+						//canGoDown = false;
+					}
 				}
 			}
 			else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
@@ -101,6 +114,11 @@ public class Game {
 					System.out.println("Collision 3 for " + d.getXPos() + "," + d.getYPos());
 					if(hero.getDirection() == 0){
 						canGoUp = false;
+					}
+					if(hero.getDirection() == 45){
+						if(canGoUp == true){
+							canGoRight = false;
+						}
 					}
 					else if(hero.getDirection() == 90){
 						canGoRight = false;
@@ -117,6 +135,9 @@ public class Game {
 					if(hero.getDirection() == 45){
 						canGoRight = false;
 					}
+					else if(hero.getDirection() == 90){
+						canGoRight = false;
+					}
 					else if(hero.getDirection() == 180){
 						canGoDown = false;
 					}
@@ -126,7 +147,7 @@ public class Game {
 				}
 			}
 		}
-		//TODO: take this into seperate method
+		//TODO: take this into separate method
 		if(hero.getDirection() == 0){
 			if(canGoUp == false){
 				hero.setIsMoving(false);
