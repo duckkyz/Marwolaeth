@@ -6,10 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 
-import marwolaeth.DrawableClasses.Drawable;
-import marwolaeth.DrawableClasses.Hero;
-import marwolaeth.DrawableClasses.Sprite;
-import marwolaeth.ImplementedEntities.Wall;
+import marwolaeth.DrawableClasses.*;
+import marwolaeth.ImplementedEntities.*;
 
 public class Game {
 
@@ -30,10 +28,12 @@ public class Game {
 		}
 		
 		//Testing walls
-		for(int i=5;i<10;++i){
-			drawables.add(new Wall((2*250)-64,(i*64)));
-			drawables.add(new Wall((i*64),(2*250)-64));
-		}
+		//for(int i=0;i<10;++i){
+		//	drawables.add(new Wall((2*250)-64,(i*64)));
+		//	drawables.add(new Wall((i*64),(2*250)-64));
+		//}
+		
+		drawables.add(new Orc(180,250,250));
 	}
 	
 	public static Hero getHero() {

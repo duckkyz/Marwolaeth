@@ -1,5 +1,6 @@
 package marwolaeth.DrawableClasses;
 
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -100,6 +101,29 @@ public class Sprite extends Drawable{
 		}
 	}
 	
+	public void abilitySetupHelper(int actionSelection) {
+		switch(getActionSequence()){																						
+			case 8:
+				setActionSequence(4*actionSelection);
+				break;
+			case 9:
+				setActionSequence(4*actionSelection+1);
+				break;
+			case 10:
+				setActionSequence(4*actionSelection+2);
+				break;
+			case 11:
+				setActionSequence(4*actionSelection+3);
+				break;
+			default:
+				setActionSequence(4*actionSelection);
+				break;
+		}
+		if(actionSelection == 5) {
+			setActionSequence(20);
+		}
+	}
+		
 	public void attack(){
 		
 	}
@@ -140,4 +164,7 @@ public class Sprite extends Drawable{
 	    return result;
 	}
 	
+	public void paint(Graphics imageGraphics) {
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+	}
 }
