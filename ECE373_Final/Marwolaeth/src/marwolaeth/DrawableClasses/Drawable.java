@@ -109,7 +109,10 @@ public class Drawable implements Comparable<Drawable>{
 			return d1.compareTo(d2);
 		}
 	};
-
+	
+	public void move(){
+		
+	}
 	
 	public void doLogic() {
 		

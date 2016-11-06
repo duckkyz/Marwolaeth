@@ -20,12 +20,11 @@ public class Fireball extends Projectile{
 		catch(IOException ex){
 			
 		}
+		
 		setActionSequence(0);
 		setActionStep(0);
 		setIsMoving(true);
-		
-		//setXPos(getXPos()-getTileWidth()/2);
-		//setYPos(getYPos()-getTileHeight()/2);
+
 		
 		if(direction == 0) {
 			setTileWidth(22);
@@ -48,8 +47,10 @@ public class Fireball extends Projectile{
 			setTileHeight(22);
 			setXPos(getXPos()-getTileWidth());	
 			setYPos(getYPos()-getTileHeight()/2);
+			
 		}
 		
+		setSpeed(20);
 	}
 
 	public void doLogic() {
@@ -81,16 +82,5 @@ public class Fireball extends Projectile{
 			else 
 				setActionStep(0);
 		}
-		
-		if(getXPos() > 10000)							//arrow destroys itself if moves too far away
-			Game.removeDrawable(this);
-		else if(getXPos() < -10000)
-			Game.removeDrawable(this);
-		else if(getYPos() > 10000)
-			Game.removeDrawable(this);
-		else if(getYPos() < -10000) {
-			Game.removeDrawable(this);
-		}
-		this.move();									//this should actually be done in game. also needs logic to get deleted
 	}
 }

@@ -13,25 +13,27 @@ public class Game {
 
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private static Hero hero;
+	private final int mapHeight = 2*1080;
+	private final int mapWidth = 2*1920;
 	
 	public Game() {
 		
 		//This makes the walls around the edge.
 		for(int i=0;i<35;++i){
 			drawables.add(new Wall(0,(i*64)));
-			drawables.add(new Wall((2*1920)-64,(i*64)));
+			drawables.add(new Wall((mapWidth)-64,(i*64)));
 		}
 		//for(int i=0; i<60; ++i){
 		for(int i=60; i>0; --i){
 			drawables.add(new Wall((i*64),0));
-			drawables.add(new Wall((i*64),(2*1080)-64));
+			drawables.add(new Wall((i*64),(mapHeight)-64));
 		}
 		
 		//Testing walls
-		//for(int i=0;i<10;++i){
-		//	drawables.add(new Wall((2*250)-64,(i*64)));
-		//	drawables.add(new Wall((i*64),(2*250)-64));
-		//}
+		for(int i=9;i<10;++i){
+			drawables.add(new Wall((2*250)-64,(i*64)));
+			drawables.add(new Wall((i*64),(2*250)-64));
+		}
 		
 		drawables.add(new Orc(180,250,250));
 	}
@@ -56,7 +58,7 @@ public class Game {
 		drawables.remove(drawable);
 	}
 	
-	public void checkForMapEdgeCollision(ArrayList<Drawable> drawables, Hero hero){
+	public void checkForCollision(ArrayList<Drawable> drawables, Hero hero){
 		Collections.sort(drawables, Drawable.PosComparator);
 		
 		
@@ -68,15 +70,24 @@ public class Game {
 		boolean canGoDown = true;
 		boolean canGoLeft = true;
 		boolean canGoRight = true;
+		int collisionX = 0;
+		int collisionY = 0;
 		
 		//TODO: fix this for single collision
 		System.out.println("New cycle");
+		int collision1Count = 0;
+		int collision2Count = 0;
+		int collision3Count = 0;
+		int collision4Count = 0;
 		for(int x=0;drawables.size()>x;x++){
 			Drawable d = drawables.get(x);	
 			
 			if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 		//Collision from the left
 				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){	//Collision from the bottom
 					System.out.println("Collision 1 for " + d.getXPos() + "," + d.getYPos());
+					++collision1Count;
+					collisionX = d.getXPos() + 64;
+					collisionY = d.getYPos() + 64;
 					if(hero.getDirection() == 0){
 						canGoUp = false;
 					}
@@ -92,6 +103,9 @@ public class Game {
 				}
 				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
 					System.out.println("Collision 2 for " + d.getXPos() + "," + d.getYPos());
+					++collision2Count;
+					collisionX = d.getXPos() + 64;
+					collisionY = d.getYPos();
 					if(hero.getDirection() == 135){
 						canGoDown = false;
 					}
@@ -104,21 +118,16 @@ public class Game {
 					else if(hero.getDirection() == 180){
 						canGoDown = false;
 					}
-					else if(hero.getDirection() == 225){
-						//canGoDown = false;
-					}
 				}
 			}
 			else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
 				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
 					System.out.println("Collision 3 for " + d.getXPos() + "," + d.getYPos());
+					++collision3Count;
+					collisionX = d.getXPos();
+					collisionY = d.getYPos() + 64;
 					if(hero.getDirection() == 0){
 						canGoUp = false;
-					}
-					if(hero.getDirection() == 45){
-						if(canGoUp == true){
-							canGoRight = false;
-						}
 					}
 					else if(hero.getDirection() == 90){
 						canGoRight = false;
@@ -132,6 +141,9 @@ public class Game {
 				}
 				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
 					System.out.println("Collision 4 for " + d.getXPos() + "," + d.getYPos());
+					++collision4Count;
+					collisionX = d.getXPos();
+					collisionY = d.getYPos();
 					if(hero.getDirection() == 45){
 						canGoRight = false;
 					}
@@ -147,6 +159,90 @@ public class Game {
 				}
 			}
 		}
+		
+		if((collision1Count + collision2Count + collision3Count + collision4Count) == 1){
+			if(collision1Count == 1){
+				if((hero.getDirection() == 0) | (hero.getDirection() == 45)){
+					canGoUp = false;
+				}
+				else if((hero.getDirection() == 270) | (hero.getDirection() == 225)){
+					canGoLeft = false;
+				}
+				else if(hero.getDirection() == 315){
+					if((collisionX - newX) < (collisionY - newY)){
+						canGoLeft = false;
+					}
+					else if((collisionX - newX) > (collisionY - newY)){
+						canGoUp = false;
+					}
+					else{
+						canGoUp = false;
+						canGoLeft = false;
+					}
+				}
+			}
+			else if(collision2Count == 1){
+				if((hero.getDirection() == 135) | (hero.getDirection() == 180)){
+					canGoDown = false;
+				}
+				else if((hero.getDirection() == 270) | (hero.getDirection() == 315)){
+					canGoLeft = false;
+				}
+				else if(hero.getDirection() == 225){
+					if((newX - collisionX) < (collisionY - newMaxY)){
+						canGoLeft = false;
+					}
+					else if((newX - collisionX) > (collisionY - newMaxY)){
+						canGoDown = false;
+					}
+					else{
+						canGoDown = false;
+						canGoLeft = false;
+					}
+				}
+			}
+			else if(collision3Count == 1){
+				if((hero.getDirection() == 0) | (hero.getDirection() == 315)){
+					canGoUp = false;
+				}
+				else if((hero.getDirection() == 90) | (hero.getDirection() == 135)){
+					canGoRight = false;
+				}
+				else if(hero.getDirection() == 45){					
+					if((newMaxX - collisionX) < (collisionY - newY)){
+						canGoRight = false;
+					}
+					else if((newMaxX - collisionX) > (collisionY - newY)){
+						canGoUp = false;					
+					}
+					else{
+						canGoUp = false;
+						canGoRight = false;
+					}
+				}
+			}
+			else if(collision4Count == 1){
+				if((hero.getDirection() == 180) | (hero.getDirection() == 225)){
+					canGoDown = false;
+				}
+				else if((hero.getDirection() == 45) | (hero.getDirection() == 90)){
+					canGoRight = false;
+				}
+				else if(hero.getDirection() == 135){
+					if((newMaxX - collisionX) < (newMaxY - collisionY)){
+						canGoRight = false;
+					}
+					else if((newMaxX - collisionX) > (newMaxY - collisionY)){
+						canGoDown = false;
+					}
+					else{
+						canGoDown = false;
+						canGoRight = false;
+					}
+				}
+			}
+		}
+		
 		//TODO: take this into separate method
 		if(hero.getDirection() == 0){
 			if(canGoUp == false){
@@ -219,64 +315,51 @@ public class Game {
 				hero.setDirection(0);
 			}
 		}
-		
 	}
 	
 	public void doGameLogic(Set keySet) {
+		//Check to see if things are outside the map, if so kill them
+		for(int x = 0; drawables.size() > x; x++){
+			Drawable d = drawables.get(x);
+			if(d.getXPos() > mapWidth){
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+			else if(d.getXPos() < 0){
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+			else if(d.getYPos() > mapHeight){
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+			else if(d.getYPos() < 0) {
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+		}
+
+		
 		//Set up movements
 		hero.doLogic(keySet);
-		for(int x=0;drawables.size()>x;x++) {					//arrow can remove itself with this type of for loop without exploding the program
+		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			d.doLogic();
 		}
-				
-		//Check for collision
-		/* Brainstorming a little:
-		 * A generic collision detection alg:
-		 * 	1. are you in this d?
-		 * 		a. if ((this.xPos >= d.xPos) and (this.xPos <= (d.xPos + 64))) 
-		 * 			i. if((this.yPos >= d.yPos) and (this.yPos <= (d.yPos + 64))){
-		 * 					//youre inside, you have problem
-		 * 				}
-		 * 		   ii. else if(((this.yPos + 64) >= (d.yPos)) and ((this.yPos +64) <= (d.yPos + 64))){
-		 * 					//youre inside, you have problem
-		 * 				}
-		 * 		b. else if (((this.xPos + 64) >= d.xPos) and ((this.xPos + 64) <= (d.xPos + 64)))
-		 * 			i. if((this.yPos >= d.yPos) and (this.yPos <= (d.yPos + 64))){
-		 * 					//youre inside, you have problem
-		 * 				}
-		 * 		   ii. else if(((this.yPos + 64) >= (d.yPos)) and ((this.yPos +64) <= (d.yPos + 64))){
-		 * 					//youre inside, you have problem
-		 * 				}
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */		
-		checkForMapEdgeCollision(drawables, hero);
+		
+		checkForCollision(drawables, hero);
 		
 		
 		//Move if not colliding
 		hero.move();
-		for(int x=0;drawables.size()>x;x++) {
+		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
-			Sprite dummy = new Sprite(0, 0, 0);
-			if(d.getClass() == dummy.getClass()){
-				dummy = (Sprite) d;
-				dummy.move();
-			}
+			d.move();
 		}
 		
 		//Do attacks for everything
 		hero.attack();
-		for(int x=0;drawables.size()>x;x++) {
+		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			Sprite dummy = new Sprite(0, 0, 0);
 			if(d.getClass() == dummy.getClass()){

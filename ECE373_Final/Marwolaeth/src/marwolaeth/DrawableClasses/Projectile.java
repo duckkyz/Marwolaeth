@@ -8,7 +8,6 @@ public abstract class Projectile extends Sprite{
 	public Projectile(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY);
 		this.heroProjectile = heroProjectile;
-		
 	}
 	
 	public abstract void doLogic();

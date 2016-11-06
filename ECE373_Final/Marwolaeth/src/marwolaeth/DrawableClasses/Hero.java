@@ -13,20 +13,6 @@ public abstract class Hero extends Sprite implements willAttack{
 	
 	public Hero(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
-		switch(direction) {									//draws the hero in the direction it was created in
-		case 0:
-			setActionSequence(8);
-			break;
-		case 90:
-			setActionSequence(11);
-			break;
-		case 180:
-			setActionSequence(10);
-			break;
-		case 270:
-			setActionSequence(9);
-			break;
-		}
 	}
 	
 	public abstract void ability1Setup();
@@ -63,10 +49,12 @@ public abstract class Hero extends Sprite implements willAttack{
 	}
 	
 	public void doLogic(Set keySet) {
-		if(keySet.contains(KeyEvent.VK_SPACE)) 
-			spaceBar = true;
-		else
-			spaceBar = false;
+		if(keySet.contains(KeyEvent.VK_SPACE)){ 
+			setStaticMovement(true);
+		}
+		else{
+			setStaticMovement(false);
+		}
 		
 		
 		if(keySet.contains(KeyEvent.VK_Q) & getCompleteingSequence() != true) {
@@ -88,7 +76,18 @@ public abstract class Hero extends Sprite implements willAttack{
 		
 		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
-			continueSequence();
+			continueSequence();								//Moved to Sprite to generalize movement
+			//Below stuff remains because sprites dont have execute ability methods
+			if(getActionSequence() >= 0 & getActionSequence() <= 3) {						//spell-casting
+				if(getActionStep() == 5) {
+					executeAbility(getEffectiveDirection());
+				}
+			}
+			else if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
+				if(getActionStep() == 9) {													//frame 9 matches arrow release
+					executeAbility(getEffectiveDirection());
+				}
+			}
 		}
 		else
 			setIsMoving(true);
@@ -137,134 +136,5 @@ public abstract class Hero extends Sprite implements willAttack{
 		
 		
 	}
-	
-	public void continueSequence() {
-		setActionStep(getActionStep()+1);												//goes to the next step of the animation
-		
-		if(getActionSequence() >= 0 & getActionSequence() <= 3) {						//spell-casting
-			if(getActionStep()>6) {
-				setSequenceWalking();
-			}
-			if(getActionStep() == 5) {
-				executeAbility(getEffectiveDirection());
-			}
-		}
-		
-		else if(getActionSequence() >= 4 & getActionSequence() <= 7) {					//thrusting 
-			if(getActionStep()>7) {
-				setSequenceWalking();
-			}
-		}
-		
-		else if(getActionSequence() >= 12 & getActionSequence() <= 15) {				//slash
-			if(getActionStep()>5) {
-				setSequenceWalking();
-			}
-		}
-		
-		else if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
-			if(getActionStep()>12) {
-				setSequenceWalking();
-			}
-			if(getActionStep() == 9) {													//frame 9 matches arrow release
-				executeAbility(getEffectiveDirection());
-			}
-		}
-		
-		else if(getActionSequence() == 20) {											//death
-			if(getActionStep()>5) {
-				//game ends
-			}
-		}
-	}
-	
-	public int getEffectiveDirection() {			//gets the direction the hero is facing
-		switch(getActionSequence()%4) {
-			case 0:
-				return 0;
-			case 1:
-				return 270;
-			case 2:
-				return 180;
-			case 3:
-				return 90;
-			default:
-				return 0;
-			}
-	}
-	
-	public void setSequenceWalking() {				//changes the actionSequence to walking based on current effectiveDirection
-		setActionStep(0);
-		setCompleteingSequence(false);
-		switch(getActionSequence()%4) {
-			case 0:
-				setActionSequence(8);
-				break;
-			case 1:
-				setActionSequence(9);
-				break;
-			case 2:
-				setActionSequence(10);
-				break;
-			case 3:
-				setActionSequence(11);
-				break;
-			default:
-				setActionSequence(8);
-				break;
-			}
-	}
-	
-	public void doMovementLogic90(int actionSequence, int direction) {			//contains the logic for moving at directions 0, 90, 180, 270
-		if(getCompleteingSequence() == false) {
-			setDirection(direction);
-			if(spaceBar == false) {
-				if(getActionSequence()==actionSequence) {
-					if(getActionStep()<8)
-						setActionStep(getActionStep()+1);
-					else
-						setActionStep(0);
-				}
-				else {
-					setActionSequence(actionSequence);
-					setActionStep(0);
-				}
-			}
-			else {
-				if(getActionStep()<=0)
-					setActionStep(8);
-				else
-					setActionStep(getActionStep()-1);
-			}
-		}
-		if(getMoveCasting() == true)
-			setDirection(direction);
-	}
-	
-	public void doMovementLogic45(int seq1, int seq2, int direction) {			//contains the logic for moving at directions 45, 135, 225, 315
-		if(getCompleteingSequence() == false) {
-			setDirection(direction);
-			if(spaceBar == false) {
-				if(getActionSequence()!=seq1 & getActionSequence()!=seq2)												//if both keys are pressed at the same time, choose one of the directions
-					setActionSequence(seq2);
-				if(getActionStep()<8)
-					setActionStep(getActionStep()+1);
-				else
-					setActionStep(0);
-			}
-			else {
-				if(getActionStep()<=0)
-					setActionStep(8);
-				else
-					setActionStep(getActionStep()-1);
-			}
-		}
-		if(getMoveCasting() == true)
-			setDirection(direction);
-	}
-	
-	//public void paint(Graphics imageGraphics) {
-	//	imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
-	//}
 
 }

@@ -23,6 +23,7 @@ public class Arrow extends Projectile{
 		catch(IOException ex){
 			
 		}
+		
 		setActionSequence(0);
 		setActionStep(0);
 		setTileWidth(getGraphic().getWidth());
@@ -31,36 +32,12 @@ public class Arrow extends Projectile{
 		
 		setXPos(getXPos()-getTileWidth()/2);
 		setYPos(getYPos()-getTileHeight()/2);
-		/*
-		if(direction == 0) {
-			setXPos(getXPos()-getTileWidth()/2);			//centers projectile
-		}
-		else if(direction == 90) {
-			setXPos(getXPos()-getTileWidth());				//accounts for image drawing from top left
-			setYPos(getYPos()-getTileHeight()/2);
-		}
-		else if(direction == 180) {
-			setXPos(getXPos()-getTileWidth()/2);
-			setYPos(getYPos()-getTileHeight());
-		}
-		else if(direction == 270) {
-			setYPos(getYPos()-getTileHeight()/2);
-		}
-		*/
 		
+		setSpeed(20);
 	}
 
 	public void doLogic() {
-		if(getXPos() > 10000)							//arrow destroys itself if moves too far away
-			Game.removeDrawable(this);
-		else if(getXPos() < -10000)
-			Game.removeDrawable(this);
-		else if(getYPos() > 10000)
-			Game.removeDrawable(this);
-		else if(getYPos() < -10000) {
-			Game.removeDrawable(this);
-		}
-		this.move();									//this should actually be done in game. also needs logic to get deleted
+
 	}
 
 }
