@@ -81,14 +81,6 @@ public class Game {
 		int collision4Count = 0;
 		for(int x=0;drawables.size()>x;x++){
 			Drawable d = drawables.get(x);
-			if(d instanceof Projectile){
-				System.out.println("I hit a projectile");
-				Projectile p = (Projectile) d;
-				if(!p.getIsFromHero()){
-					drawables.remove(d);
-				}
-				continue;
-			}
 			
 			if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 		//Collision from the left
 				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){	//Collision from the bottom
@@ -164,6 +156,24 @@ public class Game {
 					else if(hero.getDirection() == 225){
 						canGoDown = false;
 					}
+				}
+			}
+			if(d instanceof Projectile){
+				if((collision1Count + collision2Count + collision3Count + collision4Count) >= 1){
+					System.out.println("I hit a projectile");
+					Projectile p = (Projectile) d;
+					if(!p.getIsFromHero()){
+						drawables.remove(d);
+					}
+					canGoUp = true;
+					canGoDown = true;
+					canGoLeft = true;
+					canGoRight = true;
+					++collision1Count;
+					++collision2Count;
+					++collision3Count;
+					++collision4Count;
+					continue;
 				}
 			}
 		}
@@ -250,6 +260,7 @@ public class Game {
 				}
 			}
 		}
+		
 		
 		//TODO: take this into separate method
 		if(hero.getDirection() == 0){
@@ -356,7 +367,6 @@ public class Game {
 		}
 		
 		checkForHeroCollision(drawables, hero);
-		
 		
 		//Move if not colliding
 		hero.move();
