@@ -50,7 +50,7 @@ public class Fireball extends Projectile{
 			
 		}
 		
-		setSpeed(20);
+		setSpeed(5);
 	}
 
 	public void doLogic() {

@@ -71,5 +71,9 @@ public class Orc extends Villain {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	public void doLogic(){
+		setIsMoving(true);
+	}
+	
 }

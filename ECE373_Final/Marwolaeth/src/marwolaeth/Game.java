@@ -58,7 +58,7 @@ public class Game {
 		drawables.remove(drawable);
 	}
 	
-	public void checkForCollision(ArrayList<Drawable> drawables, Hero hero){
+	public void checkForHeroCollision(ArrayList<Drawable> drawables, Hero hero){
 		Collections.sort(drawables, Drawable.PosComparator);
 		
 		
@@ -80,7 +80,15 @@ public class Game {
 		int collision3Count = 0;
 		int collision4Count = 0;
 		for(int x=0;drawables.size()>x;x++){
-			Drawable d = drawables.get(x);	
+			Drawable d = drawables.get(x);
+			if(d instanceof Projectile){
+				System.out.println("I hit a projectile");
+				Projectile p = (Projectile) d;
+				if(!p.getIsFromHero()){
+					drawables.remove(d);
+				}
+				continue;
+			}
 			
 			if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 		//Collision from the left
 				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){	//Collision from the bottom
@@ -189,10 +197,10 @@ public class Game {
 					canGoLeft = false;
 				}
 				else if(hero.getDirection() == 225){
-					if((newX - collisionX) < (collisionY - newMaxY)){
+					if((collisionX - newX) < (newMaxY - collisionY)){
 						canGoLeft = false;
 					}
-					else if((newX - collisionX) > (collisionY - newMaxY)){
+					else if((collisionX - newX) > (newMaxY - collisionY)){
 						canGoDown = false;
 					}
 					else{
@@ -347,7 +355,7 @@ public class Game {
 			d.doLogic();
 		}
 		
-		checkForCollision(drawables, hero);
+		checkForHeroCollision(drawables, hero);
 		
 		
 		//Move if not colliding
