@@ -16,6 +16,9 @@ import marwolaeth.ImplementedEntities.Wizard;
 
 public class HeroSelectScreen extends GameState{
 
+	private int heroXSpawn = (int)(Math.floor((Math.random() * 3584)) + 64);
+	private int heroYSpawn = (int)(Math.floor((Math.random() * 1094)) + 64);
+	
 	public HeroSelectScreen() {
 		try {
 			setBackgroundImage(ImageIO.read(new File("Background_Images/HeroSelect.png")));
@@ -26,7 +29,7 @@ public class HeroSelectScreen extends GameState{
 
 	public void keyPressed(KeyEvent keyEvent) {
 		if (keyEvent.getKeyCode()==KeyEvent.VK_S) {
-			Game.setHero(new Wizard(180, 200, 200));
+			Game.setHero(new Wizard(180, heroXSpawn, heroYSpawn));
 			PlayScreen playScreen = new PlayScreen();
 			getRootContainer().remove(this);
 			getRootContainer().add(playScreen);
@@ -34,7 +37,7 @@ public class HeroSelectScreen extends GameState{
 			getRootContainer().repaint();
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_A) {
-			Game.setHero(new Archer(180, 200, 200));
+			Game.setHero(new Archer(180, heroXSpawn, heroYSpawn));
 			PlayScreen playScreen = new PlayScreen();
 			getRootContainer().remove(this);
 			getRootContainer().add(playScreen);

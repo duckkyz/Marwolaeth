@@ -6,6 +6,8 @@ import java.awt.event.ContainerListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import marwolaeth.Game;
+import marwolaeth.ViewController;
 import marwolaeth.Screens.PlayScreen;
 
 public class CustomContainerListener implements ContainerListener {
@@ -20,16 +22,21 @@ public class CustomContainerListener implements ContainerListener {
 	
 	
 	public void componentAdded(ContainerEvent e) {
-  	  try {
+		try {
 				if(rootContainer.getComponent(0) instanceof PlayScreen) {
 					timer.start();
 				}
-				else
+				else{
 					timer.stop();
-			} catch (ArrayIndexOutOfBoundsException ev) {
+					System.out.println("Leaving game");
+					ViewController.setGame(new Game());
+				}
+		} 
+  	  	catch (ArrayIndexOutOfBoundsException ev) {
+
 			    //System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
-			} 
-    }
+  	  	} 
+	}
 
     public void componentRemoved(ContainerEvent e) {
        

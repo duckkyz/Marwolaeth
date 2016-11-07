@@ -24,7 +24,7 @@ import marwolaeth.Screens.TitleScreen;
 public class ViewController {
 	
 	private JFrame frame;
-	private Game game;
+	private static Game game;
 	private JPanel rootContainer;
 	
 	private Timer timer;
@@ -51,10 +51,15 @@ public class ViewController {
 		frame.setVisible(true);
 	}
 	
+	public static void setGame(Game game){
+		ViewController.game = game;
+	}
+	
+	
 	public void gameTimer() {
 		timer = new Timer(timerDelay, new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				
+				//if(rootContainer.getComponent(0) instanceof )
 				((PlayScreen) rootContainer.getComponent(0)).prepaint(game.getHero(), game.getDrawables());
 				game.doGameLogic(((PlayScreen)rootContainer.getComponent(0)).getKeySet());			
 				rootContainer.repaint();

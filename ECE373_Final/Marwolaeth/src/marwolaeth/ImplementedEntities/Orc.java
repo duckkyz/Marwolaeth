@@ -13,6 +13,8 @@ public class Orc extends Villain {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
 		setTileHeight(64);
+		setSpeed(4
+				);
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Orc.png")));
 		} 
@@ -73,6 +75,9 @@ public class Orc extends Villain {
 	}
 	
 	public void doLogic(){
+		if(getIsMoving() == false){
+			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
+		}
 		setIsMoving(true);
 	}
 	

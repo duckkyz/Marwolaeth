@@ -26,9 +26,11 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 	private static int numResolutionSizes = 6;
 	private static int resolutionSizes[][] = { {1920, 1080},  {1600, 900}, {1366, 768}, {1280, 720}, {1152, 648}, {1024, 576} };			//All resolutions will be scaled assuming that resolutionSizes[0] is the standard
 	private static Set keySet = new HashSet();
+	private boolean isInGame = true;
 	
 	public GameState() {
 		addKeyListener(this);
+		isInGame = false;
 	}
 	
 	public BufferedImage getBlankImage() {
@@ -75,6 +77,10 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 	}
 	public Set getKeySet() {
 		return keySet;
+	}
+	
+	public boolean getIsInGame(){
+		return isInGame;
 	}
 	
 	public void setBlankImage(BufferedImage blankImage) {
