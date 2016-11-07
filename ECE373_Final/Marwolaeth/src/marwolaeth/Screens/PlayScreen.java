@@ -92,17 +92,18 @@ public class PlayScreen extends GameState{
 	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {
 		setImageGraphics(getBlankImage().getGraphics());		//use imageGraphics to draw on the image
 		getImageGraphics().drawImage(this.getBackgroundImage(), 0, 0, this);
+
+		
+		for(int x = 0;x < drawables.size();x++) {
+			drawables.get(x).paint(getImageGraphics());
+		}
 		
 		hero.paint(getImageGraphics());
 		heroX = hero.getXPos()+32;
 		heroY = hero.getYPos()+32;
 		percentHealth = (155*hero.getHealth())/100;			//155 is the px width of the health bar
 		percentMana = (141*hero.getMana())/100;
-		
-		for(int x = 0;x < drawables.size();x++) {
-			drawables.get(x).paint(getImageGraphics());
-		}
-		
+			
 		if(hero.getHealth()>0 & testHealthBar == false) {								//drawns health bar. Remove at some point
 			hero.setHealth(hero.getHealth()-1);
 			hero.setMana(hero.getMana()-1);
