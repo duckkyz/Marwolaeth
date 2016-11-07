@@ -80,8 +80,6 @@ public class Game {
 		int collisionX = 0;
 		int collisionY = 0;
 		
-		//TODO: fix this for single collision
-		System.out.println("New cycle");
 		int collision1Count = 0;
 		int collision2Count = 0;
 		int collision3Count = 0;
@@ -389,9 +387,6 @@ public class Game {
 			boolean canGoRight = true;
 			int collisionX = 0;
 			int collisionY = 0;
-			
-			//TODO: fix this for single collision
-			System.out.println("New cycle");
 			int collision1Count = 0;
 			int collision2Count = 0;
 			int collision3Count = 0;
