@@ -12,7 +12,7 @@ TODO's:
 	<li><s>Some attacks will spawn things</s> - Sean</li>
 	<li><s>Hero is linked to key movements</s> - Sean</li>
 	<li><s>Collision works (for hero)</s> - Ben</li>
-	<li>Collision for all sprites - Ben</li>
+	<li><s>Collision for all sprites - Ben</s></li>
 	<li>Attack methods (taking damage, ranges, ect) - Ben</li>
 	<li>Hit boxes, and the modifications this makes on the rest of the game - Ben</li>
 	<li>AI movement methods - Ben</li>
