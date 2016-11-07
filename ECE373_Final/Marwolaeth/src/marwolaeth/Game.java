@@ -1,5 +1,7 @@
 package marwolaeth;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,6 +13,8 @@ import marwolaeth.ImplementedEntities.*;
 
 public class Game {
 
+	private static Graphics mapImage;
+	private static Image testImage;
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private static Hero hero;
 	private final int mapHeight = 2*1080;
