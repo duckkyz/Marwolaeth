@@ -13,8 +13,6 @@ import marwolaeth.FloorTiles.GrassTile;
 import marwolaeth.ImplementedEntities.*;
 
 public class Game {
-
-	private static ArrayList<Drawable> mapTiles = new ArrayList<Drawable>();
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private static Hero hero;
 	private final int mapHeight = 2*1080;
@@ -23,13 +21,6 @@ public class Game {
 	public Game() {
 		//Removes all things from game so it starts fresh
 		drawables.removeAll(drawables);
-		mapTiles.removeAll(mapTiles);
-		//Makes map tiles
-		//for(int i = 0; i < 60; ++i){
-		//	for(int j = 0; j < 34; ++j){
-		//		mapTiles.add(new GrassTile(i*64,j*64));
-		//	}
-		//}
 
 		//This makes the walls around the edge.
 		for(int i=0;i<35;++i){
@@ -42,6 +33,7 @@ public class Game {
 			drawables.add(new Wall((i*64),(mapHeight)-64));
 		}
 		
+		//TODO: things shouldnt spawn on top of already existing things 
 		//Testing walls
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 10; ++i){
@@ -59,9 +51,7 @@ public class Game {
 			drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
 		}
 	}
-	public static ArrayList<Drawable> getMapTiles(){
-		return mapTiles;
-	}
+
 	public static Hero getHero() {
 		return hero;
 	}
