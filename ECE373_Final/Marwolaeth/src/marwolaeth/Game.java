@@ -433,7 +433,7 @@ public class Game {
 							Projectile p = (Projectile) d;
 							if(p.getIsFromHero() & (!(movingS == hero))){
 								if(d instanceof Sprite){
-									p.attack((Sprite)d);
+									p.attack(movingS);
 								}
 								drawables.remove(d);
 							}
@@ -474,6 +474,9 @@ public class Game {
 							System.out.println("I hit a projectile");
 							Projectile p = (Projectile) d;
 							if(p.getIsFromHero() & (!(movingS == hero))){
+								if(d instanceof Sprite){
+									p.attack(movingS);
+								}
 								drawables.remove(d);
 							}
 							else if(!(p.getIsFromHero()) & (movingS == hero)){
@@ -515,6 +518,9 @@ public class Game {
 							System.out.println("I hit a projectile");
 							Projectile p = (Projectile) d;
 							if(p.getIsFromHero() & (!(movingS == hero))){
+								if(d instanceof Sprite){
+									p.attack(movingS);
+								}
 								drawables.remove(d);
 							}
 							else if(!(p.getIsFromHero()) & (movingS == hero)){
@@ -554,6 +560,9 @@ public class Game {
 							System.out.println("I hit a projectile");
 							Projectile p = (Projectile) d;
 							if(p.getIsFromHero() & (!(movingS == hero))){
+								if(d instanceof Sprite){
+									p.attack(movingS);
+								}
 								drawables.remove(d);
 							}
 							else if(!(p.getIsFromHero()) & (movingS == hero)){
