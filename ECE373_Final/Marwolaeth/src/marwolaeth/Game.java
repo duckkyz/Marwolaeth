@@ -432,6 +432,9 @@ public class Game {
 							System.out.println("NPC hit a projectile");
 							Projectile p = (Projectile) d;
 							if(p.getIsFromHero() & (!(movingS == hero))){
+								if(d instanceof Sprite){
+									p.attack((Sprite)d);
+								}
 								drawables.remove(d);
 							}
 							else if(!(p.getIsFromHero()) & (movingS == hero)){
@@ -740,6 +743,16 @@ public class Game {
 
 	
 	public void doGameLogic(Set keySet) {
+		//Check to see if things are dead
+		for(int x = 0; drawables.size() > x; x++){
+			Drawable d = drawables.get(x);
+			if(d instanceof Sprite){
+				Sprite s = (Sprite) d;
+				if(s.getHealth() < 0){
+					drawables.remove(s);
+				}
+			}
+		}		
 		//Check to see if things are outside the map, if so kill them
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);

@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Projectile;
+import marwolaeth.DrawableClasses.Sprite;
 
 public class Arrow extends Projectile{
 
@@ -34,10 +35,15 @@ public class Arrow extends Projectile{
 		setYPos(getYPos()-getTileHeight()/2);
 		
 		setSpeed(20);
+		setDamage(20);
 	}
 
 	public void doLogic() {
 
+	}
+	
+	public void attack(Sprite beingAttacked){
+		beingAttacked.setHealth(beingAttacked.getHealth() - getDamage());
 	}
 
 }
