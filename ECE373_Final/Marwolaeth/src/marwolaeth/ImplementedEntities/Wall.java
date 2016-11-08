@@ -15,8 +15,9 @@ public class Wall extends Drawable {
 		try{
 			this.setXPos(x);
 			this.setYPos(y);
-			setGraphic(ImageIO.read(new File("Drawable_Images/Wall.png")));
-		}
+			setGraphic(ImageIO.read(new File("Background_Images/MapTiles.png")));
+			setActionStep((int) (15 + Math.floor(Math.random() * 0)));
+			setActionSequence((int) (15 + Math.floor(Math.random() * 5)));		}
 		catch(IOException ex){
 			
 		}

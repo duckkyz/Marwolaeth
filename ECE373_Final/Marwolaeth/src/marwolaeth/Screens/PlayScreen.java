@@ -95,13 +95,13 @@ public class PlayScreen extends GameState{
 		setImageGraphics(getBlankImage().getGraphics());
 		BufferedImage img = new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB);
 		GrassTile g = new GrassTile(0,0);
-
+		
 		for(int i = 0; i < 60; ++i){
 			for(int j = 0; j < 34; ++j){
 				g.setXPos(i*64);
 				g.setYPos(j*64);
-				g.setActionStep((int) (Math.floor(Math.random() * 3)));
-				g.setActionSequence((int) (1 + Math.floor(Math.random() * 3)));
+				g.setActionStep((int) (3 + Math.floor(Math.random() * 3)));
+				g.setActionSequence((int) (3 + Math.floor(Math.random() * 0)));
 				g.paint(img.getGraphics());
 			}
 		}
