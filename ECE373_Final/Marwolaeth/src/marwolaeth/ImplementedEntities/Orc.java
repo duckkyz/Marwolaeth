@@ -13,8 +13,8 @@ public class Orc extends Villain {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
 		setTileHeight(64);
-		setSpeed(4
-				);
+		setSpeed(12);
+		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Orc.png")));
 		} 

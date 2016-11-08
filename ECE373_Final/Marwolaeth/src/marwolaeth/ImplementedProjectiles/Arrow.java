@@ -35,7 +35,7 @@ public class Arrow extends Projectile{
 		setYPos(getYPos()-getTileHeight()/2);
 		
 		setSpeed(20);
-		setDamage(20);
+		setDamage(5);
 	}
 
 	public void doLogic() {
@@ -43,7 +43,11 @@ public class Arrow extends Projectile{
 	}
 	
 	public void attack(Sprite beingAttacked){
-		beingAttacked.setHealth(beingAttacked.getHealth() - getDamage());
+		int newHealth = beingAttacked.getHealth() - getDamage();
+		if(newHealth < 0){
+			System.out.println(beingAttacked.getClass().getSimpleName() + " died to an arrow!");
+		}
+		beingAttacked.setHealth(newHealth);
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Projectile;
+import marwolaeth.DrawableClasses.Sprite;
 
 public class Fireball extends Projectile{
 
@@ -50,7 +51,8 @@ public class Fireball extends Projectile{
 			
 		}
 		
-		setSpeed(5);
+		setDamage(20);
+		setSpeed(10);
 	}
 
 	public void doLogic() {
@@ -82,5 +84,13 @@ public class Fireball extends Projectile{
 			else 
 				setActionStep(0);
 		}
+	}
+	
+	public void attack(Sprite beingAttacked){
+		int newHealth = beingAttacked.getHealth() - getDamage();
+		if(newHealth < 0){
+			System.out.println(beingAttacked.getClass().getSimpleName() + " died to a fireball!!!!");
+		}
+		beingAttacked.setHealth(newHealth);
 	}
 }

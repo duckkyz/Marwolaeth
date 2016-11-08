@@ -52,8 +52,12 @@ public class Game {
 		drawables.add(new Wall(186,314));
 		drawables.add(new Wall(314,186));
 		drawables.add(new Wall(314,314));
-		
-		drawables.add(new Orc(180,250,250));
+		for(int i = 0; i < 10; ++i){
+			int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
+			int orcXPos = (int)(Math.floor((Math.random() * mapWidth)/64) * 64);
+			int orcYPos = (int)(Math.floor((Math.random() * mapWidth)/64) * 64);
+			drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+		}
 	}
 	public static ArrayList<Drawable> getMapTiles(){
 		return mapTiles;
@@ -77,426 +81,137 @@ public class Game {
 	public static void removeDrawable(Drawable drawable) {
 		drawables.remove(drawable);
 	}
-	
-	public void checkForHeroCollision(ArrayList<Drawable> drawables, Hero hero){
-		Collections.sort(drawables, Drawable.PosComparator);
 		
-		
-		int newX = (hero.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(hero.getDirection())) * hero.getSpeed())));
-		int newY = (hero.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(hero.getDirection())) * hero.getSpeed() * (-1))));
-		int newMaxX = newX + 64;	//Right
-		int newMaxY = newY + 64;	//Bottom
-		boolean canGoUp = true;
-		boolean canGoDown = true;
-		boolean canGoLeft = true;
-		boolean canGoRight = true;
-		int collisionX = 0;
-		int collisionY = 0;
-		
-		int collision1Count = 0;
-		int collision2Count = 0;
-		int collision3Count = 0;
-		int collision4Count = 0;
-		for(int x=0;drawables.size()>x;x++){
-			Drawable d = drawables.get(x);
-			
-			if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 		//Collision from the left
-				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){	//Collision from the bottom
-					System.out.println("Collision 1 for " + d.getXPos() + "," + d.getYPos());
-					//TODO this should be generalzied some how
-					if(d instanceof Projectile){
-						System.out.println("I hit a projectile");
-						Projectile p = (Projectile) d;
-						if(!p.getIsFromHero()){
-							drawables.remove(d);
-						}
-						continue;
-					}
-					//end TODO
-					++collision1Count;
-					collisionX = d.getXPos() + 64;
-					collisionY = d.getYPos() + 64;
-					if(hero.getDirection() == 0){
-						canGoUp = false;
-					}
-					else if(hero.getDirection() == 45){
-						canGoUp = false;
-					}
-					else if(hero.getDirection() == 225){
-						canGoLeft = false;
-					}
-					else if(hero.getDirection() == 270){
-						canGoLeft = false;
-					}
-				}
-				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
-					System.out.println("Collision 2 for " + d.getXPos() + "," + d.getYPos());
-					//TODO this should be generalzied some how
-					if(d instanceof Projectile){
-						System.out.println("I hit a projectile");
-						Projectile p = (Projectile) d;
-						if(!p.getIsFromHero()){
-							drawables.remove(d);
-						}
-						continue;
-					}
-					//end TODO
-					++collision2Count;
-					collisionX = d.getXPos() + 64;
-					collisionY = d.getYPos();
-					if(hero.getDirection() == 135){
-						canGoDown = false;
-					}
-					else if(hero.getDirection() == 270){
-						canGoLeft = false;
-					}
-					else if(hero.getDirection() == 315){
-						canGoLeft = false;
-					}	
-					else if(hero.getDirection() == 180){
-						canGoDown = false;
-					}
-				}
+	public boolean projectileHandling(Sprite movingS, Drawable d){
+		if(movingS instanceof Projectile){
+			if(d instanceof Wall){
+				drawables.remove(movingS);
 			}
-			else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
-				if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
-					System.out.println("Collision 3 for " + d.getXPos() + "," + d.getYPos());
-					//TODO this should be generalzied some how
-					if(d instanceof Projectile){
-						System.out.println("I hit a projectile");
-						Projectile p = (Projectile) d;
-						if(!p.getIsFromHero()){
-							drawables.remove(d);
-						}
-						continue;
-					}
-					//end TODO
-					++collision3Count;
-					collisionX = d.getXPos();
-					collisionY = d.getYPos() + 64;
-					if(hero.getDirection() == 0){
-						canGoUp = false;
-					}
-					else if(hero.getDirection() == 90){
-						canGoRight = false;
-					}
-					else if(hero.getDirection() == 135){
-						canGoRight = false;
-					}
-					else if(hero.getDirection() == 315){
-						canGoUp = false;
-					}
-				}
-				else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
-					System.out.println("Collision 4 for " + d.getXPos() + "," + d.getYPos());
-					//TODO this should be generalzied some how
-					if(d instanceof Projectile){
-						System.out.println("I hit a projectile");
-						Projectile p = (Projectile) d;
-						if(!p.getIsFromHero()){
-							drawables.remove(d);
-						}
-						continue;
-					}
-					//end TODO
-					++collision4Count;
-					collisionX = d.getXPos();
-					collisionY = d.getYPos();
-					if(hero.getDirection() == 45){
-						canGoRight = false;
-					}
-					else if(hero.getDirection() == 90){
-						canGoRight = false;
-					}
-					else if(hero.getDirection() == 180){
-						canGoDown = false;
-					}
-					else if(hero.getDirection() == 225){
-						canGoDown = false;
-					}
-				}
+			else{
+				return true;
 			}
 		}
-		
-		if((collision1Count + collision2Count + collision3Count + collision4Count) == 1){
-			if(collision1Count == 1){
-				if((hero.getDirection() == 0) | (hero.getDirection() == 45)){
-					canGoUp = false;
+		else if(d instanceof Projectile){
+			System.out.println(movingS.getClass().getSimpleName() + " was hit by a projectile");
+			Projectile p = (Projectile) d;
+			if(p.getIsFromHero() & (!(movingS == hero))){
+				if(d instanceof Sprite){
+					p.attack(movingS);
 				}
-				else if((hero.getDirection() == 270) | (hero.getDirection() == 225)){
-					canGoLeft = false;
-				}
-				else if(hero.getDirection() == 315){
-					if((collisionX - newX) < (collisionY - newY)){
-						canGoLeft = false;
-					}
-					else if((collisionX - newX) > (collisionY - newY)){
-						canGoUp = false;
-					}
-					else{
-						canGoUp = false;
-						canGoLeft = false;
-					}
-				}
+				drawables.remove(d);
 			}
-			else if(collision2Count == 1){
-				if((hero.getDirection() == 135) | (hero.getDirection() == 180)){
-					canGoDown = false;
-				}
-				else if((hero.getDirection() == 270) | (hero.getDirection() == 315)){
-					canGoLeft = false;
-				}
-				else if(hero.getDirection() == 225){
-					if((collisionX - newX) < (newMaxY - collisionY)){
-						canGoLeft = false;
-					}
-					else if((collisionX - newX) > (newMaxY - collisionY)){
-						canGoDown = false;
-					}
-					else{
-						canGoDown = false;
-						canGoLeft = false;
-					}
-				}
+			else if(!(p.getIsFromHero()) & (movingS == hero)){
+				drawables.remove(d);
 			}
-			else if(collision3Count == 1){
-				if((hero.getDirection() == 0) | (hero.getDirection() == 315)){
-					canGoUp = false;
-				}
-				else if((hero.getDirection() == 90) | (hero.getDirection() == 135)){
-					canGoRight = false;
-				}
-				else if(hero.getDirection() == 45){					
-					if((newMaxX - collisionX) < (collisionY - newY)){
-						canGoRight = false;
-					}
-					else if((newMaxX - collisionX) > (collisionY - newY)){
-						canGoUp = false;					
-					}
-					else{
-						canGoUp = false;
-						canGoRight = false;
-					}
-				}
-			}
-			else if(collision4Count == 1){
-				if((hero.getDirection() == 180) | (hero.getDirection() == 225)){
-					canGoDown = false;
-				}
-				else if((hero.getDirection() == 45) | (hero.getDirection() == 90)){
-					canGoRight = false;
-				}
-				else if(hero.getDirection() == 135){
-					if((newMaxX - collisionX) < (newMaxY - collisionY)){
-						canGoRight = false;
-					}
-					else if((newMaxX - collisionX) > (newMaxY - collisionY)){
-						canGoDown = false;
-					}
-					else{
-						canGoDown = false;
-						canGoRight = false;
-					}
-				}
-			}
+			return true;
 		}
-		
-		
-		//TODO: take this into separate method
-		if(hero.getDirection() == 0){
-			if(canGoUp == false){
-				hero.setIsMoving(false);
-			}
-		}
-
-		else if(hero.getDirection() == 45){
-			if((canGoUp == false) & (canGoRight == false)){
-				hero.setIsMoving(false);
-			}
-			else if(canGoUp == false){
-				hero.setDirection(90);
-			}
-			else if(canGoRight == false){
-				hero.setDirection(0);
-			}
-		}
-		
-		else if(hero.getDirection() == 90){
-			if(canGoRight == false){
-				hero.setIsMoving(false);
-			}
-		}
-		
-		else if(hero.getDirection() == 135){
-			if((canGoDown == false) & (canGoRight == false)){
-				hero.setIsMoving(false);
-			}
-			else if(canGoDown == false){
-				hero.setDirection(90);
-			}
-			else if(canGoRight == false){
-				hero.setDirection(180);
-			}
-		}
-		
-		else if(hero.getDirection() == 180){
-			if(canGoDown == false){
-				hero.setIsMoving(false);
-			}
-		}
-		
-		else if(hero.getDirection() == 225){
-			if((canGoDown == false) & (canGoLeft == false)){
-				hero.setIsMoving(false);
-			}
-			else if(canGoDown == false){
-				hero.setDirection(270);
-			}
-			else if(canGoLeft == false){
-				hero.setDirection(180);
-			}
-		}
-		
-		else if(hero.getDirection() == 270){
-			if(canGoLeft == false){
-				hero.setIsMoving(false);
-			}
-		}
-		
-		else if(hero.getDirection() == 315){
-			if((canGoUp == false) & (canGoLeft == false)){
-				hero.setIsMoving(false);
-			}
-			else if(canGoUp == false){
-				hero.setDirection(270);
-			}
-			else if(canGoLeft == false){
-				hero.setDirection(0);
-			}
-		}
+		return false;
+		//end TODO
 	}
 	
 	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
-		Collections.sort(drawables, Drawable.PosComparator);
-		Drawable movingD;
-		for(int y = 0; (drawables.size() + 1) > y; y++){
-			if(y == drawables.size()){
+		Collections.sort(drawables, Drawable.PosComparator);				//Sorts drawables so there is no need for spawn order collision casing
+		Drawable movingD;													
+		
+		for(int y = 0; (drawables.size() + 1) > y; y++){					//Iterates through all drawables and hero
+			if(y == drawables.size()){										//Un-intrusively inserts hero into check
 				movingD = hero;
 			}
 			else{
 				movingD = drawables.get(y);
 			}
-			if(!(movingD instanceof Sprite)){
+			
+			if(!(movingD instanceof Sprite)){								//If this drawable is not a sprite, it cant move so no need to check if its colliding
 				continue;
 			}
-			Sprite movingS = (Sprite) movingD;
+			
+			Sprite movingS = (Sprite) movingD;								//If its a sprite, lets cast it to sprite
+			
+			//Calculates new position for collision checking
 			int newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
 			int newY = (movingS.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
 			int newMaxX = newX + 64;	//Right
 			int newMaxY = newY + 64;	//Bottom
+			
+			//Initializes the movement booleans
 			boolean canGoUp = true;
 			boolean canGoDown = true;
 			boolean canGoLeft = true;
 			boolean canGoRight = true;
+			
+			//Used for single collision checking
 			int collisionX = 0;
 			int collisionY = 0;
 			int collision1Count = 0;
 			int collision2Count = 0;
 			int collision3Count = 0;
 			int collision4Count = 0;
+			
+			//To save need of creating new d every iteration
 			Drawable d;
+			
+			//Iterates through the list of drawables again, this time checking if movingS is hitting this drawable
 			for(int x = 0; (drawables.size() + 1) > x; x++){
-				if(x == (drawables.size())){
+				if(x == (drawables.size())){					//Insert hero
 					d = hero;
 				}
 				else{
 					d = drawables.get(x);
 				}
-				if(d == movingS){
+				if(d == movingS){								//Skip yourself because obvious
 					continue;
 				}
 				
-				if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 		//Collision from the left
-					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){	//Collision from the bottom
-						System.out.println("Collision 1 for " + d.getXPos() + "," + d.getYPos());
-						//TODO this should be generalzied some how
-						if(movingS instanceof Projectile){
-							if(d instanceof Wall){
-								drawables.remove(movingS);
-							}
-							else{
-								continue;
-							}
-						}
-						if(d instanceof Projectile){
-							System.out.println("NPC hit a projectile");
-							Projectile p = (Projectile) d;
-							if(p.getIsFromHero() & (!(movingS == hero))){
-								if(d instanceof Sprite){
-									p.attack(movingS);
-								}
-								drawables.remove(d);
-							}
-							else if(!(p.getIsFromHero()) & (movingS == hero)){
-								drawables.remove(d);
-							}
+				if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 			//Collision from the left
+					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){		//Collision from the bottom
+						//Projectile handling happens here, if it should continue it will
+						if(projectileHandling(movingS, d)){
 							continue;
 						}
-						//end TODO
-						++collision1Count;
+						
+						++collision1Count;											//Used for single collision 
 						collisionX = d.getXPos() + 64;
 						collisionY = d.getYPos() + 64;
+						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
 						}
+						
 						else if(movingS.getDirection() == 45){
 							canGoUp = false;
 						}
+						
 						else if(movingS.getDirection() == 225){
 							canGoLeft = false;
 						}
+						
 						else if(movingS.getDirection() == 270){
 							canGoLeft = false;
 						}
 					}
+					
 					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
-						System.out.println("Collision 2 for " + d.getXPos() + "," + d.getYPos());
-						//TODO this should be generalzied some how
-						if(movingS instanceof Projectile){
-							if(d instanceof Wall){
-								drawables.remove(movingS);
-							}
-							else{
-								continue;
-							}
-						}
-						if(d instanceof Projectile){
-							System.out.println("I hit a projectile");
-							Projectile p = (Projectile) d;
-							if(p.getIsFromHero() & (!(movingS == hero))){
-								if(d instanceof Sprite){
-									p.attack(movingS);
-								}
-								drawables.remove(d);
-							}
-							else if(!(p.getIsFromHero()) & (movingS == hero)){
-								drawables.remove(d);
-							}
+						//Projectile handling happens here, if it should continue it will
+						if(projectileHandling(movingS, d)){
 							continue;
 						}
-						//end TODO
-						++collision2Count;
+						
+						++collision2Count;													//Single Collision Detection
 						collisionX = d.getXPos() + 64;
 						collisionY = d.getYPos();
+						
 						if(movingS.getDirection() == 135){
 							canGoDown = false;
 						}
+						
 						else if(movingS.getDirection() == 270){
 							canGoLeft = false;
 						}
+						
 						else if(movingS.getDirection() == 315){
 							canGoLeft = false;
 						}	
+						
 						else if(movingS.getDirection() == 180){
 							canGoDown = false;
 						}
@@ -504,85 +219,53 @@ public class Game {
 				}
 				else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
 					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
-						System.out.println("Collision 3 for " + d.getXPos() + "," + d.getYPos());
-						//TODO this should be generalzied some how
-						if(movingS instanceof Projectile){
-							if(d instanceof Wall){
-								drawables.remove(movingS);
-							}
-							else{
-								continue;
-							}
-						}
-						if(d instanceof Projectile){
-							System.out.println("I hit a projectile");
-							Projectile p = (Projectile) d;
-							if(p.getIsFromHero() & (!(movingS == hero))){
-								if(d instanceof Sprite){
-									p.attack(movingS);
-								}
-								drawables.remove(d);
-							}
-							else if(!(p.getIsFromHero()) & (movingS == hero)){
-								drawables.remove(d);
-							}
+						//Projectile handling happens here, if it should continue it will
+						if(projectileHandling(movingS, d)){
 							continue;
 						}
-						//end TODO
-						++collision3Count;
+
+						++collision3Count;												//Single Collision detection
 						collisionX = d.getXPos();
 						collisionY = d.getYPos() + 64;
+						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
 						}
+						
 						else if(movingS.getDirection() == 90){
 							canGoRight = false;
 						}
+						
 						else if(movingS.getDirection() == 135){
 							canGoRight = false;
 						}
+						
 						else if(movingS.getDirection() == 315){
 							canGoUp = false;
 						}
 					}
 					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
-						System.out.println("Collision 4 for " + d.getXPos() + "," + d.getYPos());
-						//TODO this should be generalzied some how
-						if(movingS instanceof Projectile){
-							if(d instanceof Wall){
-								drawables.remove(movingS);
-							}
-							else{
-								continue;
-							}
-						}
-						if(d instanceof Projectile){
-							System.out.println("I hit a projectile");
-							Projectile p = (Projectile) d;
-							if(p.getIsFromHero() & (!(movingS == hero))){
-								if(d instanceof Sprite){
-									p.attack(movingS);
-								}
-								drawables.remove(d);
-							}
-							else if(!(p.getIsFromHero()) & (movingS == hero)){
-								drawables.remove(d);
-							}
+						//Projectile handling happens here, if it should continue it will
+						if(projectileHandling(movingS, d)){
 							continue;
 						}
-						//end TODO
-						++collision4Count;
+						
+						++collision4Count;													//Single collision detection
 						collisionX = d.getXPos();
 						collisionY = d.getYPos();
+						
 						if(movingS.getDirection() == 45){
 							canGoRight = false;
 						}
+						
 						else if(movingS.getDirection() == 90){
 							canGoRight = false;
 						}
+						
 						else if(movingS.getDirection() == 180){
 							canGoDown = false;
 						}
+						
 						else if(movingS.getDirection() == 225){
 							canGoDown = false;
 						}
@@ -590,6 +273,7 @@ public class Game {
 				}
 			}
 			
+			/*** This is the single collision detection section ***/
 			if((collision1Count + collision2Count + collision3Count + collision4Count) == 1){
 				if(collision1Count == 1){
 					if((movingS.getDirection() == 0) | (movingS.getDirection() == 45)){
@@ -673,96 +357,100 @@ public class Game {
 				}
 			}
 			
-			
-			//TODO: take this into separate method
-			if(movingS.getDirection() == 0){
-				if(canGoUp == false){
-					movingS.setIsMoving(false);
-				}
-			}
-	
-			else if(movingS.getDirection() == 45){
-				if((canGoUp == false) & (canGoRight == false)){
-					movingS.setIsMoving(false);
-				}
-				else if(canGoUp == false){
-					movingS.setDirection(90);
-				}
-				else if(canGoRight == false){
-					movingS.setDirection(0);
-				}
-			}
-			
-			else if(movingS.getDirection() == 90){
-				if(canGoRight == false){
-					movingS.setIsMoving(false);
-				}
-			}
-			
-			else if(movingS.getDirection() == 135){
-				if((canGoDown == false) & (canGoRight == false)){
-					movingS.setIsMoving(false);
-				}
-				else if(canGoDown == false){
-					movingS.setDirection(90);
-				}
-				else if(canGoRight == false){
-					movingS.setDirection(180);
-				}
-			}
-			
-			else if(movingS.getDirection() == 180){
-				if(canGoDown == false){
-					movingS.setIsMoving(false);
-				}
-			}
-			
-			else if(movingS.getDirection() == 225){
-				if((canGoDown == false) & (canGoLeft == false)){
-					movingS.setIsMoving(false);
-				}
-				else if(canGoDown == false){
-					movingS.setDirection(270);
-				}
-				else if(canGoLeft == false){
-					movingS.setDirection(180);
-				}
-			}
-			
-			else if(movingS.getDirection() == 270){
-				if(canGoLeft == false){
-					movingS.setIsMoving(false);
-				}
-			}
-			
-			else if(movingS.getDirection() == 315){
-				if((canGoUp == false) & (canGoLeft == false)){
-					movingS.setIsMoving(false);
-				}
-				else if(canGoUp == false){
-					movingS.setDirection(270);
-				}
-				else if(canGoLeft == false){
-					movingS.setDirection(0);
-				}
-		
-			}
+			/*** Actual collision handling cases ***/
+			collisionHandling(movingS, canGoUp, canGoDown, canGoLeft, canGoRight);
 		}
 	}
 
+	public void collisionHandling(Sprite movingS, boolean canGoUp, boolean canGoDown, boolean canGoLeft, boolean canGoRight){
+		if(movingS.getDirection() == 0){
+			if(canGoUp == false){
+				movingS.setIsMoving(false);
+			}
+		}
+
+		else if(movingS.getDirection() == 45){
+			if((canGoUp == false) & (canGoRight == false)){
+				movingS.setIsMoving(false);
+			}
+			else if(canGoUp == false){
+				movingS.setDirection(90);
+			}
+			else if(canGoRight == false){
+				movingS.setDirection(0);
+			}
+		}
+		
+		else if(movingS.getDirection() == 90){
+			if(canGoRight == false){
+				movingS.setIsMoving(false);
+			}
+		}
+		
+		else if(movingS.getDirection() == 135){
+			if((canGoDown == false) & (canGoRight == false)){
+				movingS.setIsMoving(false);
+			}
+			else if(canGoDown == false){
+				movingS.setDirection(90);
+			}
+			else if(canGoRight == false){
+				movingS.setDirection(180);
+			}
+		}
+		
+		else if(movingS.getDirection() == 180){
+			if(canGoDown == false){
+				movingS.setIsMoving(false);
+			}
+		}
+		
+		else if(movingS.getDirection() == 225){
+			if((canGoDown == false) & (canGoLeft == false)){
+				movingS.setIsMoving(false);
+			}
+			else if(canGoDown == false){
+				movingS.setDirection(270);
+			}
+			else if(canGoLeft == false){
+				movingS.setDirection(180);
+			}
+		}
+		
+		else if(movingS.getDirection() == 270){
+			if(canGoLeft == false){
+				movingS.setIsMoving(false);
+			}
+		}
+		
+		else if(movingS.getDirection() == 315){
+			if((canGoUp == false) & (canGoLeft == false)){
+				movingS.setIsMoving(false);
+			}
+			else if(canGoUp == false){
+				movingS.setDirection(270);
+			}
+			else if(canGoLeft == false){
+				movingS.setDirection(0);
+			}
+		}
+	}
 	
-	public void doGameLogic(Set keySet) {
-		//Check to see if things are dead
+	public void checkForDeadSprites(){
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			if(d instanceof Sprite){
 				Sprite s = (Sprite) d;
 				if(s.getHealth() < 0){
+					//TODO make sprites do their death animation and then remove themselves
+					System.out.println(s.getClass().getSimpleName() + " is dead, will remove from game.");
 					drawables.remove(s);
 				}
 			}
 		}		
-		//Check to see if things are outside the map, if so kill them
+	}
+	
+	public void checkForOutsideMap(){
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			if(d.getXPos() > mapWidth){
@@ -782,34 +470,52 @@ public class Game {
 				removeDrawable(d);
 			}
 		}
-
-		
-		//Set up movements
+	}
+	
+	public void setUpMovements(Set keySet){
 		hero.doLogic(keySet);
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			d.doLogic();
 		}
-		
-		//checkForHeroCollision(drawables, hero);
-		checkForSpriteCollision(drawables, hero);
-		
-		//Move if not colliding
+	}
+	
+	public void moveDrawables(){
 		hero.move();
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			d.move();
 		}
-		
-		//Do attacks for everything
+	}
+	
+	public void executeAttacks(){
 		hero.attack();
 		for(int x = 0; drawables.size() > x; x++){
-			Drawable d = drawables.get(x);
-			Sprite dummy = new Sprite(0, 0, 0);
-			if(d.getClass() == dummy.getClass()){
-				dummy = (Sprite) d;
-				dummy.attack();
+			if(!(drawables.get(x) instanceof Sprite)){
+				continue;
 			}
+			Sprite attackingS = (Sprite)drawables.get(x);
+			attackingS.attack();
 		}
+	}
+	
+	public void doGameLogic(Set keySet) {
+		//Check to see if things are dead, if so remove them
+		checkForDeadSprites();
+		
+		//Check to see if things are outside the map, if so remove them
+		checkForOutsideMap();
+		
+		//Set up movements
+		setUpMovements(keySet);
+		
+		//Check for collision
+		checkForSpriteCollision(drawables, hero);
+		
+		//Move if can
+		moveDrawables();
+		
+		//Do attacks for everything
+		executeAttacks();
 	}
 }

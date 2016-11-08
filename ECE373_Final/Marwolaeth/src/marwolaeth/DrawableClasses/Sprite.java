@@ -11,16 +11,20 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
+import marwolaeth.Game;
+
 public class Sprite extends Drawable{
 	//TODO : Hitboxes
 	private boolean moveCasting = false;
+	private boolean staticMovement = false;
 	private boolean isMoving = false;
 	private boolean completeingSequence = false;	//if the sprite needs to finish performing current action before performing others
 	private int invokedAbility = 0;					//used to keep track of which ability was issued for cases when multiple abilities use the same actionSequence
-	private int speed = 12;						//make only divisible by 2
-	//private int speed = 30;							//make only divisible by 2
-	private boolean staticMovement = false;
+	private int speed = 12;							//make only divisible by 2
 	private int direction = 0;
+	
+	private boolean isAttacking = false;
+	
 	private int health = 100;
 	private int mana = 100;
 	
@@ -50,6 +54,10 @@ public class Sprite extends Drawable{
 	
 	public boolean getIsMoving() {
 		return isMoving;
+	}
+	
+	public boolean getIsAttacking(){
+		return isAttacking;
 	}
 	
 	public boolean getCompleteingSequence() {
@@ -87,6 +95,10 @@ public class Sprite extends Drawable{
 	
 	public void setIsMoving(boolean isMoving) {
 		this.isMoving = isMoving;
+	}
+	
+	public void setIsAttacking(boolean isAttacking){
+		this.isAttacking = isAttacking;
 	}
 	
 	public void setCompleteingSequence(boolean completeingSequence) {
@@ -154,6 +166,7 @@ public class Sprite extends Drawable{
 		else if(getActionSequence() == 20) {											//death
 			if(getActionStep()>5) {
 				//game ends
+				Game.removeDrawable(this);
 			}
 		}
 	}
@@ -242,10 +255,7 @@ public class Sprite extends Drawable{
 		if(getMoveCasting() == true)
 			setDirection(direction);
 	}
-	
-	
-	//TODO changes 
-	
+		
 	public void move() {
 		if(isMoving == true) {
 			setXPos(getXPos() + (int)(Math.round(Math.sin(Math.toRadians(direction)) * speed)));

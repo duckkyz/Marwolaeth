@@ -46,6 +46,7 @@ public class PlayScreen extends GameState{
 		catch(IOException ex) {
 			
 		}
+		//TODO Maybe move this
 		makeMap();
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
 		scaling = (double) getResolutionSizes()[0][0]/ (double) getImageWidth();
@@ -105,17 +106,7 @@ public class PlayScreen extends GameState{
 				g.paint(img.getGraphics());
 			}
 		}
-		//try {
-		//	ImageIO.write(img, "png", new File("test.png"));
-		//} catch (IOException e) {
-		//	// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
 		setBackgroundImage(img);
-
-		//setBlankImage(img);
-		//return img;
-		//setImageGraphics(getImageGraphics());
 	}
 	
 	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {
