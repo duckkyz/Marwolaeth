@@ -16,6 +16,8 @@ public class Wizard extends Hero{
 	
 	public Wizard(int direction, int xPos, int yPos) {
 		super(direction, xPos, yPos);
+		setXHitBox(32);
+		setYHitBox(42);
 		setTileWidth(64);
 		setTileHeight(64);
 		//setSpeed(30);
