@@ -34,11 +34,15 @@ public class Drawable implements Comparable<Drawable>{
 	public Drawable() {
 		this.xPos = 0;
 		this.yPos = 0;
+		setTileWidth(64);
+		setTileHeight(64);
 	}
 	
 	public Drawable(int xPos, int yPos){
 		this.xPos = xPos;
 		this.yPos = yPos;
+		setTileWidth(64);
+		setTileHeight(64);
 	}
 	
 	public int getXPos() {

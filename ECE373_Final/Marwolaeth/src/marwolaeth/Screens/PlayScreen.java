@@ -16,6 +16,7 @@ import marwolaeth.Game;
 import marwolaeth.ViewController;
 import marwolaeth.DrawableClasses.Drawable;
 import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.FloorTiles.GrassTile;
 
 public class PlayScreen extends GameState{
 
@@ -45,6 +46,7 @@ public class PlayScreen extends GameState{
 		catch(IOException ex) {
 			
 		}
+		makeMap();
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
 		scaling = (double) getResolutionSizes()[0][0]/ (double) getImageWidth();
 		
@@ -89,6 +91,33 @@ public class PlayScreen extends GameState{
 		
 	}
 	
+	public void makeMap(){
+		setImageGraphics(getBlankImage().getGraphics());
+		BufferedImage img = new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB);
+		GrassTile g = new GrassTile(0,0);
+
+		for(int i = 0; i < 60; ++i){
+			for(int j = 0; j < 34; ++j){
+				g.setXPos(i*64);
+				g.setYPos(j*64);
+				g.setActionStep((int) (Math.floor(Math.random() * 3)));
+				g.setActionSequence((int) (1 + Math.floor(Math.random() * 3)));
+				g.paint(img.getGraphics());
+			}
+		}
+		//try {
+		//	ImageIO.write(img, "png", new File("test.png"));
+		//} catch (IOException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
+		setBackgroundImage(img);
+
+		//setBlankImage(img);
+		//return img;
+		//setImageGraphics(getImageGraphics());
+	}
+	
 	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {
 		setImageGraphics(getBlankImage().getGraphics());		//use imageGraphics to draw on the image
 		getImageGraphics().drawImage(this.getBackgroundImage(), 0, 0, this);
@@ -116,7 +145,6 @@ public class PlayScreen extends GameState{
 		}
 		else
 			testHealthBar = false;
-		
 	}
 	
 	public void paint(Graphics graphics) {
@@ -139,6 +167,5 @@ public class PlayScreen extends GameState{
 		graphics.drawImage(heroResources, heroResourcesXLocation, heroResourcesYLocation, heroResourcesXLocation+291, heroResourcesYLocation+198, 0, 0, 291, 198, null);											//draws UI boarder
 		graphics.drawImage(heroResources, heroResourcesXLocation+119, heroResourcesYLocation+41, heroResourcesXLocation+119+percentHealth, heroResourcesYLocation+41+34, 0, 200, percentHealth, 200+34, null);		//draws health bar
 		graphics.drawImage(heroResources, heroResourcesXLocation+101, heroResourcesYLocation+86, heroResourcesXLocation+101+percentMana, heroResourcesYLocation+86+26, 0, 233, percentMana, 259, null);		//draws mana bar
-
 	}
 }

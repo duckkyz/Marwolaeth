@@ -9,12 +9,12 @@ import java.util.Comparator;
 import java.util.Set;
 
 import marwolaeth.DrawableClasses.*;
+import marwolaeth.FloorTiles.GrassTile;
 import marwolaeth.ImplementedEntities.*;
 
 public class Game {
 
-	private static Graphics mapImage;
-	private static Image testImage;
+	private static ArrayList<Drawable> mapTiles = new ArrayList<Drawable>();
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private static Hero hero;
 	private final int mapHeight = 2*1080;
@@ -22,8 +22,15 @@ public class Game {
 	
 	public Game() {
 		//Removes all things from game so it starts fresh
-		
 		drawables.removeAll(drawables);
+		mapTiles.removeAll(mapTiles);
+		//Makes map tiles
+		//for(int i = 0; i < 60; ++i){
+		//	for(int j = 0; j < 34; ++j){
+		//		mapTiles.add(new GrassTile(i*64,j*64));
+		//	}
+		//}
+
 		//This makes the walls around the edge.
 		for(int i=0;i<35;++i){
 			drawables.add(new Wall(0,(i*64)));
@@ -48,7 +55,9 @@ public class Game {
 		
 		drawables.add(new Orc(180,250,250));
 	}
-	
+	public static ArrayList<Drawable> getMapTiles(){
+		return mapTiles;
+	}
 	public static Hero getHero() {
 		return hero;
 	}
