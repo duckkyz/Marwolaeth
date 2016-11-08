@@ -72,13 +72,5 @@ public class Orc extends Villain {
 	public void ability4Execute(int direction) {
 		// TODO Auto-generated method stub
 
-	}
-	
-	public void doLogic(){
-		if(getIsMoving() == false){
-			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
-		}
-		setIsMoving(true);
-	}
-	
+	}	
 }

@@ -63,14 +63,4 @@ public class Wizard extends Hero{
 	public void ability4Execute(int direction) {
 		//TODO implement this
 	}
-	
-	public void doLogic(){
-		if(!(Game.getHero() == this)){
-			if(getIsMoving() == false){
-				setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
-			}
-			setIsMoving(true);
-		}
-	}
-	
 }

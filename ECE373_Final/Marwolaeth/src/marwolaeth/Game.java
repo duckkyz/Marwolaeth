@@ -44,11 +44,19 @@ public class Game {
 		drawables.add(new Wall(186,314));
 		drawables.add(new Wall(314,186));
 		drawables.add(new Wall(314,314));
-		for(int i = 0; i < 10; ++i){
+		for(int i = 0; i < 30; ++i){
 			int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
 			int orcXPos = (int)(Math.floor((Math.random() * mapWidth)/64) * 64);
 			int orcYPos = (int)(Math.floor((Math.random() * mapWidth)/64) * 64);
-			drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+			if(i%3 == 0){
+				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+			}
+			else if(i%3 == 1){
+				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+			}
+			else{
+				drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+			}
 		}
 	}
 
