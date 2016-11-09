@@ -37,6 +37,8 @@ public class Game {
 		//Testing walls
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 10; ++i){
+				drawables.add(new Wall(i*64,0));
+				drawables.add(new Wall(0,j*64));				
 				drawables.add(new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapWidth)/64) * 64))));
 			}
 		}
@@ -125,11 +127,24 @@ public class Game {
 			
 			Sprite movingS = (Sprite) movingD;								//If its a sprite, lets cast it to sprite
 			
+			int newX = 0;
+			int newY = 0;
+			int newMaxX = 0;	//Right
+			int newMaxY = 0;	//Bottom
 			//Calculates new position for collision checking
-			int newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
-			int newY = (movingS.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
-			int newMaxX = newX + 64;	//Right
-			int newMaxY = newY + 64;	//Bottom
+			if(movingS == hero){
+				//int newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
+				newX = ((movingS.getXPos() + (17)) + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
+				newY = ((movingS.getYPos() + (15)) + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
+				newMaxX = newX + (64-(2*17));	//Right
+				newMaxY = newY + (64-15-2);	//Bottom
+			}
+			else{
+				newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
+				newY = (movingS.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
+				newMaxX = newX + (64);	//Right
+				newMaxY = newY + (64);	//Bottom
+			}
 			
 			//Initializes the movement booleans
 			boolean canGoUp = true;
@@ -163,6 +178,8 @@ public class Game {
 				if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 			//Collision from the left
 					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
+						if(movingS == hero)
+						System.out.println("collision 1");
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
@@ -190,6 +207,8 @@ public class Game {
 					
 					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
+						if(movingS == hero)
+						System.out.println("collision 2");
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
@@ -217,6 +236,8 @@ public class Game {
 				}
 				else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
 					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
+						if(movingS == hero)
+						System.out.println("collision 3");
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -243,6 +264,8 @@ public class Game {
 						}
 					}
 					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
+						if(movingS == hero)
+						System.out.println("collision 4");
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;
