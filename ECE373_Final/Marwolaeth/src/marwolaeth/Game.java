@@ -19,6 +19,10 @@ public class Game {
 	private final int mapWidth = 2*1920;
 	
 	public Game() {
+		setUpGame();
+	}
+
+	public void setUpGame(){
 		//Removes all things from game so it starts fresh
 		drawables.removeAll(drawables);
 
@@ -33,23 +37,37 @@ public class Game {
 			drawables.add(new Wall((i*64),(mapHeight)-64));
 		}
 		
-		//TODO: things shouldnt spawn on top of already existing things 
 		//Testing walls
+		Wall spawnWall = new Wall(0,0);
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 10; ++i){
+				spawnWall = new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
 			//	drawables.add(new Wall(i*64,0));
-			//	drawables.add(new Wall(0,j*64));				
-				drawables.add(new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapWidth)/64) * 64))));
+			//	drawables.add(new Wall(0,j*64));
+				while((checkCanSpawn(spawnWall) == false) & (drawables.size() < mapWidth*mapHeight)){
+					spawnWall = new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
+				}
+				drawables.add(spawnWall);
 			}
 		}
 		drawables.add(new Wall(186,186));
 		drawables.add(new Wall(186,314));
 		drawables.add(new Wall(314,186));
 		drawables.add(new Wall(314,314));
+		
+		Sprite spawnSprite = new Sprite(0,0,0);
 		for(int i = 0; i < 30; ++i){
 			int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
-			int orcXPos = (int)(Math.floor((Math.random() * mapWidth)/64) * 64);
-			int orcYPos = (int)(Math.floor((Math.random() * mapWidth)/64) * 64);
+			int orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+			int orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
+			
+			while((checkCanSpawn(spawnSprite) == false) & (drawables.size() < mapWidth*mapHeight)){
+				orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
+				orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+				orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
+				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
+			}
+			
 			if(i%3 == 0){
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 			}
@@ -61,7 +79,47 @@ public class Game {
 			}
 		}
 	}
-
+	
+	public boolean checkCanSpawn(Drawable toSpawn){
+		int newX = ((toSpawn.getXPos() + toSpawn.getLeftHitBox()));
+		int newY = ((toSpawn.getYPos() + toSpawn.getTopHitBox()));
+		int newMaxX = newX + (64 - toSpawn.getLeftHitBox() - toSpawn.getRightHitBox());	//Right
+		int newMaxY = newY + (64 - toSpawn.getTopHitBox() - toSpawn.getBotHitBox());	//Bottom
+		
+		int dX;
+		int dY;
+		int dMaxX;
+		int dMaxY;
+		
+		
+		for(Drawable d : drawables){
+			dX = ((d.getXPos() + d.getLeftHitBox()));
+			dY = ((d.getYPos() + d.getTopHitBox()));
+			dMaxX = dX + (64 - d.getLeftHitBox() - d.getRightHitBox());	//Right
+			dMaxY = dY + (64 - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+			
+			if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
+				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
+					return false;
+				}
+				
+				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
+					return false;
+				}
+			}
+			else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
+				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
+					return false;
+				}
+				
+				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public static Hero getHero() {
 		return hero;
 	}
