@@ -236,8 +236,10 @@ public class Game {
 				}
 				else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
 					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
-						if(movingS == hero)
-						System.out.println("collision 3");
+						if(movingS == hero){
+							System.out.println("collision 3 for " + d.getClass().getSimpleName() + "' " + d.getXPos() + " " + d.getYPos());
+						}
+						//TODO : fix the collision issue for smaller hit boxes
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;
