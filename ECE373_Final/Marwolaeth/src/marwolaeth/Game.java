@@ -107,7 +107,6 @@ public class Game {
 			return true;
 		}
 		return false;
-		//end TODO
 	}
 	
 	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
@@ -474,20 +473,6 @@ public class Game {
 		}
 	}
 	
-	public void checkForDeadSprites(){
-		for(int x = 0; drawables.size() > x; x++){
-			Drawable d = drawables.get(x);
-			if(d instanceof Sprite){
-				Sprite s = (Sprite) d;
-				if(s.getHealth() < 0){
-					//TODO make sprites do their death animation and then remove themselves
-					System.out.println(s.getClass().getSimpleName() + " is dead, will remove from game.");
-					drawables.remove(s);
-				}
-			}
-		}		
-	}
-	
 	public void checkForOutsideMap(){
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
@@ -537,10 +522,7 @@ public class Game {
 		}
 	}
 	
-	public void doGameLogic(Set keySet) {
-		//Check to see if things are dead, if so remove them
-		checkForDeadSprites();
-		
+	public void doGameLogic(Set keySet) {		
 		//Check to see if things are outside the map, if so remove them
 		checkForOutsideMap();
 		

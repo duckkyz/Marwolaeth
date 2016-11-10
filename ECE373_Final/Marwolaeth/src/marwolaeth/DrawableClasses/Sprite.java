@@ -12,8 +12,9 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import marwolaeth.Game;
+import marwolaeth.Interfaces.willAttack;
 
-public class Sprite extends Drawable{
+public class Sprite extends Drawable implements willAttack{
 	//TODO : Hitboxes
 	private boolean moveCasting = false;
 	private boolean staticMovement = false;
@@ -129,7 +130,71 @@ public class Sprite extends Drawable{
 		this.mana = mana;
 	}
 	
-	//TODO changes test
+	@Override
+	public void ability1Setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability2Setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability3Setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability4Setup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability1Execute(int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability2Execute(int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability3Execute(int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ability4Execute(int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+		
+	public void executeAbility(int direction){
+		switch(getInvokedAbility()){
+			case 1: 
+				ability1Execute(direction);
+				break;
+			case 2:
+				ability2Execute(direction);
+				break;
+			case 3:
+				ability3Execute(direction);
+				break;
+			case 4:
+				ability4Execute(direction);
+				break;
+			}
+	}
+	
 	public void continueSequence() {
 		setActionStep(getActionStep()+1);												//goes to the next step of the animation
 		
@@ -138,7 +203,7 @@ public class Sprite extends Drawable{
 				setSequenceWalking();
 			}
 			if(getActionStep() == 5) {
-				//executeAbility(getEffectiveDirection());
+				executeAbility(getEffectiveDirection());
 			}
 		}
 		
@@ -159,7 +224,7 @@ public class Sprite extends Drawable{
 				setSequenceWalking();
 			}
 			if(getActionStep() == 9) {													//frame 9 matches arrow release
-				//executeAbility(getEffectiveDirection());
+				executeAbility(getEffectiveDirection());
 			}
 		}
 		
@@ -324,6 +389,97 @@ public class Sprite extends Drawable{
 	    g.dispose();
 
 	    return result;
+	}
+	
+	//For AI
+	public void doLogic() {
+		//Check to see if dead
+		if(getHealth() <= 0){
+			if(getActionSequence() == 20){
+			//TODO this should set the actionstep to 20 and action sequence to 0, but then it should never reset this again
+				System.out.println(getClass().getSimpleName() + " is dead, will remove from game.");
+				setActionSequence(20);
+				setActionStep(0);
+			}
+		}
+		
+		//randomize direction 
+		if(!(Game.getHero() == this)){
+			if(getIsMoving() == false){
+				setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
+			}
+		}
+		
+		if(getIsAttacking() & getCompleteingSequence() != true) {
+			setInvokedAbility(1);							//records that the current ability being used is Q
+			ability1Setup();
+		}
+		/*
+		if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
+			setInvokedAbility(2);							//records that the current ability being used is W
+			ability2Setup();
+		}
+		if(keySet.contains(KeyEvent.VK_E) & getCompleteingSequence() != true) {
+			setInvokedAbility(3);							//records that the current ability being used is E
+			ability3Setup();
+		}
+		if(keySet.contains(KeyEvent.VK_R) & getCompleteingSequence() != true) {
+			setInvokedAbility(4);							//records that the current ability being used is R
+			ability4Setup();
+		}
+		*/
+		
+		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
+			continueSequence();								//Moved to Sprite to generalize movement
+			//Below stuff remains because sprites dont have execute ability methods
+			if(getActionSequence() >= 0 & getActionSequence() <= 3) {						//spell-casting
+				if(getActionStep() == 5) {
+					executeAbility(getEffectiveDirection());
+				}
+			}
+			else if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
+				if(getActionStep() == 9) {													//frame 9 matches arrow release
+					executeAbility(getEffectiveDirection());
+				}
+			}
+		}
+		else
+			setIsMoving(true);
+		
+		if(getMoveCasting() == true)
+			setIsMoving(true);
+		
+		if (getDirection() == 315) {
+			doMovementLogic45(9, 8, 315);
+		}
+		else if (getDirection() == 45) {
+			doMovementLogic45(11, 8, 45);
+		}
+		else if (getDirection() == 0) {
+			doMovementLogic90(8, 0);
+		}
+		else if (getDirection() == 225) {
+			doMovementLogic45(10, 9, 225);
+		}
+		else if (getDirection() == 135) {
+			doMovementLogic45(11, 10, 135);
+		}
+		else if (getDirection() == 180){
+			doMovementLogic90(10, 180);
+		}
+		else if (getDirection() == 270) {
+			doMovementLogic90(9, 270);
+		}
+		else if (getDirection() == 90) {
+			doMovementLogic90(11, 90);
+		}
+		else {
+			setIsMoving(false);
+			if(getCompleteingSequence() == false) {
+				if(getActionStep()>0)
+					setActionStep(0);
+			}
+		}
 	}
 	
 	public void paint(Graphics imageGraphics) {
