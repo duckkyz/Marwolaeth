@@ -9,6 +9,7 @@ import javax.swing.Timer;
 import marwolaeth.Game;
 import marwolaeth.ViewController;
 import marwolaeth.Screens.PlayScreen;
+import marwolaeth.Screens.TitleScreen;
 
 public class CustomContainerListener implements ContainerListener {
     
@@ -24,12 +25,11 @@ public class CustomContainerListener implements ContainerListener {
 	public void componentAdded(ContainerEvent e) {
 		try {
 				if(rootContainer.getComponent(0) instanceof PlayScreen) {
+					ViewController.setGame(new Game());
 					timer.start();
 				}
 				else{
 					timer.stop();
-					System.out.println("Leaving game");
-					ViewController.setGame(new Game());
 				}
 		} 
   	  	catch (ArrayIndexOutOfBoundsException ev) {
