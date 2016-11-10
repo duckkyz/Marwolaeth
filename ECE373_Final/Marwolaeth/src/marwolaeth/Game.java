@@ -22,6 +22,26 @@ public class Game {
 		setUpGame();
 	}
 
+	public static Hero getHero() {
+		return hero;
+	}
+	
+	public ArrayList<Drawable> getDrawables() {
+		return drawables;
+	}
+	
+	public static void setHero(Hero newHero) {
+		hero = newHero;
+	}
+	
+	public static void addDrawable(Drawable drawable) {
+		drawables.add(drawable);
+	}
+	
+	public static void removeDrawable(Drawable drawable) {
+		drawables.remove(drawable);
+	}
+		
 	public void setUpGame(){
 		//Removes all things from game so it starts fresh
 		drawables.removeAll(drawables);
@@ -41,9 +61,10 @@ public class Game {
 		Wall spawnWall = new Wall(0,0);
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 10; ++i){
+				//Initial new wall
 				spawnWall = new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
-			//	drawables.add(new Wall(i*64,0));
-			//	drawables.add(new Wall(0,j*64));
+
+				//Checks to see if its on top of something else
 				while((checkCanSpawn(spawnWall) == false) & (drawables.size() < mapWidth*mapHeight)){
 					spawnWall = new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
 				}
@@ -120,26 +141,6 @@ public class Game {
 		return true;
 	}
 	
-	public static Hero getHero() {
-		return hero;
-	}
-	
-	public ArrayList<Drawable> getDrawables() {
-		return drawables;
-	}
-	
-	public static void setHero(Hero newHero) {
-		hero = newHero;
-	}
-	
-	public static void addDrawable(Drawable drawable) {
-		drawables.add(drawable);
-	}
-	
-	public static void removeDrawable(Drawable drawable) {
-		drawables.remove(drawable);
-	}
-		
 	public boolean projectileHandling(Sprite movingS, Drawable d){
 		if(movingS instanceof Projectile){
 			if(d instanceof Wall){
@@ -190,21 +191,12 @@ public class Game {
 			int newY = 0;
 			int newMaxX = 0;	//Right
 			int newMaxY = 0;	//Bottom
-			//Calculates new position for collision checking
-			if(movingS == hero){
-				//int newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
-				newX = ((movingS.getXPos() + movingS.getLeftHitBox()) + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
-				newY = ((movingS.getYPos() + movingS.getTopHitBox()) + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
-				newMaxX = newX + (64 - movingS.getLeftHitBox() - movingS.getRightHitBox());	//Right
-				newMaxY = newY + (64 - movingS.getTopHitBox() - movingS.getBotHitBox());	//Bottom
-			}
-			else{
-				newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
-				newY = (movingS.getYPos() + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
-				newMaxX = newX + (64);	//Right
-				newMaxY = newY + (64);	//Bottom
-			}
 			
+			newX = ((movingS.getXPos() + movingS.getLeftHitBox()) + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
+			newY = ((movingS.getYPos() + movingS.getTopHitBox()) + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
+			newMaxX = newX + (64 - movingS.getLeftHitBox() - movingS.getRightHitBox());	//Right
+			newMaxY = newY + (64 - movingS.getTopHitBox() - movingS.getBotHitBox());	//Bottom
+
 			//Initializes the movement booleans
 			boolean canGoUp = true;
 			boolean canGoDown = true;
@@ -218,6 +210,10 @@ public class Game {
 			int collision2Count = 0;
 			int collision3Count = 0;
 			int collision4Count = 0;
+			int dX;
+			int dY;
+			int dMaxX;
+			int dMaxY;
 			
 			//To save need of creating new d every iteration
 			Drawable d;
@@ -233,11 +229,14 @@ public class Game {
 				if(d == movingS){								//Skip yourself because obvious
 					continue;
 				}
-				if((movingS == hero) & (x == 0)){
-				//	System.out.println("New collision at: " + newMaxX + ", " + newMaxY);
-				}
-				if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 			//Collision from the left
-					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){		//Collision from the bottom
+
+				dX = ((d.getXPos() + d.getLeftHitBox()));
+				dY = ((d.getYPos() + d.getTopHitBox()));
+				dMaxX = dX + (64 - d.getLeftHitBox() - d.getRightHitBox());	//Right
+				dMaxY = dY + (64 - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+				
+				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
+					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
 						if(movingS == hero){
 					//		System.out.println("collision 1");
@@ -247,8 +246,8 @@ public class Game {
 						}
 						
 						++collision1Count;											//Used for single collision 
-						collisionX = d.getXPos() + 64;
-						collisionY = d.getYPos() + 64;
+						collisionX = dMaxX;
+						collisionY = dMaxY;
 						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
@@ -272,7 +271,7 @@ public class Game {
 						}
 					}
 					
-					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
+					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
 						if(movingS == hero){
 						//	System.out.println("collision 2");
@@ -282,8 +281,8 @@ public class Game {
 						}
 						
 						++collision2Count;													//Single Collision Detection
-						collisionX = d.getXPos() + 64;
-						collisionY = d.getYPos();
+						collisionX = dMaxX;
+						collisionY = dY;
 						
 						if(movingS.getDirection() == 135){
 							canGoDown = false;
@@ -302,8 +301,8 @@ public class Game {
 						}
 					}
 				}
-				else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
-					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
+				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
+					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						if(movingS == hero){
 						//	System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
@@ -313,8 +312,8 @@ public class Game {
 						}
 
 						++collision3Count;												//Single Collision detection
-						collisionX = d.getXPos();
-						collisionY = d.getYPos() + 64;
+						collisionX = dX;
+						collisionY = dMaxY;
 						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
@@ -336,7 +335,7 @@ public class Game {
 							canGoUp = false;
 						}
 					}
-					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
+					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						if(movingS == hero){
 						//	System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
@@ -346,8 +345,8 @@ public class Game {
 						}
 						
 						++collision4Count;													//Single collision detection
-						collisionX = d.getXPos();
-						collisionY = d.getYPos();
+						collisionX = dX;
+						collisionY = dY;
 						
 						if(movingS.getDirection() == 45){
 							canGoRight = false;
