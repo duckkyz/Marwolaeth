@@ -110,6 +110,7 @@ public class Game {
 	}
 	
 	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
+		//TODO need to make this so it uses the 'hit box' parameters from each sprite
 		Collections.sort(drawables, Drawable.PosComparator);				//Sorts drawables so there is no need for spawn order collision casing
 		Drawable movingD;													
 		
@@ -134,10 +135,10 @@ public class Game {
 			//Calculates new position for collision checking
 			if(movingS == hero){
 				//int newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
-				newX = ((movingS.getXPos() + (17)) + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
-				newY = ((movingS.getYPos() + (15)) + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
-				newMaxX = newX + (64-(2*17));	//Right
-				newMaxY = newY + (64-15-2);	//Bottom
+				newX = ((movingS.getXPos() + movingS.getLeftHitBox()) + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
+				newY = ((movingS.getYPos() + movingS.getTopHitBox()) + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
+				newMaxX = newX + (64 - movingS.getLeftHitBox() - movingS.getRightHitBox());	//Right
+				newMaxY = newY + (64 - movingS.getTopHitBox() - movingS.getBotHitBox());	//Bottom
 			}
 			else{
 				newX = (movingS.getXPos() + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
@@ -248,7 +249,6 @@ public class Game {
 						if(movingS == hero){
 						//	System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
-						//TODO : fix the collision issue for smaller hit boxes
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;

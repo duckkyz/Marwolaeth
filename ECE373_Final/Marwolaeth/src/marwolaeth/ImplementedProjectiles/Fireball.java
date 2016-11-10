@@ -16,7 +16,6 @@ public class Fireball extends Projectile{
 		super(direction, spawnX, spawnY, heroProjectile);
 		try{
 			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Fireball.png"))), 90));
-			//ImageIO.write(getGraphic(), "png", new File("D:/cake.png"));
 		}
 		catch(IOException ex){
 			

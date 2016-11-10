@@ -22,8 +22,10 @@ import java.util.Comparator;
 import javax.imageio.ImageIO;
 
 public class Drawable implements Comparable<Drawable>{
-	private int xHitBox;
-	private int yHitBox;
+	private int topHitBox;
+	private int botHitBox;	
+	private int leftHitBox;
+	private int rightHitBox;
 	private int xPos;
 	private int yPos;
 	private int tileWidth;
@@ -36,8 +38,11 @@ public class Drawable implements Comparable<Drawable>{
 		this.xPos = 0;
 		this.yPos = 0;
 		
-		setXHitBox(64);
-		setYHitBox(64);
+		setTopHitBox(0);
+		setBotHitBox(0);
+		setLeftHitBox(0);
+		setRightHitBox(0);
+		
 		setTileWidth(64);
 		setTileHeight(64);
 	}
@@ -57,12 +62,20 @@ public class Drawable implements Comparable<Drawable>{
 		return yPos;
 	}
 	
-	public int getXHitBox() {
-		return xHitBox;
+	public int getTopHitBox() {
+		return topHitBox;
 	}
 	
-	public int getYHitBox() {
-		return xHitBox;
+	public int getBotHitBox() {
+		return botHitBox;
+	}	
+	
+	public int getLeftHitBox() {
+		return leftHitBox;
+	}
+	
+	public int getRightHitBox() {
+		return rightHitBox;
 	}
 	
 	public int getTileWidth() {
@@ -89,12 +102,20 @@ public class Drawable implements Comparable<Drawable>{
 		this.yPos = yPos;
 	}
 	
-	public void setXHitBox(int xHitBox){
-		this.xHitBox = xHitBox;
+	public void setTopHitBox(int topHitBox){
+		this.topHitBox = topHitBox;
 	}
 	
-	public void setYHitBox(int yHitBox){
-		this.yHitBox = yHitBox;
+	public void setBotHitBox(int botHitBox){
+		this.botHitBox = botHitBox;
+	}
+
+	public void setLeftHitBox(int leftHitBox){
+		this.leftHitBox = leftHitBox;
+	}
+	
+	public void setRightHitBox(int rightHitBox){
+		this.rightHitBox = rightHitBox;
 	}
 	
 	public void setTileWidth(int tileWidth) {

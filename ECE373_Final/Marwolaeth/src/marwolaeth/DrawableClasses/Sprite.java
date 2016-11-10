@@ -350,7 +350,8 @@ public class Sprite extends Drawable implements willAttack{
 			setActionSequence(20);
 		}
 	}
-		
+	
+	//TODO Might need to just kill this since theres the abilities 
 	public void attack(){
 		
 	}
