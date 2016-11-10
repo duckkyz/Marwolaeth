@@ -37,8 +37,8 @@ public class Game {
 		//Testing walls
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 10; ++i){
-				drawables.add(new Wall(i*64,0));
-				drawables.add(new Wall(0,j*64));				
+			//	drawables.add(new Wall(i*64,0));
+			//	drawables.add(new Wall(0,j*64));				
 				drawables.add(new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapWidth)/64) * 64))));
 			}
 		}
@@ -86,6 +86,7 @@ public class Game {
 		if(movingS instanceof Projectile){
 			if(d instanceof Wall){
 				drawables.remove(movingS);
+				return true;
 			}
 			else{
 				return true;
@@ -174,12 +175,15 @@ public class Game {
 				if(d == movingS){								//Skip yourself because obvious
 					continue;
 				}
-				
+				if((movingS == hero) & (x == 0)){
+				//	System.out.println("New collision at: " + newMaxX + ", " + newMaxY);
+				}
 				if((newX >= d.getXPos()) & (newX <= (d.getXPos() + 64))){ 			//Collision from the left
 					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
-						if(movingS == hero)
-						System.out.println("collision 1");
+						if(movingS == hero){
+					//		System.out.println("collision 1");
+						}
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
@@ -203,12 +207,18 @@ public class Game {
 						else if(movingS.getDirection() == 270){
 							canGoLeft = false;
 						}
+						else if(movingS.getDirection() == 315){
+							if((collision1Count > 1) & (collision3Count == 0)){
+								canGoLeft = false;
+							}
+						}
 					}
 					
 					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
-						if(movingS == hero)
-						System.out.println("collision 2");
+						if(movingS == hero){
+						//	System.out.println("collision 2");
+						}
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
@@ -237,7 +247,7 @@ public class Game {
 				else if ((newMaxX >= d.getXPos()) & (newMaxX <= (d.getXPos() + 64))){	//Collision from the right
 					if((newY >= d.getYPos()) & (newY <= (d.getYPos() + 64))){
 						if(movingS == hero){
-							System.out.println("collision 3 for " + d.getClass().getSimpleName() + "' " + d.getXPos() + " " + d.getYPos());
+						//	System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
 						//TODO : fix the collision issue for smaller hit boxes
 						//Projectile handling happens here, if it should continue it will
@@ -253,6 +263,10 @@ public class Game {
 							canGoUp = false;
 						}
 						
+						if((collision3Count > 1) & (movingS.getDirection() == 45)){
+							canGoRight = false;
+						}
+						
 						else if(movingS.getDirection() == 90){
 							canGoRight = false;
 						}
@@ -266,8 +280,9 @@ public class Game {
 						}
 					}
 					else if((newMaxY >= (d.getYPos())) & (newMaxY <= (d.getYPos() + 64))){
-						if(movingS == hero)
-						System.out.println("collision 4");
+						if(movingS == hero){
+						//	System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+						}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;

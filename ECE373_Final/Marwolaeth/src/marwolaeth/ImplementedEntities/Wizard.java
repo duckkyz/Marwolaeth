@@ -20,7 +20,7 @@ public class Wizard extends Hero{
 		setYHitBox(46);
 		setTileWidth(64);
 		setTileHeight(64);
-		setSpeed(6);
+		//setSpeed(6);
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Wizard.png")));
 		} 

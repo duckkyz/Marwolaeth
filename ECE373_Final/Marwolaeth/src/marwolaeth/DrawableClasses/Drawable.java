@@ -125,7 +125,7 @@ public class Drawable implements Comparable<Drawable>{
 		int compareXPos = ((Drawable) compareDrawable).getXPos();
 		
 		int yDif = this.getYPos() - compareDrawable.getYPos();
-		return yDif + (this.getXPos() - compareXPos);
+		return yDif - (this.getXPos() - compareXPos);
 		
 	}
 	
