@@ -62,17 +62,6 @@ public abstract class Hero extends Sprite{
 		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
 			continueSequence();								//Moved to Sprite to generalize movement
-			//Below stuff remains because sprites dont have execute ability methods
-			if(getActionSequence() >= 0 & getActionSequence() <= 3) {						//spell-casting
-				if(getActionStep() == 5) {
-					executeAbility(getEffectiveDirection());
-				}
-			}
-			else if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
-				if(getActionStep() == 9) {													//frame 9 matches arrow release
-					executeAbility(getEffectiveDirection());
-				}
-			}
 		}
 		else
 			setIsMoving(true);

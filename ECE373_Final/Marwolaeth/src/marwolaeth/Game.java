@@ -499,7 +499,9 @@ public class Game {
 		hero.doLogic(keySet);
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
-			d.doLogic();
+			if(d instanceof Sprite){
+				d.doLogic();
+			}
 		}
 	}
 	

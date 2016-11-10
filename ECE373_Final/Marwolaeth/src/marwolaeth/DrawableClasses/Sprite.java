@@ -395,12 +395,14 @@ public class Sprite extends Drawable implements willAttack{
 	public void doLogic() {
 		//Check to see if dead
 		if(getHealth() <= 0){
-			if(getActionSequence() == 20){
-			//TODO this should set the actionstep to 20 and action sequence to 0, but then it should never reset this again
+			if(getActionSequence() != 20){
 				System.out.println(getClass().getSimpleName() + " is dead, will remove from game.");
 				setActionSequence(20);
 				setActionStep(0);
+				setIsMoving(false);
 			}
+			continueSequence();
+			return;
 		}
 		
 		//randomize direction 
@@ -443,8 +445,9 @@ public class Sprite extends Drawable implements willAttack{
 				}
 			}
 		}
-		else
+		else{
 			setIsMoving(true);
+		}
 		
 		if(getMoveCasting() == true)
 			setIsMoving(true);

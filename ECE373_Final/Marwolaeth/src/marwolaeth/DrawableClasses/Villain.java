@@ -26,20 +26,4 @@ public abstract class Villain extends Sprite  implements willAttack{
 	
 	public abstract void ability4Execute(int direction);
 	
-	public void executeAbility(int direction){
-		switch(getInvokedAbility()){
-			case 1: 
-				ability1Execute(direction);
-				break;
-			case 2:
-				ability2Execute(direction);
-				break;
-			case 3:
-				ability3Execute(direction);
-				break;
-			case 4:
-				ability4Execute(direction);
-				break;
-			}
-	}
 }
