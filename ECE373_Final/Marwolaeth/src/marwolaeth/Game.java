@@ -26,7 +26,7 @@ public class Game {
 		return hero;
 	}
 	
-	public ArrayList<Drawable> getDrawables() {
+	public static ArrayList<Drawable> getDrawables() {
 		return drawables;
 	}
 	
@@ -169,7 +169,6 @@ public class Game {
 	}
 	
 	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
-		//TODO need to make this so it uses the 'hit box' parameters from each sprite
 		Collections.sort(drawables, Drawable.PosComparator);				//Sorts drawables so there is no need for spawn order collision casing
 		Drawable movingD;													
 		
@@ -564,10 +563,10 @@ public class Game {
 	
 	public void moveDrawables(){
 		hero.move();
-		for(int x = 0; drawables.size() > x; x++){
-			Drawable d = drawables.get(x);
-			d.move();
-		}
+		//for(int x = 0; drawables.size() > x; x++){
+		//	Drawable d = drawables.get(x);
+		//	d.move();
+		//}
 	}
 	
 	public void executeAttacks(){
@@ -595,6 +594,6 @@ public class Game {
 		moveDrawables();
 		
 		//Do attacks for everything
-		executeAttacks();
+		//executeAttacks();
 	}
 }

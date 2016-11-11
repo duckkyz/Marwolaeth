@@ -15,7 +15,6 @@ import marwolaeth.Game;
 import marwolaeth.Interfaces.willAttack;
 
 public class Sprite extends Drawable implements willAttack{
-	//TODO : Hitboxes
 	private boolean moveCasting = false;
 	private boolean staticMovement = false;
 	private boolean isMoving = false;
@@ -23,6 +22,8 @@ public class Sprite extends Drawable implements willAttack{
 	private int invokedAbility = 0;					//used to keep track of which ability was issued for cases when multiple abilities use the same actionSequence
 	private int speed = 12;							//make only divisible by 2
 	private int direction = 0;
+	private int attackRange = 16;					//Test value, will need tuning
+	private int attackDamage = 10;
 	
 	private boolean isAttacking = false;
 	
@@ -89,6 +90,14 @@ public class Sprite extends Drawable implements willAttack{
 		return mana;
 	}
 	
+	public int getAttackRange(){
+		return attackRange;
+	}
+
+	public int getAttackDamage(){
+		return attackDamage;
+	}
+	
 	public void setMoveCasting(boolean moveCasting) {
 		this.moveCasting = moveCasting;
 		this.isMoving = moveCasting;					//this line is intentional
@@ -128,6 +137,14 @@ public class Sprite extends Drawable implements willAttack{
 	
 	public void setMana(int mana) {
 		this.mana = mana;
+	}
+	
+	public void setAttackRange(int attackRange){
+		this.attackRange = attackRange;
+	}
+	
+	public void setAttackDamage(int attackRange){
+		this.attackDamage = attackDamage;
 	}
 	
 	@Override
@@ -215,6 +232,7 @@ public class Sprite extends Drawable implements willAttack{
 		
 		else if(getActionSequence() >= 12 & getActionSequence() <= 15) {				//slash
 			if(getActionStep()>5) {
+				attack();
 				setSequenceWalking();
 			}
 		}
@@ -351,9 +369,80 @@ public class Sprite extends Drawable implements willAttack{
 		}
 	}
 	
-	//TODO Might need to just kill this since theres the abilities 
 	public void attack(){
+		int newX = ((this.getXPos() + this.getLeftHitBox()));
+		int newY = ((this.getYPos() + this.getTopHitBox()));
+		int newMaxX = newX + (64 - this.getLeftHitBox() - this.getRightHitBox());	//Right
+		int newMaxY = newY + (64 - this.getTopHitBox() - this.getBotHitBox());	//Bottom
 		
+		int dX;
+		int dY;
+		int dMaxX;
+		int dMaxY;
+		
+		switch(this.getEffectiveDirection()){
+		case 0:
+			newY = newY - getAttackRange();
+			break;
+		case 90:
+			newMaxX = newMaxX + getAttackRange();
+			break;
+		case 180:
+			newMaxY = newMaxY + getAttackRange();
+			break;
+		case 270:
+			newX = newX - getAttackRange();
+			break;
+		}
+		
+		Sprite s = new Sprite(0,0,0);
+		
+		for(Drawable d : Game.getDrawables()){
+			if(d == this){
+				continue;
+			}
+			if(!(d instanceof Sprite)){
+				continue;
+			}
+			if(d instanceof Projectile){
+				continue;
+			}
+			
+			s = (Sprite)d;
+			
+			dX = ((d.getXPos() + d.getLeftHitBox()));
+			dY = ((d.getYPos() + d.getTopHitBox()));
+			dMaxX = dX + (64 - d.getLeftHitBox() - d.getRightHitBox());	//Right
+			dMaxY = dY + (64 - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+
+			if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
+				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
+					System.out.println(this.getClass().getSimpleName() + "1 is attacking " + s.getClass().getSimpleName());
+					s.setHealth(s.getHealth() - this.getAttackDamage());
+					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+				}
+				
+				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
+					System.out.println(this.getClass().getSimpleName() + "2 is attacking " + s.getClass().getSimpleName());
+					s.setHealth(s.getHealth() - this.getAttackDamage());
+					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+				}
+			}
+			
+			else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
+				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
+					System.out.println(this.getClass().getSimpleName() + "3 is attacking " + s.getClass().getSimpleName());
+					s.setHealth(s.getHealth() - this.getAttackDamage());
+					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+				}
+				
+				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
+					System.out.println(this.getClass().getSimpleName() + "4 is attacking " + s.getClass().getSimpleName());
+					s.setHealth(s.getHealth() - this.getAttackDamage());
+					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+				}				
+			}
+		}
 	}
 	
 	public BufferedImage rotate(BufferedImage image, float degreeOffset) 
@@ -434,17 +523,6 @@ public class Sprite extends Drawable implements willAttack{
 		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
 			continueSequence();								//Moved to Sprite to generalize movement
-			//Below stuff remains because sprites dont have execute ability methods
-			if(getActionSequence() >= 0 & getActionSequence() <= 3) {						//spell-casting
-				if(getActionStep() == 5) {
-					executeAbility(getEffectiveDirection());
-				}
-			}
-			else if(getActionSequence() >= 16 & getActionSequence() <= 19) {				//currently shooting
-				if(getActionStep() == 9) {													//frame 9 matches arrow release
-					executeAbility(getEffectiveDirection());
-				}
-			}
 		}
 		else{
 			setIsMoving(true);
