@@ -16,12 +16,6 @@ public class Wizard extends Hero{
 	
 	public Wizard(int direction, int xPos, int yPos) {
 		super(direction, xPos, yPos);
-
-		setTopHitBox(15);
-		setBotHitBox(2);
-		setLeftHitBox(17);
-		setRightHitBox(17);
-		
 		setTileWidth(64);
 		setTileHeight(64);
 		//setSpeed(6);
@@ -49,7 +43,11 @@ public class Wizard extends Hero{
 		abilitySetupHelper(3);	}
 	
 	public void ability3Setup() {	
-		//TODO implement this
+		setActionStep(0);
+		setMoveCasting(true);
+		setCompleteingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(0);
 	}
 	
 	public void ability4Setup() {
@@ -66,7 +64,9 @@ public class Wizard extends Hero{
 	}
 	
 	public void ability3Execute(int direction) {
-		//TODO implement this
+		Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 	}
 	
 	public void ability4Execute(int direction) {

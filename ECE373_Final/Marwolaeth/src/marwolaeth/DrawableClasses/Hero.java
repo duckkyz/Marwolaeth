@@ -14,6 +14,10 @@ public abstract class Hero extends Sprite{
 	
 	public Hero(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
+		setTopHitBox(15);
+		setBotHitBox(2);
+		setLeftHitBox(17);
+		setRightHitBox(17);
 	}
 	
 	//For Player
