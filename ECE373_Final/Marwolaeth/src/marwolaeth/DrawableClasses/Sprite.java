@@ -31,7 +31,10 @@ public class Sprite extends Drawable implements willAttack{
 	private int mana = 100;
 	
 	public Sprite(int direction, int spawnX, int spawnY) {
-		setDirection(direction);
+		if(direction < 0)
+			this.direction = direction + 360;
+		else
+			setDirection(direction);
 		setXPos(spawnX);
 		setYPos(spawnY);
 		switch(direction) {									//draws the sprite in the direction it was created in
