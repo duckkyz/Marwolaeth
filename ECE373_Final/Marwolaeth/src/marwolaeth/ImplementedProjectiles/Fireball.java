@@ -16,6 +16,10 @@ public class Fireball extends Projectile{
 	private int yRef = 0;	//Needs to know which corner the first fireball is in the png
 	private int xSlope = 1;				//Needs to know if there is a positive or negative slope when transitioning frames
 	private int ySlope = 1;
+	private int xStart = 0;		//used in paint to find the correct starting/finishing coords from png file
+	private int xStop = 0;
+	private int yStart = 0;
+	private int yStop = 0;
 	
 	public Fireball(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY, heroProjectile);
@@ -33,10 +37,10 @@ public class Fireball extends Projectile{
 		setTileWidth((int)(22+42*Math.abs(Math.sin(Math.toRadians(direction)))));
 		setTileHeight((int)(22+42*Math.abs(Math.cos(Math.toRadians(direction)))));
 		setIsMoving(true);
-		//setXPos(getXPos()-getTileWidth()/2);
-		//setYPos(getYPos()-getTileHeight()/2);
+		setXPos(getXPos()-getTileWidth()/2);
+		setYPos(getYPos()-getTileHeight()/2);
 		
-		System.out.println(getDirection()+" "+getTileWidth()+" "+getTileHeight());
+		System.out.println(getDirection()+" "+getTileWidth()+" "+getTileHeight()+" xRef: "+getGraphic().getWidth()+" yRef: "+getGraphic().getHeight());
 		
 		if(direction >= 0 & direction <= 90) {
 			xRef = getGraphic().getWidth();
@@ -72,7 +76,7 @@ public class Fireball extends Projectile{
 			setActionSequence(0);
 		else
 			setActionSequence(getActionSequence()+1);
-		//setActionSequence(3);
+		//setActionSequence(0);
 	}
 	
 	public void attack(Sprite beingAttacked){
@@ -84,7 +88,33 @@ public class Fireball extends Projectile{
 	}
 	
 	public void paint(Graphics imageGraphics) {			
-		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+		//imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
 		//imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+xSlope*getTileWidth(), getYPos()+ySlope*getTileHeight(), xRef+xSlope*getActionSequence()*getTileWidth(), yRef+ySlope*getActionSequence()*getTileHeight(), xRef+xSlope*getActionSequence()*getTileWidth()+xSlope*getTileWidth(), yRef+ySlope*getActionSequence()*getTileHeight()+ySlope*getTileHeight(), null);
+		
+		if(getDirection() >= 0 & getDirection() <= 90) {
+			xStart = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8;
+			xStop = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8+getTileWidth();
+			yStart = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8;
+			yStop = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8+getTileWidth();
+		}
+		else if(getDirection() >= 90 & getDirection() <= 180) {
+			xStart = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8;
+			xStop = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8+getTileWidth();
+			yStart = yRef+ySlope*getTileWidth()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8;
+			yStop = yRef+ySlope*getTileWidth()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8+getTileWidth();
+		}
+		else if(getDirection() >= 180 & getDirection() <= 270) {
+			xStart = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8;
+			xStop = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8+getTileWidth();
+			yStart = yRef+ySlope*getTileWidth()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8;
+			yStop = yRef+ySlope*getTileWidth()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8+getTileWidth();
+		}
+		else if(getDirection() >= 270 & getDirection() <= 360) {
+			xStart = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8;
+			xStop = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth())/8+getTileWidth();
+			yStart = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8;
+			yStop = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight())/8+getTileWidth();
+		}
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), xStart, yStart, xStop, yStop, null);
 	}
 }
