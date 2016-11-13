@@ -608,10 +608,10 @@ public class Game {
 		hero.move();
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
-//			if((d instanceof Sprite) & !(d instanceof Projectile)){
-//				Sprite s = (Sprite)d;
-//				s.setHealth(s.getHealth() - 1);
-//			}
+			if((d instanceof Sprite) & !(d instanceof Projectile)){
+				Sprite s = (Sprite)d;
+				s.setHealth(s.getHealth() - 1);
+			}
 			d.move();
 		}
 	}

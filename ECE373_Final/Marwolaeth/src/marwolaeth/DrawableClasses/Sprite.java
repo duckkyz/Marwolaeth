@@ -1,3 +1,19 @@
+package marwolaeth.DrawableClasses;
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
+import marwolaeth.Game;
+import marwolaeth.ImplementedEntities.Orc;
+import marwolaeth.Interfaces.willAttack;
+
 public class Sprite extends Drawable implements willAttack{
 	private boolean moveCasting = false;
 	private boolean staticMovement = false;
