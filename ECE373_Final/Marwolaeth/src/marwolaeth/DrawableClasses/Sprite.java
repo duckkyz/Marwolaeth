@@ -1,19 +1,3 @@
-package marwolaeth.DrawableClasses;
-
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.RenderingHints;
-import java.awt.Transparency;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-
-import marwolaeth.Game;
-import marwolaeth.Interfaces.willAttack;
-
 public class Sprite extends Drawable implements willAttack{
 	private boolean moveCasting = false;
 	private boolean staticMovement = false;
@@ -150,51 +134,32 @@ public class Sprite extends Drawable implements willAttack{
 		this.attackDamage = attackDamage;
 	}
 	
-	@Override
-	public void ability1Setup() {
-		// TODO Auto-generated method stub
-		
+	public void ability1Setup() {		
 	}
 
-	@Override
-	public void ability2Setup() {
-		// TODO Auto-generated method stub
-		
+	
+	public void ability2Setup() {		
 	}
 
-	@Override
-	public void ability3Setup() {
-		// TODO Auto-generated method stub
-		
+	public void ability3Setup() {		
 	}
 
-	@Override
 	public void ability4Setup() {
-		// TODO Auto-generated method stub
-		
 	}
 
-	@Override
 	public void ability1Execute(int direction) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void ability2Execute(int direction) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void ability3Execute(int direction) {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void ability4Execute(int direction) {
-		// TODO Auto-generated method stub
 		
 	}
 		
@@ -229,6 +194,7 @@ public class Sprite extends Drawable implements willAttack{
 		
 		else if(getActionSequence() >= 4 & getActionSequence() <= 7) {					//thrusting 
 			if(getActionStep()>7) {
+				attack();
 				setSequenceWalking();
 			}
 		}
@@ -400,12 +366,19 @@ public class Sprite extends Drawable implements willAttack{
 		
 		Sprite s = new Sprite(0,0,0);
 		
+		boolean heroChecked = false;
 		for(Drawable d : Game.getDrawables()){
 			if(d == this){
 				continue;
 			}
 			if(!(d instanceof Sprite)){
-				continue;
+				if(heroChecked == false){
+					d = Game.getHero();
+					heroChecked = true;
+				}
+				else{
+					continue;
+				}
 			}
 			if(d instanceof Projectile){
 				continue;
@@ -500,7 +473,7 @@ public class Sprite extends Drawable implements willAttack{
 		
 		//randomize direction 
 		if(!(Game.getHero() == this)){
-			if(getIsMoving() == false){
+			if((getIsMoving() == false) & (getIsAttacking() == false) & (!(this instanceof Orc))){
 				setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
 			}
 		}
@@ -508,6 +481,7 @@ public class Sprite extends Drawable implements willAttack{
 		if(getIsAttacking() & getCompleteingSequence() != true) {
 			setInvokedAbility(1);							//records that the current ability being used is Q
 			ability1Setup();
+			setIsAttacking(false);
 		}
 		/*
 		if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
