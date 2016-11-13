@@ -1,3 +1,17 @@
+package marwolaeth.ImplementedEntities;
+
+import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import marwolaeth.Game;
+import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.ImplementedProjectiles.Arrow;
+import marwolaeth.ImplementedProjectiles.Fireball;
+
+
 public class Wizard extends Hero{
 	
 	public Wizard(int direction, int xPos, int yPos) {
