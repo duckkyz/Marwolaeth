@@ -51,13 +51,25 @@ public class Archer extends Hero{
 	
 	
 	public void ability1Execute(int direction) {
-		Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		if(this == Game.getHero()){
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		}
+		else{
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+		}
 	}
 
 	public void ability2Execute(int direction) {
-		Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		if(this == Game.getHero()){
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		}
+		else{
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+		}
 	}
 	
 	public void ability3Execute(int direction) {
@@ -68,4 +80,36 @@ public class Archer extends Hero{
 		//TODO implement this
 	}
 
+	public void doLogic(){
+		int xDistFromHero = getXPos() - Game.getHero().getXPos();
+		int yDistFromHero = getYPos() - Game.getHero().getYPos();
+		
+		switch(getEffectiveDirection()){
+			case 0:
+				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < 2000))){
+					setIsAttacking(true);
+				}
+				break;
+			case 90:
+				if(((xDistFromHero > -2000) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+					setIsAttacking(true);
+				}
+				break;
+			case 180:
+				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -2000) & (yDistFromHero < 0))){
+					setIsAttacking(true);
+				}
+				break;
+			case 270:
+				if(((xDistFromHero > 0) & (xDistFromHero < 2000)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+					setIsAttacking(true);
+				}
+				break;
+		}
+		
+		super.doLogic();
+		if(getIsAttacking() == true){
+			setIsMoving(false);
+		}
+	}
 }
