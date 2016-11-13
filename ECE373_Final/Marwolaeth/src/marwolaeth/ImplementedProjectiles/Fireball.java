@@ -57,24 +57,40 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 		setYPos(getYPos()-getTileHeight()/2);
 		
 		if(direction >= 0 & direction <= 90) {
+			setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
 			xRef = getGraphic().getWidth();
 			yRef = 0;
 			xSlope = -1;
 			ySlope = 1;
 		}
 		else if(direction >= 90 & direction <= 180) {
+			setTopHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
 			xRef = getGraphic().getWidth();
 			yRef = getGraphic().getHeight();
 			xSlope = -1;
 			ySlope = -1;
 		}
 		else if(direction >= 180 & direction <= 270) {
+			setTopHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
 			xRef = 0;
 			yRef = getGraphic().getHeight();
 			xSlope = 1;
 			ySlope = -1;
 		}
 		else if(direction >= 270 & direction <= 360) {
+			setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
 			xRef = 0;
 			yRef = 0;
 			xSlope = 1;
@@ -146,7 +162,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			xStop = xSmoother*getActionSequence()   +xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
 			yStart = ySmoother*getActionSequence()  +yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
 			yStop = ySmoother*getActionSequence()   +yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
-			System.out.println("Direction: "+getDirection()+" xref: "+xRef+" As: "+getActionSequence()+" xStart: "+xStart+" xStop: "+xStop+" yStart: "+yStart+" yStop: "+yStop+" Graphic Width: "+getGraphic().getWidth()+" Graphic Height: "+ getGraphic().getHeight()+" Tile Width: "+getTileWidth()+" Title Hieght: "+getTileHeight());
+			//System.out.println("Direction: "+getDirection()+" xref: "+xRef+" As: "+getActionSequence()+" xStart: "+xStart+" xStop: "+xStop+" yStart: "+yStart+" yStop: "+yStop+" Graphic Width: "+getGraphic().getWidth()+" Graphic Height: "+ getGraphic().getHeight()+" Tile Width: "+getTileWidth()+" Title Hieght: "+getTileHeight());
 
 		}
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), xStart, yStart, xStop, yStop, null);

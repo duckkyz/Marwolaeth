@@ -15,6 +15,10 @@ public class Orc extends Villain {
 		setTileWidth(64);
 		setTileHeight(64);
 		setSpeed(12);
+		setTopHitBox(15);
+		setBotHitBox(2);
+		setLeftHitBox(17);
+		setRightHitBox(17);
 		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Orc.png")));

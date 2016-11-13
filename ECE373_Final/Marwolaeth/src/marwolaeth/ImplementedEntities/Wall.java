@@ -12,7 +12,7 @@ import marwolaeth.DrawableClasses.Drawable;
 
 public class Wall extends Drawable {
 	private static BufferedImage img;
-		
+	
 	public Wall(int x, int y){
 		if(img == null){
 			try {
@@ -23,6 +23,10 @@ public class Wall extends Drawable {
 				e.printStackTrace();
 			}
 		}
+		setTopHitBox(0);
+		setBotHitBox(0);
+		setLeftHitBox(0);
+		setRightHitBox(0);
 		this.setXPos(x);
 		this.setYPos(y);
 		setActionStep((int) (12 + Math.floor(Math.random() * 5)));		//column

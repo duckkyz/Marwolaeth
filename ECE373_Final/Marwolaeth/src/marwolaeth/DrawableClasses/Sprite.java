@@ -33,6 +33,9 @@ public class Sprite extends Drawable implements willAttack{
 	public Sprite(int direction, int spawnX, int spawnY) {
 		if(direction < 0)
 			this.direction = direction + 360;
+		else if(direction/360 >= 1) {
+			this.direction = direction - (int)Math.floor((direction/360));
+		}
 		else
 			setDirection(direction);
 		setXPos(spawnX);
@@ -135,7 +138,11 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public void setHealth(int health) {
-		this.health = health;
+		if(health < 0)
+			this.health = 0;
+		else
+			this.health = health;
+	
 	}
 	
 	public void setMana(int mana) {

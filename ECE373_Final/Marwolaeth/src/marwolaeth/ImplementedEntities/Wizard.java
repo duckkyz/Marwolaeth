@@ -44,14 +44,18 @@ public class Wizard extends Hero{
 	
 	public void ability3Setup() {	
 		setActionStep(0);
-		setMoveCasting(true);
+		setMoveCasting(false);
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(0);
 	}
 	
 	public void ability4Setup() {
-		//TODO implement this
+		setActionStep(0);
+		setMoveCasting(true);
+		setCompleteingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(0);
 	}
 
 	public void ability1Execute(int direction) {
@@ -76,7 +80,13 @@ public class Wizard extends Hero{
 	}
 	
 	public void ability4Execute(int direction) {
-		//TODO implement this
+		Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction-60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction+60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction-90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		Game.addDrawable(new Fireball(direction+90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 	}
 
 	public void doLogic(){
