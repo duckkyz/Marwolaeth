@@ -17,6 +17,9 @@ public class Game {
 	private static Hero hero;
 	private final int mapHeight = 2*1080;
 	private final int mapWidth = 2*1920;
+	private int currentWave = 0;
+	private boolean waveDoneSpawning = true;
+	private int spawnCounter = 0;
 	
 	public Game() {
 		setUpGame();
@@ -44,6 +47,7 @@ public class Game {
 		
 	public void setUpGame(){
 		//Removes all things from game so it starts fresh
+		currentWave = 0;
 		drawables.removeAll(drawables);
 
 		//This makes the walls around the edge.
@@ -58,6 +62,7 @@ public class Game {
 		}
 		
 		//Testing walls
+		
 		Wall spawnWall = new Wall(0,0);
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 10; ++i){
@@ -71,13 +76,14 @@ public class Game {
 				drawables.add(spawnWall);
 			}
 		}
+		
 		drawables.add(new Wall(186,186));
 		drawables.add(new Wall(186,314));
 		drawables.add(new Wall(314,186));
 		drawables.add(new Wall(314,314));
 		
 		Sprite spawnSprite = new Sprite(0,0,0);
-		for(int i = 0; i < 30; ++i){
+		for(int i = 0; i < 3; ++i){
 			int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
 			int orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
 			int orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
@@ -161,11 +167,80 @@ public class Game {
 				drawables.remove(d);
 			}
 			else if(!(p.getIsFromHero()) & (movingS == hero)){
+				if(d instanceof Sprite){
+					p.attack(movingS);
+				}
 				drawables.remove(d);
 			}
 			return true;
 		}
 		return false;
+	}
+	
+	private void spawnNewWave(int currentWave) {
+		if(waveDoneSpawning == false){
+			Sprite spawnSprite = new Sprite(0,0,0);
+			int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
+			int orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+			int orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);				
+			while((checkCanSpawn(spawnSprite) == false) & (drawables.size() < mapWidth*mapHeight)){
+				orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
+				orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+				orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
+				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
+			}
+			
+			if(spawnCounter%3 == 0){
+				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+			}
+			else if(spawnCounter%3 == 1){
+				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+			}
+			else{
+				drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+			}
+			
+			++spawnCounter;
+			if(spawnCounter > currentWave){
+				waveDoneSpawning = true;
+				++this.currentWave;
+			}	
+		}
+		
+		
+		
+	}
+	
+	public void checkForOutsideMap(){
+		for(int x = 0; drawables.size() > x; x++){
+			Drawable d = drawables.get(x);
+			if(d.getXPos() > mapWidth){
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+			else if(d.getXPos() < 0){
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+			else if(d.getYPos() > mapHeight){
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+			else if(d.getYPos() < 0) {
+				System.out.println("Removing " + d.toString());
+				removeDrawable(d);
+			}
+		}
+	}
+	
+	public void setUpMovements(Set keySet){
+		hero.doLogic(keySet);
+		for(int x = 0; drawables.size() > x; x++){
+			Drawable d = drawables.get(x);
+			if(d instanceof Sprite){
+				d.doLogic();
+			}
+		}
 	}
 	
 	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
@@ -529,58 +604,33 @@ public class Game {
 		}
 	}
 	
-	public void checkForOutsideMap(){
-		for(int x = 0; drawables.size() > x; x++){
-			Drawable d = drawables.get(x);
-			if(d.getXPos() > mapWidth){
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-			else if(d.getXPos() < 0){
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-			else if(d.getYPos() > mapHeight){
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-			else if(d.getYPos() < 0) {
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-		}
-	}
-	
-	public void setUpMovements(Set keySet){
-		hero.doLogic(keySet);
-		for(int x = 0; drawables.size() > x; x++){
-			Drawable d = drawables.get(x);
-			if(d instanceof Sprite){
-				d.doLogic();
-			}
-		}
-	}
-	
 	public void moveDrawables(){
 		hero.move();
-		//for(int x = 0; drawables.size() > x; x++){
-		//	Drawable d = drawables.get(x);
-		//	d.move();
-		//}
-	}
-	
-	public void executeAttacks(){
-		hero.attack();
 		for(int x = 0; drawables.size() > x; x++){
-			if(!(drawables.get(x) instanceof Sprite)){
-				continue;
-			}
-			Sprite attackingS = (Sprite)drawables.get(x);
-			attackingS.attack();
+			Drawable d = drawables.get(x);
+//			if((d instanceof Sprite) & !(d instanceof Projectile)){
+//				Sprite s = (Sprite)d;
+//				s.setHealth(s.getHealth() - 1);
+//			}
+			d.move();
 		}
 	}
-	
-	public void doGameLogic(Set keySet) {		
+		
+	public void doGameLogic(Set keySet) {	
+		//Check if all non hero entities are dead, if so spawn a new wave
+		int waveCounter = 0;
+		for(Drawable d : drawables){
+			if(d instanceof Sprite){
+				++waveCounter;
+			}
+		}
+		if(waveCounter == 0){
+			System.out.println("Spawning new wave");
+			spawnCounter = 0;
+			this.waveDoneSpawning = false;
+		}
+		spawnNewWave(currentWave);
+		
 		//Check to see if things are outside the map, if so remove them
 		checkForOutsideMap();
 		
@@ -592,8 +642,7 @@ public class Game {
 		
 		//Move if can
 		moveDrawables();
-		
-		//Do attacks for everything
-		//executeAttacks();
 	}
+
+
 }
