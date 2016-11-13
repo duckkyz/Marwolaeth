@@ -90,7 +90,8 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			setActionSequence(0);
 		else
 			setActionSequence(getActionSequence()+1);
-		//setActionSequence(0);
+		//setActionSequence(5);
+		
 	}
 	
 	public void attack(Sprite beingAttacked){
@@ -102,29 +103,51 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 	}
 	
 	public void paint(Graphics imageGraphics) {			
-		if(getDirection() >= 0 & getDirection() <= 90) {
-			xStart = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
-			xStop = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
-			yStart = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
-			yStop = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+		if(getDirection() == 0 | getDirection() == 180) {
+			xStart = 0;
+			xStop = getTileWidth();
+			yStart = getActionSequence()*getTileHeight();
+			yStop = getActionSequence()*getTileHeight()+getTileHeight();
 		}
-		else if(getDirection() >= 90 & getDirection() <= 180) {
-			xStart = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
-			xStop = xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
-			yStart = yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
-			yStop = yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+		else if(getDirection() == 90 | getDirection() == 270) {
+			xStart = getActionSequence()*getTileWidth();
+			xStop = getActionSequence()*getTileWidth()+getTileWidth();
+			yStart = 0;
+			yStop = getTileHeight();
 		}
-		else if(getDirection() >= 180 & getDirection() <= 270) {
-			xStart = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
-			xStop = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
-			yStart = yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
-			yStop = yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+		else if(getDirection() > 0 & getDirection() < 90) {
+			int xSmoother = (int)(1+Math.round(Math.cos(Math.toRadians(getDirection()))));
+			int ySmoother = (int)(-1-Math.round(Math.sin(Math.toRadians(getDirection()))));
+			xStart = xSmoother*getActionSequence()  +xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
+			xStop = xSmoother*getActionSequence()   +xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
+			yStart = ySmoother*getActionSequence()  +yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
+			yStop = ySmoother*getActionSequence()   +yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
 		}
-		else if(getDirection() >= 270 & getDirection() <= 360) {
-			xStart = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
-			xStop = xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
-			yStart = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
-			yStop = yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+		else if(getDirection() > 90 & getDirection() < 180) {
+			int xSmoother = (int)(1+Math.abs(Math.round(Math.cos(Math.toRadians(getDirection())))));
+			int ySmoother = (int)(1+Math.abs(Math.round(Math.sin(Math.toRadians(getDirection())))));
+			xStart = xSmoother*getActionSequence()  +xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
+			xStop = xSmoother*getActionSequence()   +xRef+xSlope*getTileWidth()+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
+			yStart = ySmoother*getActionSequence()  +yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
+			yStop = ySmoother*getActionSequence()   +yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+		}
+		else if(getDirection() > 180 & getDirection() < 270) {
+			int xSmoother = (int)(-1-Math.abs(Math.round(Math.cos(Math.toRadians(getDirection())))));
+			int ySmoother = (int)(1+Math.abs(Math.round(Math.sin(Math.toRadians(getDirection())))));
+			xStart = xSmoother*getActionSequence()  +xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
+			xStop = xSmoother*getActionSequence()   +xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
+			yStart = ySmoother*getActionSequence()  +yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
+			yStop = ySmoother*getActionSequence()   +yRef+ySlope*getTileHeight()+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+		}
+		else if(getDirection() > 270 & getDirection() < 360) {
+			int xSmoother = (int)(-1-Math.abs(Math.round(Math.cos(Math.toRadians(getDirection())))));
+			int ySmoother = (int)(-1-Math.abs(Math.round(Math.sin(Math.toRadians(getDirection())))));
+			xStart = xSmoother*getActionSequence()  +xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames;
+			xStop = xSmoother*getActionSequence()   +xRef+xSlope*getActionSequence()*(getGraphic().getWidth()-getTileWidth()*(int)Math.abs(Math.cos(Math.toRadians(getDirection()))))/numOfFrames+getTileWidth();
+			yStart = ySmoother*getActionSequence()  +yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames;
+			yStop = ySmoother*getActionSequence()   +yRef+ySlope*getActionSequence()*(getGraphic().getHeight()-getTileHeight()*(int)Math.abs(Math.sin(Math.toRadians(getDirection()))))/numOfFrames+getTileHeight();
+			System.out.println("Direction: "+getDirection()+" xref: "+xRef+" As: "+getActionSequence()+" xStart: "+xStart+" xStop: "+xStop+" yStart: "+yStart+" yStop: "+yStop+" Graphic Width: "+getGraphic().getWidth()+" Graphic Height: "+ getGraphic().getHeight()+" Tile Width: "+getTileWidth()+" Title Hieght: "+getTileHeight());
+
 		}
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), xStart, yStart, xStop, yStop, null);
 	}
