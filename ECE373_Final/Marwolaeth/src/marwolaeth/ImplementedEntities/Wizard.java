@@ -74,19 +74,38 @@ public class Wizard extends Hero{
 	}
 	
 	public void ability3Execute(int direction) {
-		Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		if(this == Game.getHero()){
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		}
+		else{
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+		}
 	}
 	
 	public void ability4Execute(int direction) {
-		Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction-60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction+60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction-90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		Game.addDrawable(new Fireball(direction+90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		if(this == Game.getHero()){
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction-60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction+60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction-90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Fireball(direction+90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		}
+		else{
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction-60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction+60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction-90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Fireball(direction+90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+		}
+		
 	}
 
 	public void doLogic(){

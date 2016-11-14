@@ -110,8 +110,8 @@ public class Game {
 	public boolean checkCanSpawn(Drawable toSpawn){
 		int newX = ((toSpawn.getXPos() + toSpawn.getLeftHitBox()));
 		int newY = ((toSpawn.getYPos() + toSpawn.getTopHitBox()));
-		int newMaxX = newX + (64 - toSpawn.getLeftHitBox() - toSpawn.getRightHitBox());	//Right
-		int newMaxY = newY + (64 - toSpawn.getTopHitBox() - toSpawn.getBotHitBox());	//Bottom
+		int newMaxX = newX + (toSpawn.getTileWidth() - toSpawn.getLeftHitBox() - toSpawn.getRightHitBox());	//Right
+		int newMaxY = newY + (toSpawn.getTileHeight() - toSpawn.getTopHitBox() - toSpawn.getBotHitBox());	//Bottom
 		
 		int dX;
 		int dY;
@@ -122,8 +122,8 @@ public class Game {
 		for(Drawable d : drawables){
 			dX = ((d.getXPos() + d.getLeftHitBox()));
 			dY = ((d.getYPos() + d.getTopHitBox()));
-			dMaxX = dX + (64 - d.getLeftHitBox() - d.getRightHitBox());	//Right
-			dMaxY = dY + (64 - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+			dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
+			dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
 			
 			if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
