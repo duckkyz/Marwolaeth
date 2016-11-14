@@ -56,6 +56,10 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 		setXPos(getXPos()-getTileWidth()/2);
 		setYPos(getYPos()-getTileHeight()/2);
 		
+		//TODO: Could maybe refactor this:
+		// Have the sin/cos functions go from Math.abs(0:30) and then add 2
+		// Will look into it, dont know how simple it would be, but might save the need for direction statements
+		//
 		if(direction >= 0 & direction <= 90) {
 			setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
 			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4

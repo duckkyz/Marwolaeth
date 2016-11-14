@@ -23,10 +23,8 @@ public class Wall extends Drawable {
 				e.printStackTrace();
 			}
 		}
-		setTopHitBox(0);
-		setBotHitBox(0);
-		setLeftHitBox(0);
-		setRightHitBox(0);
+		//Removed these because by default drawable has hitbox sizes of 0, so its redundant to add them here.
+		
 		this.setXPos(x);
 		this.setYPos(y);
 		setActionStep((int) (12 + Math.floor(Math.random() * 5)));		//column
