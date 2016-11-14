@@ -161,13 +161,13 @@ public class Game {
 			System.out.println(movingS.getClass().getSimpleName() + " was hit by a projectile");
 			Projectile p = (Projectile) d;
 			if(p.getIsFromHero() & (!(movingS == hero))){
-				if(d instanceof Sprite){
+				if((d instanceof Hero) | (d instanceof Villain)){
 					p.attack(movingS);
 				}
 				drawables.remove(d);
 			}
 			else if(!(p.getIsFromHero()) & (movingS == hero)){
-				if(d instanceof Sprite){
+				if((d instanceof Hero) | (d instanceof Villain)){
 					p.attack(movingS);
 				}
 				drawables.remove(d);

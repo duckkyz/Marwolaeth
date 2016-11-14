@@ -65,6 +65,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
 			setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
 			setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
+			System.out.println(getTopHitBox() + " " + getBotHitBox() + " " + getLeftHitBox() + " " + getRightHitBox());
 			xRef = getGraphic().getWidth();
 			yRef = 0;
 			xSlope = -1;
@@ -75,6 +76,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
 			setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
 			setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
+			System.out.println(getTopHitBox() + " " + getBotHitBox() + " " + getLeftHitBox() + " " + getRightHitBox());
 			xRef = getGraphic().getWidth();
 			yRef = getGraphic().getHeight();
 			xSlope = -1;
@@ -85,6 +87,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
 			setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
 			setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
+			System.out.println(getTopHitBox() + " " + getBotHitBox() + " " + getLeftHitBox() + " " + getRightHitBox());
 			xRef = 0;
 			yRef = getGraphic().getHeight();
 			xSlope = 1;
@@ -95,6 +98,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
 			setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
 			setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
+			System.out.println(getTopHitBox() + " " + getBotHitBox() + " " + getLeftHitBox() + " " + getRightHitBox());
 			xRef = 0;
 			yRef = 0;
 			xSlope = 1;
