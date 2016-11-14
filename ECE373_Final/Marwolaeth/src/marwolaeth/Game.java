@@ -206,9 +206,6 @@ public class Game {
 				++this.currentWave;
 			}	
 		}
-		
-		
-		
 	}
 	
 	public void checkForOutsideMap(){

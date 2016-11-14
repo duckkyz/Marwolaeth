@@ -32,7 +32,11 @@ public class Sprite extends Drawable implements willAttack{
 	
 	public Sprite(int direction, int spawnX, int spawnY) {
 		
-		setDirection(Math.abs(direction) % 361);
+		if(direction < 0){
+			direction = 360 + direction;
+		}
+		setDirection(direction % 361);
+		System.out.println(getDirection());
 		setXPos(spawnX);
 		setYPos(spawnY);
 		switch(direction) {									//draws the sprite in the direction it was created in
