@@ -11,8 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
-import marwolaeth.ImplementedEntities.Archer;
-import marwolaeth.ImplementedEntities.Wizard;
+import marwolaeth.ImplementedEntities.*;
 
 public class HeroSelectScreen extends GameState{
 
@@ -38,6 +37,14 @@ public class HeroSelectScreen extends GameState{
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_A) {
 			Game.setHero(new Archer(180, heroXSpawn, heroYSpawn));
+			PlayScreen playScreen = new PlayScreen();
+			getRootContainer().remove(this);
+			getRootContainer().add(playScreen);
+			getRootContainer().doLayout();
+			getRootContainer().repaint();
+		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_K) {
+			Game.setHero(new Knight(180, heroXSpawn, heroYSpawn));
 			PlayScreen playScreen = new PlayScreen();
 			getRootContainer().remove(this);
 			getRootContainer().add(playScreen);

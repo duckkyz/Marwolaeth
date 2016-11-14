@@ -153,26 +153,30 @@ public class Game {
 				drawables.remove(movingS);
 				return true;
 			}
-			else{
+			else if(d instanceof Projectile){
 				return true;
 			}
-		}
-		else if(d instanceof Projectile){
-			System.out.println(movingS.getClass().getSimpleName() + " was hit by a projectile");
-			Projectile p = (Projectile) d;
-			if(p.getIsFromHero() & (!(movingS == hero))){
-				if((d instanceof Hero) | (d instanceof Villain)){
-					p.attack(movingS);
+			else{
+				System.out.println(d.getClass().getSimpleName() + " was hit by a projectile");
+				if(d instanceof Sprite){
+					Projectile p = (Projectile) movingS;
+					Sprite dSprite = (Sprite) d;
+					if(p.getIsFromHero() & (!(dSprite == hero))){
+						if((dSprite instanceof Hero) | (dSprite instanceof Villain)){
+							p.attack(dSprite);
+						}
+						drawables.remove(p);
+					}
+					else if(!(p.getIsFromHero()) & (dSprite == hero)){
+						if((dSprite instanceof Hero) | (dSprite instanceof Villain)){
+							p.attack(dSprite);
+						}
+						drawables.remove(p);
+					}
+					return true;
 				}
-				drawables.remove(d);
+				return true;
 			}
-			else if(!(p.getIsFromHero()) & (movingS == hero)){
-				if((d instanceof Hero) | (d instanceof Villain)){
-					p.attack(movingS);
-				}
-				drawables.remove(d);
-			}
-			return true;
 		}
 		return false;
 	}

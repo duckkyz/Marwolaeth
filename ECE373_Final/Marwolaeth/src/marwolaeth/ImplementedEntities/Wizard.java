@@ -44,7 +44,7 @@ public class Wizard extends Hero{
 	
 	public void ability3Setup() {	
 		setActionStep(0);
-		setMoveCasting(false);
+		setMoveCasting(true);
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(0);

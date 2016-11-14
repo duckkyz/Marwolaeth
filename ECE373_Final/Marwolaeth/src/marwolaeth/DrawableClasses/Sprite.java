@@ -22,8 +22,8 @@ public class Sprite extends Drawable implements willAttack{
 	private int invokedAbility = 0;					//used to keep track of which ability was issued for cases when multiple abilities use the same actionSequence
 	private int speed = 12;							//make only divisible by 2
 	private int direction = 0;
-	private int attackRange = 16;					//Test value, will need tuning
-	private int attackDamage = 10;
+	private int attackRange;					//Test value, will need tuning
+	private int attackDamage;
 	
 	private boolean isAttacking = false;
 	
@@ -36,7 +36,6 @@ public class Sprite extends Drawable implements willAttack{
 			direction = 360 + direction;
 		}
 		setDirection(direction % 361);
-		System.out.println(getDirection());
 		setXPos(spawnX);
 		setYPos(spawnY);
 		switch(direction) {									//draws the sprite in the direction it was created in
@@ -154,13 +153,12 @@ public class Sprite extends Drawable implements willAttack{
 		this.attackRange = attackRange;
 	}
 	
-	public void setAttackDamage(int attackRange){
+	public void setAttackDamage(int attackDamage){
 		this.attackDamage = attackDamage;
 	}
 	
 	public void ability1Setup() {		
 	}
-
 	
 	public void ability2Setup() {		
 	}
@@ -365,8 +363,8 @@ public class Sprite extends Drawable implements willAttack{
 	public void attack(){
 		int newX = ((this.getXPos() + this.getLeftHitBox()));
 		int newY = ((this.getYPos() + this.getTopHitBox()));
-		int newMaxX = newX + (64 - this.getLeftHitBox() - this.getRightHitBox());	//Right
-		int newMaxY = newY + (64 - this.getTopHitBox() - this.getBotHitBox());	//Bottom
+		int newMaxX = newX + (this.getTileWidth() - this.getLeftHitBox() - this.getRightHitBox());	//Right
+		int newMaxY = newY + (this.getTileHeight() - this.getTopHitBox() - this.getBotHitBox());	//Bottom
 		
 		int dX;
 		int dY;
@@ -392,9 +390,6 @@ public class Sprite extends Drawable implements willAttack{
 		
 		boolean heroChecked = false;
 		for(Drawable d : Game.getDrawables()){
-			if(d == this){
-				continue;
-			}
 			if(!(d instanceof Sprite)){
 				if(heroChecked == false){
 					d = Game.getHero();
@@ -404,6 +399,9 @@ public class Sprite extends Drawable implements willAttack{
 					continue;
 				}
 			}
+			if(d == this){
+				continue;
+			}
 			if(d instanceof Projectile){
 				continue;
 			}
@@ -412,34 +410,42 @@ public class Sprite extends Drawable implements willAttack{
 			
 			dX = ((d.getXPos() + d.getLeftHitBox()));
 			dY = ((d.getYPos() + d.getTopHitBox()));
-			dMaxX = dX + (64 - d.getLeftHitBox() - d.getRightHitBox());	//Right
-			dMaxY = dY + (64 - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+			dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
+			dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
 
 			if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
-					System.out.println(this.getClass().getSimpleName() + "1 is attacking " + s.getClass().getSimpleName());
 					s.setHealth(s.getHealth() - this.getAttackDamage());
-					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					if(this == Game.getHero()){
+						System.out.println(this.getClass().getSimpleName() + "1 is attacking " + s.getClass().getSimpleName());
+						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					}
 				}
 				
 				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
-					System.out.println(this.getClass().getSimpleName() + "2 is attacking " + s.getClass().getSimpleName());
 					s.setHealth(s.getHealth() - this.getAttackDamage());
-					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					if(this == Game.getHero()){
+						System.out.println(this.getClass().getSimpleName() + "2 is attacking " + s.getClass().getSimpleName());
+						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					}
 				}
 			}
 			
 			else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
 				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
-					System.out.println(this.getClass().getSimpleName() + "3 is attacking " + s.getClass().getSimpleName());
 					s.setHealth(s.getHealth() - this.getAttackDamage());
-					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					if(this == Game.getHero()){
+						System.out.println(this.getClass().getSimpleName() + "3 is attacking " + s.getClass().getSimpleName());
+						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					}
 				}
 				
 				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
-					System.out.println(this.getClass().getSimpleName() + "4 is attacking " + s.getClass().getSimpleName());
 					s.setHealth(s.getHealth() - this.getAttackDamage());
-					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					if(this == Game.getHero()){
+						System.out.println(this.getClass().getSimpleName() + "4 is attacking " + s.getClass().getSimpleName());
+						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+					}
 				}				
 			}
 		}

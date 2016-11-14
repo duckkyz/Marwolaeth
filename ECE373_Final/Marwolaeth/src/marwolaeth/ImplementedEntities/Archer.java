@@ -1,3 +1,12 @@
+/*Get more sprites at : http://gaurav.munjal.us/Universal-LPC-Spritesheet-Character-Generator/
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
+
 package marwolaeth.ImplementedEntities;
 
 import java.awt.Graphics;

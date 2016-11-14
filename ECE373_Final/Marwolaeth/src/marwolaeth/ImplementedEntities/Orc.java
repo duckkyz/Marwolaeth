@@ -19,6 +19,8 @@ public class Orc extends Villain {
 		setBotHitBox(2);
 		setLeftHitBox(17);
 		setRightHitBox(17);
+		setAttackRange(16);
+		setAttackDamage(10);
 		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Orc.png")));
