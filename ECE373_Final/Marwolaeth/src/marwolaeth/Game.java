@@ -268,8 +268,8 @@ public class Game {
 			
 			newX = ((movingS.getXPos() + movingS.getLeftHitBox()) + (int)(Math.round(Math.sin(Math.toRadians(movingS.getDirection())) * movingS.getSpeed())));
 			newY = ((movingS.getYPos() + movingS.getTopHitBox()) + (int)(Math.round(Math.cos(Math.toRadians(movingS.getDirection())) * movingS.getSpeed() * (-1))));
-			newMaxX = newX + (64 - movingS.getLeftHitBox() - movingS.getRightHitBox());	//Right
-			newMaxY = newY + (64 - movingS.getTopHitBox() - movingS.getBotHitBox());	//Bottom
+			newMaxX = newX + (movingS.getTileWidth() - movingS.getLeftHitBox() - movingS.getRightHitBox());	//Right
+			newMaxY = newY + (movingS.getTileHeight() - movingS.getTopHitBox() - movingS.getBotHitBox());	//Bottom
 
 			//Initializes the movement booleans
 			boolean canGoUp = true;
@@ -306,8 +306,8 @@ public class Game {
 
 				dX = ((d.getXPos() + d.getLeftHitBox()));
 				dY = ((d.getYPos() + d.getTopHitBox()));
-				dMaxX = dX + (64 - d.getLeftHitBox() - d.getRightHitBox());	//Right
-				dMaxY = dY + (64 - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+				dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
+				dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
 				
 				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom

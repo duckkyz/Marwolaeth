@@ -106,10 +106,12 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 	}
 
 	public void doLogic() {
-		if(getActionSequence()==(numOfFrames-1))
+		if(getActionSequence() == (numOfFrames - 1)){
 			setActionSequence(0);
-		else
+		}
+		else{
 			setActionSequence(getActionSequence()+1);
+		}
 		//setActionSequence(5);
 		
 	}
