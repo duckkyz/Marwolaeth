@@ -220,12 +220,18 @@ public class Sprite extends Drawable implements willAttack{
 				attack();
 				setSequenceWalking();
 			}
+			if(getActionStep() == 6) {
+				executeAbility(getEffectiveDirection());
+			}
 		}
 		
 		else if(getActionSequence() >= 12 & getActionSequence() <= 15) {				//slash
-			if(getActionStep()>5) {
+			if(getActionStep() > 5) {
 				attack();
-				setSequenceWalking();
+				setSequenceWalking();	
+			}
+			if(getActionStep() == 5) {
+				executeAbility(getEffectiveDirection());
 			}
 		}
 		

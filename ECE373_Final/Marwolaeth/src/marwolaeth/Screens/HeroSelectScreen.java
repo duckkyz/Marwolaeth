@@ -51,6 +51,14 @@ public class HeroSelectScreen extends GameState{
 			getRootContainer().doLayout();
 			getRootContainer().repaint();
 		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_D) {
+			Game.setHero(new Druid(180, heroXSpawn, heroYSpawn));
+			PlayScreen playScreen = new PlayScreen();
+			getRootContainer().remove(this);
+			getRootContainer().add(playScreen);
+			getRootContainer().doLayout();
+			getRootContainer().repaint();
+		}
 		else if(keyEvent.getKeyCode()==KeyEvent.VK_ESCAPE) {
 				TitleScreen titleScreen = new TitleScreen();
 				getRootContainer().remove(this);
