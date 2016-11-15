@@ -22,10 +22,10 @@ import java.util.Comparator;
 import javax.imageio.ImageIO;
 
 public class Drawable implements Comparable<Drawable>{
-	private int topHitBox;
-	private int botHitBox;	
-	private int leftHitBox;
-	private int rightHitBox;
+	private int topHitBox = 0;
+	private int botHitBox = 0;	
+	private int leftHitBox = 0;
+	private int rightHitBox = 0;
 	private int xPos;
 	private int yPos;
 	private int tileWidth;
@@ -37,11 +37,6 @@ public class Drawable implements Comparable<Drawable>{
 	public Drawable() {
 		this.xPos = 0;
 		this.yPos = 0;
-		
-		setTopHitBox(0);
-		setBotHitBox(0);
-		setLeftHitBox(0);
-		setRightHitBox(0);
 		
 		setTileWidth(64);
 		setTileHeight(64);
