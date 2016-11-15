@@ -34,8 +34,33 @@ public class Arrow extends Projectile{
 		setXPos(getXPos()-getTileWidth()/2);
 		setYPos(getYPos()-getTileHeight()/2);
 		
+		if(direction >= 0 & direction <= 90) {
+			setTopHitBox(1);		
+			setBotHitBox(1+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		
+			setLeftHitBox(1+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		
+			setRightHitBox(1);		
+		}
+		else if(direction >= 90 & direction <= 180) {
+			setTopHitBox(1+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		
+			setBotHitBox(1);		
+			setLeftHitBox(1+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	
+			setRightHitBox(1);		
+		}
+		else if(direction >= 180 & direction <= 270) {
+			setTopHitBox(1+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		
+			setBotHitBox(1);		
+			setLeftHitBox(1);		
+			setRightHitBox(1+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	
+		}
+		else if(direction >= 270 & direction <= 360) {
+			setTopHitBox(0);		
+			setBotHitBox(1+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		
+			setLeftHitBox(0);	
+			setRightHitBox(1+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	
+		}
+		
 		setSpeed(20);
-		setDamage(5);
+		setDamage(25);
 	}
 
 	public void doLogic() {
