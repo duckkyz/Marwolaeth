@@ -60,8 +60,16 @@ public class ViewController {
 		timer = new Timer(timerDelay, new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				((PlayScreen) rootContainer.getComponent(0)).prepaint(game.getHero(), game.getDrawables());
-				game.doGameLogic(((PlayScreen)rootContainer.getComponent(0)).getKeySet());			
-				rootContainer.repaint();
+				if(game.doGameLogic(((PlayScreen)rootContainer.getComponent(0)).getKeySet()) == true){			
+					rootContainer.repaint();
+				}
+				else{
+					TitleScreen titleScreen = new TitleScreen();
+					rootContainer.remove(rootContainer.getComponent(0));
+					rootContainer.add(titleScreen);
+					rootContainer.doLayout();
+					rootContainer.repaint();
+				}
 					
 			}
 			

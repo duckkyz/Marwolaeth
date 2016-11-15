@@ -123,19 +123,6 @@ public class PlayScreen extends GameState{
 		heroY = hero.getYPos()+32;
 		percentHealth = (155*hero.getHealth())/100;			//155 is the px width of the health bar
 		percentMana = (141*hero.getMana())/100;
-			
-		if(hero.getHealth()>0 & testHealthBar == false) {								//drawns health bar. Remove at some point
-			hero.setHealth(hero.getHealth()-1);
-			hero.setMana(hero.getMana()-1);
-		}
-		else
-			testHealthBar = true;
-		if(hero.getHealth()<100 & testHealthBar == true) {								//drawns health bar. Remove at some point
-			hero.setHealth(hero.getHealth()+1);
-			hero.setMana(hero.getMana()+1);
-		}
-		else
-			testHealthBar = false;
 	}
 	
 	public void paint(Graphics graphics) {

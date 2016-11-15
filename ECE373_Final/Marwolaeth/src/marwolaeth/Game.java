@@ -95,15 +95,15 @@ public class Game {
 				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
 			}
 			
-			if(i%3 == 0){
+			//if(i%3 == 0){
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
-			}
-			else if(i%3 == 1){
-				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
-			}
-			else{
-				drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
-			}
+			//}
+			//else if(i%3 == 1){
+			//	drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+			//}
+			//else{
+			//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+			//}
 		}
 	}
 	
@@ -194,15 +194,15 @@ public class Game {
 				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
 			}
 			
-			if(spawnCounter%3 == 0){
+			//if(spawnCounter%3 == 0){
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
-			}
-			else if(spawnCounter%3 == 1){
-				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
-			}
-			else{
-				drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
-			}
+			//}
+			//else if(spawnCounter%3 == 1){
+			//	drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+			//}
+			//else{
+			//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+			//}
 			
 			++spawnCounter;
 			if(spawnCounter > currentWave){
@@ -617,7 +617,14 @@ public class Game {
 		}
 	}
 		
-	public void doGameLogic(Set keySet) {	
+	public boolean doGameLogic(Set keySet) {	
+		//Checks if hero is dead if so returns false
+		if(hero.getHealth() <= 0){
+			if(hero.getActionStep() == 5) {
+				return false;
+			}
+		}
+		
 		//Check if all non hero entities are dead, if so spawn a new wave
 		int waveCounter = 0;
 		for(Drawable d : drawables){
@@ -643,7 +650,7 @@ public class Game {
 		
 		//Move if can
 		moveDrawables();
+		
+		return true;
 	}
-
-
 }

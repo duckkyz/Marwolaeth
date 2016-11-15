@@ -11,6 +11,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import marwolaeth.Game;
+import marwolaeth.ImplementedEntities.Archer;
 import marwolaeth.ImplementedEntities.Orc;
 import marwolaeth.Interfaces.willAttack;
 
@@ -240,7 +241,14 @@ public class Sprite extends Drawable implements willAttack{
 		else if(getActionSequence() == 20) {											//death
 			if(getActionStep()>5) {
 				//game ends
-				Game.removeDrawable(this);
+				if(this == Game.getHero()){
+					setActionStep(0);
+					//setActionStep(0);
+					//Game ends
+				}
+				else{
+					Game.removeDrawable(this);
+				}
 			}
 		}
 	}

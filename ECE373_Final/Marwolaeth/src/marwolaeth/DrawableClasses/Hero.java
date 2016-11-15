@@ -22,6 +22,17 @@ public abstract class Hero extends Sprite{
 	
 	//For Player
 	public void doLogic(Set keySet) {
+		if(getHealth() <= 0){
+			if(getActionSequence() != 20){
+				System.out.println(getClass().getSimpleName() + " is dead, will remove from game.");
+				setActionSequence(20);
+				setActionStep(0);
+				setIsMoving(false);
+			}
+			continueSequence();
+			return;
+		}
+		
 		if(keySet.contains(KeyEvent.VK_SPACE)){ 
 			setStaticMovement(true);
 		}
