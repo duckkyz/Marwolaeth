@@ -8,8 +8,11 @@ import javax.imageio.ImageIO;
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
 import marwolaeth.ImplementedProjectiles.Fireball;
+import marwolaeth.ImplementedProjectiles.Leaf;
 
 public class Druid extends Hero{
+	private int animationCounter = 0;
+	
 	public Druid(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
@@ -36,7 +39,7 @@ public class Druid extends Hero{
 		setMoveCasting(true);								//whether the hero can move while using this ability
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(3);
+		abilitySetupHelper(0);
 	}
 
 	@Override
@@ -62,20 +65,22 @@ public class Druid extends Hero{
 
 	@Override
 	public void ability1Execute(int direction) {
-		// TODO Auto-generated method stub
-
+		setHealth(getHealth() + 10);
+		Leaf tempLeaf = new Leaf(0, this.getXPos() - 10, this.getYPos() - 10, true);
+		tempLeaf.setIsMoving(false);
+		Game.addDrawable(tempLeaf);
 	}
 
 	@Override
 	public void ability2Execute(int direction) {
-		Fireball fireball = new Fireball(0,0,0,false);
+		Leaf leafBolt = new Leaf(0,0,0,false);
 		if(this == Game.getHero()){
-			fireball = new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
+			leafBolt = new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
 		}
 		else{
-			fireball = new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false);	//math gives the created object a reference to the center of the enemy
+			leafBolt = new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false);	//math gives the created object a reference to the center of the enemy
 		}
-		Game.addDrawable(fireball);	
+		Game.addDrawable(leafBolt);	
 	}
 
 	@Override
@@ -90,6 +95,25 @@ public class Druid extends Hero{
 
 	}	
 
+	public void move(){
+		super.move();
+		if((getIsMoving() == true) & (animationCounter%7 == 0)){
+			Leaf leafTrailLeft = new Leaf(0, this.getXPos() + (this.getLeftHitBox()), this.getYPos() + (this.getTileHeight() - this.getBotHitBox()), true);
+			Leaf leafTrailRight = new Leaf(0, this.getXPos() + (this.getTileWidth() - this.getRightHitBox()), this.getYPos() + (this.getTileHeight() - this.getBotHitBox()), true);
+			leafTrailLeft.setIsMoving(false);
+			leafTrailRight.setIsMoving(false);
+			Game.addDrawable(leafTrailLeft);
+			Game.addDrawable(leafTrailRight);
+			animationCounter++;
+		}
+		else if(animationCounter > 100){
+			animationCounter = 0;
+		}
+		else{
+			animationCounter++;
+		}
+	}
+	
 	public void doLogic(){
 		int xDistFromHero = getXPos() - Game.getHero().getXPos();
 		int yDistFromHero = getYPos() - Game.getHero().getYPos();

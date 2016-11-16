@@ -314,7 +314,7 @@ public class Game {
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
 						if(movingS == hero){
-					//		System.out.println("collision 1");
+							System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -349,7 +349,7 @@ public class Game {
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
 						if(movingS == hero){
-						//	System.out.println("collision 2");
+							System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -379,7 +379,7 @@ public class Game {
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						if(movingS == hero){
-						//	System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
@@ -412,7 +412,7 @@ public class Game {
 					}
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						if(movingS == hero){
-						//	System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
 						}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){

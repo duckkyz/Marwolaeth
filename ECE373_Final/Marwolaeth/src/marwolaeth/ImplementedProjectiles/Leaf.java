@@ -5,24 +5,27 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Projectile;
 import marwolaeth.DrawableClasses.Sprite;
 
 public class Leaf extends Projectile {
 	
+	int animationCounter = 0;
+	
 	public Leaf(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY, heroProjectile);
 		try{
-			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Leaves.png"))), 90));
+			setGraphic((ImageIO.read(new File("Drawable_Images/Leaves.png"))));
 		}
 		catch(IOException ex){
 			
 		}
 		
-		setActionSequence(0);
-		setActionStep(0);
-		setTileWidth(getGraphic().getWidth());
-		setTileHeight(getGraphic().getHeight());
+		setActionSequence((int)Math.floor(Math.random() * 4));
+		setActionStep((int)Math.floor(Math.random() * 4));
+		setTileWidth(16);
+		setTileHeight(14);
 		setIsMoving(true);
 		
 		setXPos(getXPos()-getTileWidth()/2);
@@ -58,14 +61,29 @@ public class Leaf extends Projectile {
 	}
 
 	public void doLogic() {
-
+		if(getIsMoving() == false){
+			if((animationCounter%10) == 0){
+				setActionSequence((int)Math.floor(Math.random() * 4));
+				setActionStep((int)Math.floor(Math.random() * 4));
+				animationCounter++;
+			}
+			else if(animationCounter == 101){
+				animationCounter = 0;
+				Game.removeDrawable(this);
+			}
+			else{
+				animationCounter++;
+			}
+		}
 	}
 	
 	public void attack(Sprite beingAttacked){
-		int newHealth = beingAttacked.getHealth() - getDamage();
-		if(newHealth < 0){
-			System.out.println(beingAttacked.getClass().getSimpleName() + " died to a leaf! lol, nerd.");
+		if(getIsMoving() == true){
+			int newHealth = beingAttacked.getHealth() - getDamage();
+			if(newHealth < 0){
+				System.out.println(beingAttacked.getClass().getSimpleName() + " died to a leaf! lol, nerd.");
+			}
+			beingAttacked.setHealth(newHealth);
 		}
-		beingAttacked.setHealth(newHealth);
 	}
 }
