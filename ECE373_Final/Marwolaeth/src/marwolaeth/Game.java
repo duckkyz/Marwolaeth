@@ -440,6 +440,14 @@ public class Game {
 						}
 					}
 				}
+				if((canGoDown & canGoRight & canGoUp & canGoLeft) == false){
+					if(d instanceof Wall){
+						movingS.incrementCollisionCounter();
+					}
+				}
+				else{
+					movingS.decrementCollisionCounter();
+				}
 			}
 			
 			/*** This is the single collision detection section ***/

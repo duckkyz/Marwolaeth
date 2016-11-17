@@ -145,7 +145,7 @@ public class Orc extends Villain {
 		}
 		
 		super.doLogic();
-		if(getIsMoving() == false){
+		if(collisionCounter > 5){
 			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
 		}
 		if(getIsAttacking() == true){

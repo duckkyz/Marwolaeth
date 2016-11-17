@@ -25,6 +25,7 @@ public class Sprite extends Drawable implements willAttack{
 	private int direction = 0;
 	private int attackRange;					//Test value, will need tuning
 	private int attackDamage;
+	protected int collisionCounter;
 	
 	private boolean isAttacking = false;
 	
@@ -101,6 +102,20 @@ public class Sprite extends Drawable implements willAttack{
 
 	public int getAttackDamage(){
 		return attackDamage;
+	}
+	
+	public int getCollisionCounter(){
+		return collisionCounter;
+	}
+	
+	public void incrementCollisionCounter(){
+		++this.collisionCounter;
+	}
+	
+	public void decrementCollisionCounter(){
+		if(this.collisionCounter > 0){
+			--this.collisionCounter;
+		}
 	}
 	
 	public void setMoveCasting(boolean moveCasting) {
