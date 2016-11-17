@@ -80,8 +80,8 @@ public class Game {
 		}
 		
 		drawables.add(new Wall(256,256));
-		drawables.add(new Wall(186,314));
-		//drawables.add(new Wall(314,186));
+		//drawables.add(new Wall(186,314));
+		drawables.add(new Wall(314,186));
 		//drawables.add(new Wall(314,314));
 		
 		Sprite spawnSprite = new Sprite(0,0,0);
@@ -284,8 +284,8 @@ public class Game {
 			boolean canGoRight = true;
 			
 			//Used for single collision checking
-			int collisionX = 0;
-			int collisionY = 0;
+			ArrayList<Integer> collisionX = new ArrayList<Integer>();
+			ArrayList<Integer> collisionY = new ArrayList<Integer>();
 			int collision1Count = 0;
 			int collision2Count = 0;
 			int collision3Count = 0;
@@ -344,14 +344,15 @@ public class Game {
 						}
 						else if(movingS.getDirection() == 315){
 							if((collision3Count > 0)){
-								if(collisionY != dMaxY)
+								if(!collisionY.contains(dMaxY)){
 									canGoLeft = false;
+								}
 							}
 						}
 						
 						++collision1Count;											//Used for single collision 
-						collisionX = dMaxX;
-						collisionY = dMaxY;
+						collisionX.add(dMaxX);
+						collisionY.add(dMaxY);
 						
 					}
 					
@@ -365,11 +366,7 @@ public class Game {
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
-						
-						++collision2Count;													//Single Collision Detection
-						collisionX = dMaxX;
-						collisionY = dY;
-						
+					
 						if(movingS.getDirection() == 135){
 							canGoDown = false;
 						}
@@ -380,11 +377,20 @@ public class Game {
 						
 						else if(movingS.getDirection() == 315){
 							canGoLeft = false;
+							if((collision1Count > 0)){
+								if(!collisionX.contains(dMaxX))
+									canGoUp = false;
+							}
 						}	
 						
 						else if(movingS.getDirection() == 180){
 							canGoDown = false;
 						}
+						
+						++collision2Count;													//Single Collision Detection
+						collisionX.add(dMaxX);
+						collisionY.add(dY);
+						
 					}
 				}
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
@@ -400,8 +406,8 @@ public class Game {
 						}
 
 						++collision3Count;												//Single Collision detection
-						collisionX = dX;
-						collisionY = dMaxY;
+						collisionX.add(dX);
+						collisionY.add(dMaxY);
 						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
@@ -435,8 +441,8 @@ public class Game {
 						}
 						
 						++collision4Count;													//Single collision detection
-						collisionX = dX;
-						collisionY = dY;
+						collisionX.add(dX);
+						collisionY.add(dY);
 						
 						if(movingS.getDirection() == 45){
 							canGoRight = false;
@@ -476,10 +482,10 @@ public class Game {
 						canGoLeft = false;
 					}
 					else if(movingS.getDirection() == 315){
-						if((collisionX - newX) < (collisionY - newY)){
+						if((collisionX.get(0) - newX) < (collisionY.get(0) - newY)){
 							canGoLeft = false;
 						}
-						else if((collisionX - newX) > (collisionY - newY)){
+						else if((collisionX.get(0) - newX) > (collisionY.get(0) - newY)){
 							canGoUp = false;
 						}
 						else{
@@ -496,10 +502,10 @@ public class Game {
 						canGoLeft = false;
 					}
 					else if(movingS.getDirection() == 225){
-						if((collisionX - newX) < (newMaxY - collisionY)){
+						if((collisionX.get(0) - newX) < (newMaxY - collisionY.get(0))){
 							canGoLeft = false;
 						}
-						else if((collisionX - newX) > (newMaxY - collisionY)){
+						else if((collisionX.get(0) - newX) > (newMaxY - collisionY.get(0))){
 							canGoDown = false;
 						}
 						else{
@@ -516,10 +522,10 @@ public class Game {
 						canGoRight = false;
 					}
 					else if(hero.getDirection() == 45){					
-						if((newMaxX - collisionX) < (collisionY - newY)){
+						if((newMaxX - collisionX.get(0)) < (collisionY.get(0) - newY)){
 							canGoRight = false;
 						}
-						else if((newMaxX - collisionX) > (collisionY - newY)){
+						else if((newMaxX - collisionX.get(0)) > (collisionY.get(0) - newY)){
 							canGoUp = false;					
 						}
 						else{
@@ -536,10 +542,10 @@ public class Game {
 						canGoRight = false;
 					}
 					else if(hero.getDirection() == 135){
-						if((newMaxX - collisionX) < (newMaxY - collisionY)){
+						if((newMaxX - collisionX.get(0)) < (newMaxY - collisionY.get(0))){
 							canGoRight = false;
 						}
-						else if((newMaxX - collisionX) > (newMaxY - collisionY)){
+						else if((newMaxX - collisionX.get(0)) > (newMaxY - collisionY.get(0))){
 							canGoDown = false;
 						}
 						else{
