@@ -2,6 +2,7 @@ package marwolaeth;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +21,7 @@ public class Game {
 	private int currentWave = 0;
 	private boolean waveDoneSpawning = true;
 	private int spawnCounter = 0;
+	private boolean debugText = false;
 	
 	public Game() {
 		setUpGame();
@@ -77,10 +79,10 @@ public class Game {
 			}
 		}
 		
-		drawables.add(new Wall(186,186));
+		drawables.add(new Wall(256,256));
 		drawables.add(new Wall(186,314));
-		drawables.add(new Wall(314,186));
-		drawables.add(new Wall(314,314));
+		//drawables.add(new Wall(314,186));
+		//drawables.add(new Wall(314,314));
 		
 		Sprite spawnSprite = new Sprite(0,0,0);
 		for(int i = 0; i < 3; ++i){
@@ -247,7 +249,10 @@ public class Game {
 	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
 		Collections.sort(drawables, Drawable.PosComparator);				//Sorts drawables so there is no need for spawn order collision casing
 		Drawable movingD;													
-		
+		if(debugText){
+			System.out.println();
+			System.out.println("New cycle:");
+		}
 		for(int y = 0; (drawables.size() + 1) > y; y++){					//Iterates through all drawables and hero
 			if(y == drawables.size()){										//Un-intrusively inserts hero into check
 				movingD = hero;
@@ -314,15 +319,13 @@ public class Game {
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
 						if(movingS == hero){
-							System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							if(debugText){
+								System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							}
 						}
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
-						
-						++collision1Count;											//Used for single collision 
-						collisionX = dMaxX;
-						collisionY = dMaxY;
 						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
@@ -340,16 +343,24 @@ public class Game {
 							canGoLeft = false;
 						}
 						else if(movingS.getDirection() == 315){
-							if((collision1Count > 1) & (collision3Count == 0)){
-								canGoLeft = false;
+							if((collision3Count > 0)){
+								if(collisionY != dMaxY)
+									canGoLeft = false;
 							}
 						}
+						
+						++collision1Count;											//Used for single collision 
+						collisionX = dMaxX;
+						collisionY = dMaxY;
+						
 					}
 					
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
 						if(movingS == hero){
-							System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							if(debugText){
+								System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							}
 						}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -379,7 +390,9 @@ public class Game {
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						if(movingS == hero){
-							System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							if(debugText){
+								System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							}
 						}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
@@ -412,7 +425,9 @@ public class Game {
 					}
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						if(movingS == hero){
-							System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							if(debugText){
+								System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+							}
 						}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
@@ -452,7 +467,8 @@ public class Game {
 			
 			/*** This is the single collision detection section ***/
 			if((collision1Count + collision2Count + collision3Count + collision4Count) == 1){
-				if(collision1Count == 1){
+				if((collision2Count == 0) & (collision3Count == 0) & (collision4Count == 0)){
+				//if(collision1Count == 1){
 					if((movingS.getDirection() == 0) | (movingS.getDirection() == 45)){
 						canGoUp = false;
 					}
@@ -631,6 +647,14 @@ public class Game {
 			if(hero.getActionStep() == 5) {
 				return false;
 			}
+		}
+		
+		//Debug stuff
+		if(keySet.contains(KeyEvent.VK_B)){
+			this.debugText = true;
+		}
+		else{
+			this.debugText = false;
 		}
 		
 		//Check if all non hero entities are dead, if so spawn a new wave
