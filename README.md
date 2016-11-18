@@ -15,11 +15,15 @@ TODO's:
 	<li><s>Collision for all sprites - Ben</s></li>
 	<li><s>Attack methods (taking damage, ranges, ect)</s> - Ben</li>
 	<li><s>Hit boxes, and the modifications this makes on the rest of the game</s> - Ben</li>
-	<li>Revisit collision since things will occasisonally run through walls</li>
-	<li><s>Simple</s> Sophistocated AI movement methods - Ben</li>
+	<li><s>Revisit collision since things will occasisonally run through walls</s> - Ben </li>
+	<li><s>Simple</s> Sophistocated AI movement methods - Ben
+		<ul>
+			<li>Orc is more sophistocated, much more annoying now</li>
+		</ul>
+	</li>
 	<li><s>Simple</s> Sophistocated AI attacking methods - Ben </li>
-	<li><s>Projectile damage methods</s></li>
-	<li>Power up's</li>
+	<li><s>Projectile damage methods</s> - Ben</li>
+	<li>Power up's - Sean</li>
 	<li>Create real menu windows and set up GUI (drop down menus ect)</li>
 	<li>Create more heroes (sprites, abilities)</li>
 	<li>Create more villians (sprites, abilities)</li>
