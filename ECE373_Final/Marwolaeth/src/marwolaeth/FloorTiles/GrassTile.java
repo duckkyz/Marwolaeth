@@ -15,9 +15,10 @@ public class GrassTile extends Drawable{
 		try{
 			setXPos(x);
 			setYPos(y);
-			setGraphic(ImageIO.read(new File("Background_Images/MapTiles.png")));
+			setGraphic(ImageIO.read(new File("Background_Images/dungeon_sheet.png")));
 		}
 		catch(IOException ex){
+			System.out.println("error");
 			
 		}
 	}

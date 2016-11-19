@@ -1,4 +1,4 @@
-package marwolaeth.ImplementedEntities;
+package marwolaeth.FloorTiles;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -15,7 +15,7 @@ public class Wall extends Drawable {
 	public Wall(int x, int y){
 		if(img == null){
 			try {
-				img = (ImageIO.read(new File("Background_Images/MapTiles.png")));
+				img = (ImageIO.read(new File("Background_Images/dungeon_sheet.png")));
 			} 
 			catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -26,8 +26,6 @@ public class Wall extends Drawable {
 		
 		this.setXPos(x);
 		this.setYPos(y);
-		setActionStep((int) (12 + Math.floor(Math.random() * 5)));		//column
-		setActionSequence((int) (14 + Math.floor(Math.random() * 0)));	//row
 		setGraphic(img);
 	}
 	

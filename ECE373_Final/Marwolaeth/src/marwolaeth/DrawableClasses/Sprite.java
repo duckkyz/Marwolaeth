@@ -151,17 +151,28 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public void setHealth(int health) {
-		if(health < 0){
+		if(this.health < 0){
 			this.health = 0;
 		}
 		else{
 			this.health = health;
+			if(this.health > 100){
+				this.health = 100;
+			}
 		}
 	
 	}
 	
 	public void setMana(int mana) {
-		this.mana = mana;
+		if(this.mana < 0){
+			this.mana = 0;
+		}
+		else{
+			this.mana = mana;
+			if(this.mana > 100){
+				this.mana = 100;
+			}
+		}
 	}
 	
 	public void setAttackRange(int attackRange){

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import marwolaeth.DrawableClasses.*;
+import marwolaeth.FloorTiles.*;
 import marwolaeth.ImplementedEntities.*;
 
 public class Game {
@@ -48,15 +49,18 @@ public class Game {
 		drawables.removeAll(drawables);
 
 		//This makes the walls around the edge.
-		for(int i=0;i<35;++i){
-			drawables.add(new Wall(0,(i*64)));
-			drawables.add(new Wall((mapWidth)-64,(i*64)));
+		for(int i=2;i<33;++i){
+			drawables.add(new LeftWall(0,(i*64)));
+			drawables.add(new RightWall((mapWidth)-64,(i*64)));
 		}
-		//for(int i=0; i<60; ++i){
-		for(int i=60; i>0; --i){
-			drawables.add(new Wall((i*64),0));
-			drawables.add(new Wall((i*64),(mapHeight)-64));
+		for(int i=1; i<59; ++i){
+			drawables.add(new TopWall((i*64),0));
+			drawables.add(new BotWall((i*64),(mapHeight)-64));
 		}
+		drawables.add(new TopLeftCornerWall(0,0));
+		drawables.add(new TopRightCornerWall((59*64),0));
+		drawables.add(new BotLeftCornerWall(0,(mapHeight)-64));
+		drawables.add(new BotRightCornerWall((59*64),(mapHeight)-64));
 		
 		//Testing walls
 		
@@ -338,7 +342,7 @@ public class Game {
 							canGoLeft = false;
 						}
 						else if(movingS.getDirection() == 315){
-							if((collision3Count > 0)){
+							if((collision3Count > 0) | (collision1Count > 0)){
 								if(!collisionY.contains(dMaxY)){
 									canGoLeft = false;
 								}
@@ -468,8 +472,7 @@ public class Game {
 			
 			/*** This is the single collision detection section ***/
 			if((collision1Count + collision2Count + collision3Count + collision4Count) == 1){
-				if((collision2Count == 0) & (collision3Count == 0) & (collision4Count == 0)){
-				//if(collision1Count == 1){
+				if(collision1Count == 1){
 					if((movingS.getDirection() == 0) | (movingS.getDirection() == 45)){
 						canGoUp = false;
 					}
@@ -642,12 +645,20 @@ public class Game {
 		}
 	}
 		
-	public boolean doGameLogic(Set keySet) {	
+	public boolean doGameLogic(Set keySet) {		
 		//Checks if hero is dead if so returns false
 		if(hero.getHealth() <= 0){
 			if(hero.getActionStep() == 5) {
 				return false;
 			}
+		}
+		
+		//Hero heath/mana regain
+		if((hero.getHealth() < 100 & hero.getHealth() > 0)){
+			hero.setHealth(hero.getHealth() + 1);
+		}
+		if((hero.getMana() < 100)){
+			hero.setMana(hero.getMana() + 1);
 		}
 		
 		//Debug stuff

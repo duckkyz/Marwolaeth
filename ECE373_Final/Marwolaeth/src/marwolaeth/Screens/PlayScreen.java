@@ -101,7 +101,9 @@ public class PlayScreen extends GameState{
 			for(int j = 0; j < 34; ++j){
 				g.setXPos(i*64);
 				g.setYPos(j*64);
-				g.setActionStep((int) (1 + Math.floor(Math.random() * 0)));		//column
+				//g.setActionStep((int) (384 + Math.floor(Math.random() * 0)));		//column
+				//g.setActionSequence((int) (128 + Math.floor(Math.random() * 0)));	//row
+				g.setActionStep((int) (6 + Math.floor(Math.random() * 0)));		//column
 				g.setActionSequence((int) (2 + Math.floor(Math.random() * 0)));	//row
 				g.paint(img.getGraphics());
 			}
