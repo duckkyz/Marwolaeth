@@ -36,7 +36,7 @@ public class Sprite extends Drawable implements willAttack{
 		if(direction < 0){
 			direction = 360 + direction;
 		}
-		setDirection(direction % 361);
+		setDirection(direction % 360);
 		setXPos(spawnX);
 		setYPos(spawnY);
 		switch(direction) {									//draws the sprite in the direction it was created in
