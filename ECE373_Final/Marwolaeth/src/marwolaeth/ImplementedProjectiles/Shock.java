@@ -62,41 +62,46 @@ public class Shock extends Projectile{			//Using the "CUSTOM" label to show what
 		// Have the sin/cos functions go from Math.abs(0:30) and then add 2
 		// Will look into it, dont know how simple it would be, but might save the need for direction statements
 		//
+		setTopHitBox(4 + ((((-32 * (int)(Math.cos(Math.toRadians(direction)))) % 34) + 34 ) % 34));			//0: 6  90:4  180:36  270:4
+		setBotHitBox(4 + ((((32 * (int)(Math.cos(Math.toRadians(direction)))) % 34) + 34 ) % 34));			//0: 36 90:4  180:6   270:4
+		setLeftHitBox(4 + ((((32 * (int)(Math.sin(Math.toRadians(direction)))) % 34) + 34 ) % 34));			//0: 4  90:36 180:4   270:6
+		setRightHitBox(4 + ((((-32 * (int)(Math.sin(Math.toRadians(direction)))) % 34) + 34 ) % 34));		//0: 4  90:6  180:4   270:36
+		
 		if(direction >= 0 & direction <= 90) {
-			setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
-			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
-			setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
-			setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
+			//setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			//setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			//setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			//setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
 			xRef = getGraphic().getWidth();
 			yRef = 0;
 			xSlope = -1;
 			ySlope = 1;
 		}
 		else if(direction >= 90 & direction <= 180) {
-			setTopHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
-			setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
-			setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
-			setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
+			//setTopHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			//setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			//setLeftHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			//setRightHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:6  180:4   270:36
 			xRef = getGraphic().getWidth();
 			yRef = getGraphic().getHeight();
 			xSlope = -1;
 			ySlope = -1;
 		}
 		else if(direction >= 180 & direction <= 270) {
-			setTopHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
-			setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
-			setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
-			setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
+			//setTopHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			//setBotHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			//setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			//setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
 			xRef = 0;
 			yRef = getGraphic().getHeight();
 			xSlope = 1;
 			ySlope = -1;
 		}
 		else if(direction >= 270 & direction <= 360) {
-			setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
-			setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
-			setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
-			setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
+			//setTopHitBox(4+2*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 6  90:4  180:36  270:4
+			//setBotHitBox(4+32*(int)Math.abs(Math.cos(Math.toRadians(direction))));		//0: 36 90:4  180:6   270:4
+			//setLeftHitBox(4+2*(int)Math.abs(Math.sin(Math.toRadians(direction))));		//0: 4  90:36 180:4   270:6
+			//setRightHitBox(4+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	//0: 4  90:6  180:4   270:36
 			xRef = 0;
 			yRef = 0;
 			xSlope = 1;

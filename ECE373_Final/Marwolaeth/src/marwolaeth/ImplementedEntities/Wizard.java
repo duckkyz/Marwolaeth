@@ -57,14 +57,12 @@ public class Wizard extends Hero{
 	}
 
 	public void ability1Execute(int direction) {
-		Fireball fireball = new Fireball(0,0,0,false);
 		if(this == Game.getHero()){
-			fireball = new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
 		}
 		else{
-			fireball = new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false);	//math gives the created object a reference to the center of the enemy
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
 		}
-		Game.addDrawable(fireball);		
 	}
 
 	public void ability2Execute(int direction) {
