@@ -1,6 +1,5 @@
 package marwolaeth.ImplementedEntities;
 
-import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
@@ -8,8 +7,7 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
-import marwolaeth.ImplementedProjectiles.Arrow;
-import marwolaeth.ImplementedProjectiles.Fireball;
+import marwolaeth.ImplementedProjectiles.*;
 
 
 public class Wizard extends Hero{
@@ -76,34 +74,32 @@ public class Wizard extends Hero{
 	public void ability3Execute(int direction) {
 		if(this == Game.getHero()){
 			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Shock(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 		}
 		else{
 			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Shock(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
 		}
 	}
 	
 	public void ability4Execute(int direction) {
 		if(this == Game.getHero()){
-			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction-60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction+60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction-90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Fireball(direction+90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			for(int i = 0; i < 4; i++){
+				if(i != 0){
+					Game.addDrawable(new Fireball(direction + (i * -30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+				}
+				Game.addDrawable(new Fireball(direction + (i * 30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			}
 		}
 		else{
-			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction-60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction+60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction-90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Fireball(direction+90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			for(int i = 0; i < 4; i++){
+				if(i != 0){
+					Game.addDrawable(new Fireball(direction + (i * -30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+				}
+				Game.addDrawable(new Fireball(direction + (i * 30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			}
 		}
 		
 	}

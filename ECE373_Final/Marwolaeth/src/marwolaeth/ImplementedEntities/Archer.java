@@ -9,7 +9,6 @@
 
 package marwolaeth.ImplementedEntities;
 
-import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 

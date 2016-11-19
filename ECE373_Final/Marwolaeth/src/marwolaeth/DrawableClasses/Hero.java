@@ -1,12 +1,7 @@
 package marwolaeth.DrawableClasses;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.util.HashSet;
 import java.util.Set;
-
-import marwolaeth.Game;
-import marwolaeth.Interfaces.willAttack;
 
 public abstract class Hero extends Sprite{
 	

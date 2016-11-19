@@ -1,16 +1,8 @@
 package marwolaeth.ImplementedProjectiles;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
-import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Projectile;
 import marwolaeth.DrawableClasses.Sprite;
 

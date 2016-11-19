@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import marwolaeth.DrawableClasses.Projectile;
 import marwolaeth.DrawableClasses.Sprite;
 	
-public class Fireball extends Projectile{			//Using the "CUSTOM" label to show what parameters should be changed when creating a similar projectile.
+public class Icicle extends Projectile{			//Using the "CUSTOM" label to show what parameters should be changed when creating a similar projectile.
 	
 	private int xRef = 0;			//Location of first fireball in png. Is set to one of the 4 corners of the png
 	private int yRef = 0;			
@@ -24,11 +24,11 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 	private int limitingDimension = 0;			//The lesser of the width/height from the original png.
 	private int nonlimitingDimension = 0;
 	
-	public Fireball(int direction, int spawnX, int spawnY, boolean heroProjectile) {
+	public Icicle(int direction, int spawnX, int spawnY, boolean heroProjectile) {
 		super(direction, spawnX, spawnY, heroProjectile);
 		
 		try{
-			setGraphic(ImageIO.read(new File("Drawable_Images/Fireball.png")));		//CUSTOM
+			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Icicle.png"))), 90));
 			int origionalWidth = getGraphic().getWidth();
 			int origionalHeight = getGraphic().getHeight();
 			if(origionalWidth <= origionalHeight) {
@@ -39,7 +39,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 				limitingDimension = origionalHeight;
 				nonlimitingDimension = origionalWidth/numOfFrames-limitingDimension;
 			}
-			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Fireball.png"))), 90));	//CUSTOM: Make sure to use the second parameter in the method to rotate the image to the 0th degree as a default
+			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Icicle.png"))), 90));	//CUSTOM: Make sure to use the second parameter in the method to rotate the image to the 0th degree as a default
 			//File outputfile = new File("image.jpg");
 			//ImageIO.write(getGraphic(), "jpg", outputfile);
 		}
@@ -118,7 +118,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 	public void attack(Sprite beingAttacked){
 		int newHealth = beingAttacked.getHealth() - getDamage();
 		if(newHealth < 0){
-			System.out.println(beingAttacked.getClass().getSimpleName() + " died to a fireball!!!!");
+			System.out.println(beingAttacked.getClass().getSimpleName() + " died to a Icicle!!!!");
 		}
 		beingAttacked.setHealth(newHealth);
 	}

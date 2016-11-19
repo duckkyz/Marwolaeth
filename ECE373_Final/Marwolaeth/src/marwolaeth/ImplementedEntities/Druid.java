@@ -7,8 +7,7 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
-import marwolaeth.ImplementedProjectiles.Fireball;
-import marwolaeth.ImplementedProjectiles.Leaf;
+import marwolaeth.ImplementedProjectiles.*;
 
 public class Druid extends Hero{
 	private int animationCounter = 0;

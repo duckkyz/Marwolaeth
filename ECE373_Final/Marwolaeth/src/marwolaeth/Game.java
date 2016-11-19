@@ -1,16 +1,11 @@
 package marwolaeth;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Set;
 
 import marwolaeth.DrawableClasses.*;
-import marwolaeth.FloorTiles.GrassTile;
 import marwolaeth.ImplementedEntities.*;
 
 public class Game {

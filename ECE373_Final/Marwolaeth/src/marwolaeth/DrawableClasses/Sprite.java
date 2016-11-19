@@ -11,7 +11,6 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import marwolaeth.Game;
-import marwolaeth.ImplementedEntities.Archer;
 import marwolaeth.ImplementedEntities.Orc;
 import marwolaeth.Interfaces.willAttack;
 
