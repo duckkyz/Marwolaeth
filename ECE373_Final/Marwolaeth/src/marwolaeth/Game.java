@@ -64,24 +64,19 @@ public class Game {
 		
 		//Testing walls
 		
-		Wall spawnWall = new Wall(0,0);
+		TikiGolem spawnGolem = new TikiGolem(0,0);
 		for(int j = 0; j < 10; ++j){
-			for(int i = 0; i < 10; ++i){
+			for(int i = 0; i < 2; ++i){
 				//Initial new wall
-				spawnWall = new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
+				spawnGolem = new TikiGolem(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * (mapHeight - 192))/64) * 64)));
 
 				//Checks to see if its on top of something else
-				while((checkCanSpawn(spawnWall) == false) & (drawables.size() < mapWidth*mapHeight)){
-					spawnWall = new Wall(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
+				while((checkCanSpawn(spawnGolem) == false) & (drawables.size() < mapWidth*mapHeight)){
+					spawnGolem = new TikiGolem(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
 				}
-				drawables.add(spawnWall);
+				drawables.add(spawnGolem);
 			}
 		}
-		
-		drawables.add(new Wall(256,256));
-		//drawables.add(new Wall(186,314));
-		drawables.add(new Wall(314,186));
-		//drawables.add(new Wall(314,314));
 		
 		Sprite spawnSprite = new Sprite(0,0,0);
 		for(int i = 0; i < 3; ++i){
@@ -195,15 +190,15 @@ public class Game {
 				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
 			}
 			
-			//if(spawnCounter%3 == 0){
+			if(spawnCounter%3 == 0){
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
-			//}
-			//else if(spawnCounter%3 == 1){
-			//	drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
-			//}
-			//else{
-			//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
-			//}
+			}
+			else if(spawnCounter%3 == 1){
+				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+			}
+			else{
+				drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+			}
 			
 			++spawnCounter;
 			if(spawnCounter > currentWave){
@@ -213,25 +208,29 @@ public class Game {
 		}
 	}
 	
-	public void checkForOutsideMap(){
-		for(int x = 0; drawables.size() > x; x++){
-			Drawable d = drawables.get(x);
-			if(d.getXPos() > mapWidth){
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-			else if(d.getXPos() < 0){
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-			else if(d.getYPos() > mapHeight){
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
-			else if(d.getYPos() < 0) {
-				System.out.println("Removing " + d.toString());
-				removeDrawable(d);
-			}
+	public boolean checkForOutsideMap(Drawable d){
+		if(d.getXPos() > mapWidth){
+			System.out.println("Removing " + d.toString());
+			removeDrawable(d);
+			return true;
+		}
+		else if(d.getXPos() < 0){
+			System.out.println("Removing " + d.toString());
+			removeDrawable(d);
+			return true;
+		}
+		else if(d.getYPos() > mapHeight){
+			System.out.println("Removing " + d.toString());
+			removeDrawable(d);
+			return true;
+		}
+		else if(d.getYPos() < 0) {
+			System.out.println("Removing " + d.toString());
+			removeDrawable(d);
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 	
@@ -240,7 +239,9 @@ public class Game {
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			if(d instanceof Sprite){
-				d.doLogic();
+				if(checkForOutsideMap(d) == false){
+					d.doLogic();
+				}
 			}
 		}
 	}
@@ -336,15 +337,21 @@ public class Game {
 						
 						else if(movingS.getDirection() == 225){
 							canGoLeft = false;
+							if(collision1Count > 0){
+								//canGoDown = false;
+							}
 						}
 						
 						else if(movingS.getDirection() == 270){
 							canGoLeft = false;
 						}
 						else if(movingS.getDirection() == 315){
-							if((collision3Count > 0) | (collision1Count > 0)){
+							if(collision3Count > 0){
+								canGoUp = false;
 								if(!collisionY.contains(dMaxY)){
-									canGoLeft = false;
+									if((collision1Count > 0)){
+										canGoLeft = false;
+									}
 								}
 							}
 						}
@@ -377,13 +384,28 @@ public class Game {
 						else if(movingS.getDirection() == 315){
 							canGoLeft = false;
 							if((collision1Count > 0)){
-								if(!collisionX.contains(dMaxX))
+								if(!collisionX.contains(dMaxX)){
 									canGoUp = false;
+								}
 							}
 						}	
 						
 						else if(movingS.getDirection() == 180){
 							canGoDown = false;
+						}
+						
+						else if(movingS.getDirection() == 225){
+							if(collision4Count > 0){
+								canGoDown = false;
+							}
+							if((collision1Count > 0)){
+								if(d instanceof BotLeftCornerWall){
+									canGoDown = false;
+								}
+							}
+							if(collision2Count >0){
+								canGoDown = false;
+							}
 						}
 						
 						++collision2Count;													//Single Collision Detection
@@ -674,6 +696,7 @@ public class Game {
 		for(Drawable d : drawables){
 			if(d instanceof Sprite){
 				++waveCounter;
+				break;
 			}
 		}
 		if(waveCounter == 0){
@@ -682,9 +705,6 @@ public class Game {
 			this.waveDoneSpawning = false;
 		}
 		spawnNewWave(currentWave);
-		
-		//Check to see if things are outside the map, if so remove them
-		checkForOutsideMap();
 		
 		//Set up movements
 		setUpMovements(keySet);

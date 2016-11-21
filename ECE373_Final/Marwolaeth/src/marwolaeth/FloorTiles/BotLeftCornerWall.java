@@ -10,5 +10,6 @@ public class BotLeftCornerWall extends Wall {
 		
 		setActionStep((int) (5 + Math.floor(Math.random() * 0)));		//column
 		setActionSequence((int) (3 + Math.floor(Math.random() * 0)));	//row
+		
 		}
 }
