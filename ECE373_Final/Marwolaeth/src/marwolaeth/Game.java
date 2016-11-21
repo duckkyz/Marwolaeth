@@ -64,6 +64,10 @@ public class Game {
 		
 		//Testing walls
 		
+		//test
+		drawables.add(new LightSwitch(128,128));
+		
+		
 		TikiGolem spawnGolem = new TikiGolem(0,0);
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 2; ++i){
