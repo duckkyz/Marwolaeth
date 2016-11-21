@@ -64,9 +64,8 @@ public class Wizard extends Hero{
 			else{
 				Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
 			}
-		}
-		this.setMana(this.getMana() - 10);
-		
+			this.setMana(this.getMana() - 10);
+		}		
 	}
 
 	public void ability2Execute(int direction) {

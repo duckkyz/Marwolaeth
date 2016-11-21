@@ -28,7 +28,7 @@ public class Icicle extends Projectile{			//Using the "CUSTOM" label to show wha
 		super(direction, spawnX, spawnY, heroProjectile);
 		
 		try{
-			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Icicle.png"))), 90));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Icicle.png")));
 			int origionalWidth = getGraphic().getWidth();
 			int origionalHeight = getGraphic().getHeight();
 			if(origionalWidth <= origionalHeight) {
@@ -39,9 +39,8 @@ public class Icicle extends Projectile{			//Using the "CUSTOM" label to show wha
 				limitingDimension = origionalHeight;
 				nonlimitingDimension = origionalWidth/numOfFrames-limitingDimension;
 			}
-			setGraphic(rotate((ImageIO.read(new File("Drawable_Images/Icicle.png"))), 90));	//CUSTOM: Make sure to use the second parameter in the method to rotate the image to the 0th degree as a default
-			//File outputfile = new File("image.jpg");
-			//ImageIO.write(getGraphic(), "jpg", outputfile);
+			setGraphic(rotate(getGraphic(), 90));	//CUSTOM: Make sure to use the second parameter in the method to rotate the image to the 0th degree as a default
+
 		}
 		catch(IOException ex){
 			

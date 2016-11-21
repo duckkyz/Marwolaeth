@@ -428,6 +428,7 @@ public class Sprite extends Drawable implements willAttack{
 		Sprite s = new Sprite(0,0,0);
 		
 		boolean heroChecked = false;
+		boolean isAttacked = false;
 		for(Drawable d : Game.getDrawables()){
 			if(!(d instanceof Sprite)){
 				if(heroChecked == false){
@@ -445,47 +446,41 @@ public class Sprite extends Drawable implements willAttack{
 				continue;
 			}
 			
+			isAttacked = false;
+			
 			s = (Sprite)d;
 			
 			dX = ((d.getXPos() + d.getLeftHitBox()));
 			dY = ((d.getYPos() + d.getTopHitBox()));
 			dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
 			dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+			
 
 			if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
-					s.setHealth(s.getHealth() - this.getAttackDamage());
-					if(this == Game.getHero()){
-						System.out.println(this.getClass().getSimpleName() + "1 is attacking " + s.getClass().getSimpleName());
-						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
-					}
+					isAttacked = true;
 				}
 				
 				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
-					s.setHealth(s.getHealth() - this.getAttackDamage());
-					if(this == Game.getHero()){
-						System.out.println(this.getClass().getSimpleName() + "2 is attacking " + s.getClass().getSimpleName());
-						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
-					}
+					isAttacked = true;
 				}
 			}
 			
 			else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
 				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
-					s.setHealth(s.getHealth() - this.getAttackDamage());
-					if(this == Game.getHero()){
-						System.out.println(this.getClass().getSimpleName() + "3 is attacking " + s.getClass().getSimpleName());
-						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
-					}
+					isAttacked = true;
 				}
 				
 				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
-					s.setHealth(s.getHealth() - this.getAttackDamage());
-					if(this == Game.getHero()){
-						System.out.println(this.getClass().getSimpleName() + "4 is attacking " + s.getClass().getSimpleName());
-						System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
-					}
-				}				
+					isAttacked = true;
+				}
+			}
+			if(isAttacked){
+				s.setHealth(s.getHealth() - this.getAttackDamage());
+				if(this == Game.getHero()){
+					System.out.println(this.getClass().getSimpleName() + "1 is attacking " + s.getClass().getSimpleName());
+					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
+				}
 			}
 		}
 	}

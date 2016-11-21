@@ -83,6 +83,7 @@ public class Knight extends Hero{
 
 	}	
 
+
 	public void doLogic(){
 		int xDistFromHero = getXPos() - Game.getHero().getXPos();
 		int yDistFromHero = getYPos() - Game.getHero().getYPos();
@@ -147,13 +148,11 @@ public class Knight extends Hero{
 		}
 		
 		super.doLogic();
-		if(getIsMoving() == false){
+		if(collisionCounter > 5){
 			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
 		}
 		if(getIsAttacking() == true){
 			setIsMoving(false);
 		}
 	}
-	
-
 }

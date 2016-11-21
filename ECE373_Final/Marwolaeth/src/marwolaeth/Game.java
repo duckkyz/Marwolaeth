@@ -198,10 +198,10 @@ public class Game {
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 			}
 			else if(spawnCounter%3 == 1){
-				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Knight(orcDirection, orcXPos, orcYPos));
 			}
 			else{
-				drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Druid(orcDirection, orcXPos, orcYPos));
 			}
 			
 			++spawnCounter;
