@@ -8,6 +8,7 @@ import java.util.Set;
 import marwolaeth.DrawableClasses.*;
 import marwolaeth.FloorTiles.*;
 import marwolaeth.ImplementedEntities.*;
+import marwolaeth.TitleScreenSpash.TitleText;
 
 public class Game {
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
@@ -105,6 +106,7 @@ public class Game {
 			//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
 			//}
 		}
+		drawables.add(new TitleText(256,256));
 	}
 	
 	public boolean checkCanSpawn(Drawable toSpawn){
