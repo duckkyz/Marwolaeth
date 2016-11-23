@@ -84,7 +84,7 @@ public class Game {
 		//Testing walls
 		
 		//test
-		drawables.add(new LightSwitch(128,128));
+		drawables.add(new LightSwitch(48, mapHeight - 128));
 		
 		if(isTitleScreen){
 			drawables.add(new TitleText((mapWidth/2) - ((64 * 22)/2),mapHeight/2));
