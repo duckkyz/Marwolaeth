@@ -85,9 +85,13 @@ public class Game {
 		
 		//test
 		drawables.add(new LightSwitch(48, mapHeight - 128));
+		drawables.add(new LargeLight(48, mapHeight - (64*3)));
+		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
+		
 		
 		if(isTitleScreen){
-			drawables.add(new TitleText((mapWidth/2) - ((64 * 22)/2),mapHeight/2));
+			//TODO: fix image so it doenst look like its breathing
+			drawables.add(new TitleText((mapWidth/2) - ((64 * 44)/2),mapHeight/2));
 		}
 		
 		TikiGolem spawnGolem = new TikiGolem(0,0);
@@ -689,7 +693,6 @@ public class Game {
 		else if(movingS.getDirection() == 270){
 			if(canGoLeft == false){
 				movingS.setIsMoving(false);
-				System.out.println(movingS.getClass().getSimpleName() + " should change direction now");
 			}
 		}
 		
@@ -741,10 +744,10 @@ public class Game {
 	
 		//Debug stuff
 		if(keySet.contains(KeyEvent.VK_B)){
-			this.debugText = false;
+			this.debugText = true;
 		}
 		else{
-			this.debugText = true;
+			this.debugText = false;
 		}
 		
 		//Check if all non hero entities are dead, if so spawn a new wave

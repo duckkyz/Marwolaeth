@@ -17,7 +17,7 @@ public class TitleText extends Drawable {
 	public TitleText(int x, int y){
 		if(img == null){
 			try {
-				img = (ImageIO.read(new File("Background_Images/TitleText.png")));
+				img = (ImageIO.read(new File("Background_Images/TitleText_test.png")));
 			} 
 			catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -31,8 +31,8 @@ public class TitleText extends Drawable {
 		
 		setActionStep((int) (0 + Math.floor(Math.random() * 0)));		//column
 		setActionSequence((int) (0 + Math.floor(Math.random() * 0)));	//row
-		this.setTileHeight(64 * 3);
-		this.setTileWidth(64 * 22);
+		this.setTileHeight(64 * 6);
+		this.setTileWidth(64 * 44);
 		setTopHitBox(0);
 		setBotHitBox(0);
 		setLeftHitBox(0);
