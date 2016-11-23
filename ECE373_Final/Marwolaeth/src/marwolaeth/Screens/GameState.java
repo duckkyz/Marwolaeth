@@ -100,10 +100,10 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 	public void setBackgroundImage(Image backgroundImage) {
 		GameState.backgroundImage = backgroundImage;
 	}
-	public void setFrame(JFrame frame) {
+	public static void setFrame(JFrame frame) {
 		GameState.frame = frame;
 	}
-	public void setRootContainer(JPanel rootContainer) {
+	public static void setRootContainer(JPanel rootContainer) {
 		GameState.rootContainer = rootContainer;
 	}
 	public void setImageGraphics(Graphics imageGraphics) {

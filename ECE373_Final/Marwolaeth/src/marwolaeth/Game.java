@@ -364,11 +364,11 @@ public class Game {
 				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
-						if(movingS == hero){
+						//if(movingS == hero){
 							if(debugText){
-								System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+								System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
 							}
-						}
+						//}
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
@@ -402,6 +402,12 @@ public class Game {
 							}
 						}
 						
+						if(d instanceof BotLeftCornerWall){
+							movingS.setDirection(-movingS.getDirection());
+							canGoDown = false;
+							canGoLeft = false;
+						}
+						
 						++collision1Count;											//Used for single collision 
 						collisionX.add(dMaxX);
 						collisionY.add(dMaxY);
@@ -410,11 +416,11 @@ public class Game {
 					
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
-						if(movingS == hero){
+						//if(movingS == hero){
 							if(debugText){
-								System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+								System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
 							}
-						}
+						//}
 						if(projectileHandling(movingS, d)){
 							continue;
 						}
@@ -445,9 +451,7 @@ public class Game {
 								canGoDown = false;
 							}
 							if((collision1Count > 0)){
-								if(d instanceof BotLeftCornerWall){
-									canGoDown = false;
-								}
+								
 							}
 							if(collision2Count >0){
 								canGoDown = false;
@@ -462,11 +466,11 @@ public class Game {
 				}
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
-						if(movingS == hero){
+						//if(movingS == hero){
 							if(debugText){
-								System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+								System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
 							}
-						}
+						//}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -497,11 +501,11 @@ public class Game {
 						}
 					}
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
-						if(movingS == hero){
+						//if(movingS == hero){
 							if(debugText){
-								System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos());
+								System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
 							}
-						}
+						//}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -685,6 +689,7 @@ public class Game {
 		else if(movingS.getDirection() == 270){
 			if(canGoLeft == false){
 				movingS.setIsMoving(false);
+				System.out.println(movingS.getClass().getSimpleName() + " should change direction now");
 			}
 		}
 		
@@ -736,10 +741,10 @@ public class Game {
 	
 		//Debug stuff
 		if(keySet.contains(KeyEvent.VK_B)){
-			this.debugText = true;
+			this.debugText = false;
 		}
 		else{
-			this.debugText = false;
+			this.debugText = true;
 		}
 		
 		//Check if all non hero entities are dead, if so spawn a new wave

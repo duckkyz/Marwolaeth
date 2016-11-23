@@ -36,24 +36,32 @@ public class ViewController {
 	public ViewController() {
 		frame = new JFrame("Marwolaeth");
 		game = new Game();
+
+		gameTimer();
+
 		rootContainer = new JPanel();
 		rootContainer.setLayout(new BorderLayout());
 		frame.getContentPane().add(rootContainer, BorderLayout.CENTER);
 		frame.setResizable(false);										//Prevents user from manually resizing frame.
-		TitleScreen titleScreen = new TitleScreen();
-		titleScreen.setFrame(frame);
-		titleScreen.setRootContainer(rootContainer);
-		titleScreen.setupResolution(titleScreen.getResolutionSizes(), titleScreen.getNumResolutionSizes());
-		rootContainer.add((GameState)titleScreen);
+
 		
+		rootContainer.addContainerListener(new CustomContainerListener(rootContainer, timer));
+		GameState.setFrame(frame);
+		GameState.setRootContainer(rootContainer);
+		TitleScreen titleScreen = new TitleScreen();
+		
+		titleScreen.setupResolution(titleScreen.getResolutionSizes(), titleScreen.getNumResolutionSizes());
+		rootContainer.add(titleScreen);
+		rootContainer.doLayout();
+		((TitleScreen) rootContainer.getComponent(0)).prepaint(Game.getHero(), Game.getDrawables());
+		rootContainer.repaint();
+
 		//Next 3 lines: Turn cursor transparent
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
 		frame.getContentPane().setCursor(blankCursor);
 		
-		gameTimer();
-		rootContainer.addContainerListener(new CustomContainerListener(rootContainer, timer));
-		frame.setVisible(true);
+		frame.setVisible(true);				
 	}
 	
 	public static void setGame(Game game){

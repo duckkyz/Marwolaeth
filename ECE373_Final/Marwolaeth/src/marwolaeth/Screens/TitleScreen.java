@@ -68,7 +68,8 @@ public class TitleScreen extends GameState{
 		
 		Game.setHero(new Wizard(180, Game.getMapWidth()/2, Game.getMapHeight()/2));
 		Game.setIsTitleScreen(true);
-
+		getRootContainer().doLayout();
+		getRootContainer().repaint();
 	}
 	
 	public void setupResolution(int[][] resolutionSizes, int numResolutionSizes) {
