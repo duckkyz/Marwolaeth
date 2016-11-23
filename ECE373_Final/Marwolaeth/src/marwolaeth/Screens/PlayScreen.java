@@ -118,9 +118,10 @@ public class PlayScreen extends GameState{
 			graphics.drawImage(getBlankImage(), (int) ((-1)*(heroX)/(scaling)+getImageWidth()/2), (int) ((-1)*(heroY)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
 		
 		//draw UI
-		//getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null
-		graphics.drawImage(heroResources, heroResourcesXLocation, heroResourcesYLocation, heroResourcesXLocation+291, heroResourcesYLocation+198, 0, 0, 291, 198, null);											//draws UI boarder
-		graphics.drawImage(heroResources, heroResourcesXLocation+119, heroResourcesYLocation+41, heroResourcesXLocation+119+percentHealth, heroResourcesYLocation+41+34, 0, 200, percentHealth, 200+34, null);		//draws health bar
-		graphics.drawImage(heroResources, heroResourcesXLocation+101, heroResourcesYLocation+86, heroResourcesXLocation+101+percentMana, heroResourcesYLocation+86+26, 0, 233, percentMana, 259, null);		//draws mana bar
+		int scaledHeroResourcesImageWidth = (int) (heroResources.getWidth(this) / (scaling));		
+		int scaledHeroResourcesImageHeight = (int) (198 / (scaling));	
+		graphics.drawImage(heroResources, 0, 0, scaledHeroResourcesImageWidth, scaledHeroResourcesImageHeight, 0, 0, heroResources.getWidth(this), 198, this);
+		graphics.drawImage(heroResources, (int)(122/scaling), (int)(42/scaling), (int)((122 + percentHealth)/scaling), (int)(75/scaling), 0, 200, percentHealth, 232, this);
+		graphics.drawImage(heroResources, (int)(102/scaling), (int)(86/scaling), (int)((102 + percentMana)/scaling), (int)(112/scaling), 0, 233, percentMana, 259, this);
 	}
 }

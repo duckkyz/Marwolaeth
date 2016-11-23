@@ -86,6 +86,9 @@ public class Game {
 		//test
 		drawables.add(new LightSwitch(128,128));
 		
+		if(isTitleScreen){
+			drawables.add(new TitleText((mapWidth/2) - ((64 * 22)/2),mapHeight/2));
+		}
 		
 		TikiGolem spawnGolem = new TikiGolem(0,0);
 		for(int j = 0; j < 10; ++j){
@@ -102,29 +105,30 @@ public class Game {
 		}
 		
 		Sprite spawnSprite = new Sprite(0,0,0);
-		for(int i = 0; i < 3; ++i){
-			int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
-			int orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
-			int orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
-			
-			while((checkCanSpawn(spawnSprite) == false) & (drawables.size() < mapWidth*mapHeight)){
-				orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
-				orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
-				orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
-				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
+		if(isTitleScreen){
+			for(int i = 0; i < 20; ++i){
+				int orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
+				int orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+				int orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
+				
+				while((checkCanSpawn(spawnSprite) == false) & (drawables.size() < mapWidth*mapHeight)){
+					orcDirection = (int) (45 * (Math.floor(((Math.random() * 360) / 45))));
+					orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+					orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
+					spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
+				}
+				
+				//if(i%3 == 0){
+					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+				//}
+				//else if(i%3 == 1){
+				//	drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+				//}
+				//else{
+				//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
+				//}
 			}
-			
-			//if(i%3 == 0){
-				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
-			//}
-			//else if(i%3 == 1){
-			//	drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
-			//}
-			//else{
-			//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
-			//}
 		}
-		drawables.add(new TitleText(256,256));
 	}
 	
 	public boolean checkCanSpawn(Drawable toSpawn){
