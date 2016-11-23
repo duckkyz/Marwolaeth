@@ -40,8 +40,11 @@ public class ViewController {
 		rootContainer.setLayout(new BorderLayout());
 		frame.getContentPane().add(rootContainer, BorderLayout.CENTER);
 		frame.setResizable(false);										//Prevents user from manually resizing frame.
-		GameState titleScreen = new TitleScreen(frame, rootContainer);
-		rootContainer.add(titleScreen);
+		TitleScreen titleScreen = new TitleScreen();
+		titleScreen.setFrame(frame);
+		titleScreen.setRootContainer(rootContainer);
+		titleScreen.setupResolution(titleScreen.getResolutionSizes(), titleScreen.getNumResolutionSizes());
+		rootContainer.add((GameState)titleScreen);
 		
 		//Next 3 lines: Turn cursor transparent
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -57,22 +60,28 @@ public class ViewController {
 		ViewController.game = game;
 	}
 	
-	
 	public void gameTimer() {
 		timer = new Timer(timerDelay, new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				((PlayScreen) rootContainer.getComponent(0)).prepaint(game.getHero(), game.getDrawables());
-				if(game.doGameLogic(((PlayScreen)rootContainer.getComponent(0)).getKeySet()) == true){			
-					rootContainer.repaint();
+				if(rootContainer.getComponent(0) instanceof PlayScreen){
+					((PlayScreen) rootContainer.getComponent(0)).prepaint(game.getHero(), game.getDrawables());
+					if(game.doGameLogic(((PlayScreen)rootContainer.getComponent(0)).getKeySet()) == true){			
+						rootContainer.repaint();
+					}
+					else{
+						TitleScreen titleScreen = new TitleScreen();
+						rootContainer.remove(rootContainer.getComponent(0));
+						rootContainer.add(titleScreen);
+						rootContainer.doLayout();
+						rootContainer.repaint();
+					}
 				}
-				else{
-					TitleScreen titleScreen = new TitleScreen();
-					rootContainer.remove(rootContainer.getComponent(0));
-					rootContainer.add(titleScreen);
-					rootContainer.doLayout();
-					rootContainer.repaint();
+				else if(rootContainer.getComponent(0) instanceof TitleScreen){
+					((TitleScreen) rootContainer.getComponent(0)).prepaint(game.getHero(), game.getDrawables());
+					if(game.doGameLogic(((TitleScreen)rootContainer.getComponent(0)).getKeySet()) == true){			
+						rootContainer.repaint();
+					}	
 				}
-					
 			}
 			
 		});

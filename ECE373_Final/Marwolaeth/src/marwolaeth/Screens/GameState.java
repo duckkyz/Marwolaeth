@@ -11,6 +11,8 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import marwolaeth.FloorTiles.GrassTile;
+
 public abstract class GameState extends JPanel implements ActionListener, KeyListener{
 	
 	private static BufferedImage blankImage;									//gets painted on
@@ -27,6 +29,15 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 	private static int resolutionSizes[][] = { {1920, 1080},  {1600, 900}, {1366, 768}, {1280, 720}, {1152, 648}, {1024, 576} };			//All resolutions will be scaled assuming that resolutionSizes[0] is the standard
 	private static Set keySet = new HashSet();
 	private boolean isInGame = true;
+	
+	protected double scaling;
+	protected int scaledBackgroundImageWidth;				
+	protected int scaledBackgroundImageHeight;
+	protected int bottomBarYLocation;
+	protected int rightBarXLocation;
+	protected int halfDiffDisImgHeight;
+	protected int halfDiffDisImgWidth;
+	
 	
 	public GameState() {
 		addKeyListener(this);
@@ -113,5 +124,25 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 	public void setMonitorWidth(int monitorWidth) {
 		GameState.monitorWidth = monitorWidth;
 	}
+	
+	public void makeMap(){
+		setImageGraphics(getBlankImage().getGraphics());
+		BufferedImage img = new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB);
+		GrassTile g = new GrassTile(0,0);
+		
+		for(int i = 0; i < 60; ++i){
+			for(int j = 0; j < 34; ++j){
+				g.setXPos(i*64);
+				g.setYPos(j*64);
+				//g.setActionStep((int) (384 + Math.floor(Math.random() * 0)));		//column
+				//g.setActionSequence((int) (128 + Math.floor(Math.random() * 0)));	//row
+				g.setActionStep((int) (6 + Math.floor(Math.random() * 0)));		//column
+				g.setActionSequence((int) (2 + Math.floor(Math.random() * 0)));	//row
+				g.paint(img.getGraphics());
+			}
+		}
+		setBackgroundImage(img);
+	}
+	
 	
 }

@@ -13,12 +13,13 @@ import marwolaeth.TitleScreenSpash.TitleText;
 public class Game {
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private static Hero hero;
-	private final int mapHeight = 2*1080;
-	private final int mapWidth = 2*1920;
+	private static final int mapHeight = 2*1080;
+	private static final int mapWidth = 2*1920;
 	private int currentWave = 0;
 	private boolean waveDoneSpawning = true;
 	private int spawnCounter = 0;
 	private boolean debugText = false;
+	private static boolean isTitleScreen = false;
 	
 	public Game() {
 		setUpGame();
@@ -30,6 +31,23 @@ public class Game {
 	
 	public static ArrayList<Drawable> getDrawables() {
 		return drawables;
+	}
+	
+	public static int getMapHeight(){
+		return mapHeight;
+	}
+	
+	public static int getMapWidth(){
+		return mapWidth;
+	}
+	
+	
+	public static boolean getIsTitleScreen() {
+		return isTitleScreen;
+	}
+	
+	public static void setIsTitleScreen(boolean b) {
+		isTitleScreen = b;		
 	}
 	
 	public static void setHero(Hero newHero) {
@@ -163,19 +181,27 @@ public class Game {
 				if(d instanceof Sprite){
 					Projectile p = (Projectile) movingS;
 					Sprite dSprite = (Sprite) d;
-					if(p.getIsFromHero() & (!(dSprite == hero))){
+					if(isTitleScreen == false){
+						if(p.getIsFromHero() & (!(dSprite == hero))){
+							if((dSprite instanceof Hero) | (dSprite instanceof Villain)){
+								p.attack(dSprite);
+							}
+							drawables.remove(p);
+						}
+						else if(!(p.getIsFromHero()) & (dSprite == hero)){
+							if((dSprite instanceof Hero) | (dSprite instanceof Villain)){
+								p.attack(dSprite);
+							}
+							drawables.remove(p);
+						}
+						return true;
+					}
+					else{
 						if((dSprite instanceof Hero) | (dSprite instanceof Villain)){
 							p.attack(dSprite);
 						}
 						drawables.remove(p);
 					}
-					else if(!(p.getIsFromHero()) & (dSprite == hero)){
-						if((dSprite instanceof Hero) | (dSprite instanceof Villain)){
-							p.attack(dSprite);
-						}
-						drawables.remove(p);
-					}
-					return true;
 				}
 				return true;
 			}
@@ -261,7 +287,12 @@ public class Game {
 		}
 		for(int y = 0; (drawables.size() + 1) > y; y++){					//Iterates through all drawables and hero
 			if(y == drawables.size()){										//Un-intrusively inserts hero into check
-				movingD = hero;
+				if(isTitleScreen == false){
+					movingD = hero;
+				}
+				else{
+					continue;
+				}
 			}
 			else{
 				movingD = drawables.get(y);
@@ -307,7 +338,12 @@ public class Game {
 			//Iterates through the list of drawables again, this time checking if movingS is hitting this drawable
 			for(int x = 0; (drawables.size() + 1) > x; x++){
 				if(x == (drawables.size())){					//Insert hero
-					d = hero;
+					if(isTitleScreen == false){
+						d = hero;
+					}
+					else{
+						continue;
+					}
 				}
 				else{
 					d = drawables.get(x);
@@ -662,7 +698,9 @@ public class Game {
 	}
 	
 	public void moveDrawables(){
-		hero.move();
+		if(isTitleScreen == false){
+			hero.move();
+		}
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			//if((d instanceof Sprite) & !(d instanceof Projectile)){
@@ -673,22 +711,25 @@ public class Game {
 		}
 	}
 		
-	public boolean doGameLogic(Set keySet) {		
-		//Checks if hero is dead if so returns false
-		if(hero.getHealth() <= 0){
-			if(hero.getActionStep() == 5) {
-				return false;
+	public boolean doGameLogic(Set keySet) {	
+		
+		if(isTitleScreen == false){
+			//Checks if hero is dead if so returns false
+			if(hero.getHealth() <= 0){
+				if(hero.getActionStep() == 5) {
+					return false;
+				}
+			}
+			
+			//Hero heath/mana regain
+			if((hero.getHealth() < 100 & hero.getHealth() > 0)){
+				hero.setHealth(hero.getHealth() + 1);
+			}
+			if((hero.getMana() < 100)){
+				hero.setMana(hero.getMana() + 1);
 			}
 		}
-		
-		//Hero heath/mana regain
-		if((hero.getHealth() < 100 & hero.getHealth() > 0)){
-			hero.setHealth(hero.getHealth() + 1);
-		}
-		if((hero.getMana() < 100)){
-			hero.setMana(hero.getMana() + 1);
-		}
-		
+	
 		//Debug stuff
 		if(keySet.contains(KeyEvent.VK_B)){
 			this.debugText = true;

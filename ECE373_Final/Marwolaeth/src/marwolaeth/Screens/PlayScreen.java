@@ -21,13 +21,6 @@ import marwolaeth.FloorTiles.GrassTile;
 public class PlayScreen extends GameState{
 
 	//only do reocurring math operations once
-	private double scaling;
-	private int scaledBackgroundImageWidth;				
-	private int scaledBackgroundImageHeight;
-	private int bottomBarYLocation;
-	private int rightBarXLocation;
-	private int halfDiffDisImgHeight;
-	private int halfDiffDisImgWidth;
 	private int heroX;
 	private int heroY;
 	private int percentHealth;				//needed for drawing UI
@@ -59,6 +52,7 @@ public class PlayScreen extends GameState{
 		rightBarXLocation = (getMonitorWidth()-getImageWidth()) / 2 + getImageWidth();
 		halfDiffDisImgHeight = (getMonitorHeight()-getImageHeight()) / 2;
 		halfDiffDisImgWidth = (getMonitorWidth()-getImageWidth()) / 2;
+		Game.setIsTitleScreen(false);
 		
 	}
 
@@ -90,25 +84,6 @@ public class PlayScreen extends GameState{
 	
 	public void actionPerformed(ActionEvent arg0) {
 		
-	}
-	
-	public void makeMap(){
-		setImageGraphics(getBlankImage().getGraphics());
-		BufferedImage img = new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB);
-		GrassTile g = new GrassTile(0,0);
-		
-		for(int i = 0; i < 60; ++i){
-			for(int j = 0; j < 34; ++j){
-				g.setXPos(i*64);
-				g.setYPos(j*64);
-				//g.setActionStep((int) (384 + Math.floor(Math.random() * 0)));		//column
-				//g.setActionSequence((int) (128 + Math.floor(Math.random() * 0)));	//row
-				g.setActionStep((int) (6 + Math.floor(Math.random() * 0)));		//column
-				g.setActionSequence((int) (2 + Math.floor(Math.random() * 0)));	//row
-				g.paint(img.getGraphics());
-			}
-		}
-		setBackgroundImage(img);
 	}
 	
 	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -23,10 +24,16 @@ import javax.swing.JPanel;
 //
 //
 
+import marwolaeth.Game;
+import marwolaeth.DrawableClasses.Drawable;
+import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.ImplementedEntities.Wizard;
+
 
 public class TitleScreen extends GameState{
 
 	public TitleScreen() {
+		/*
 		//TODO why is this here if theres already a constructor for TitleScreen?
 		try {
 			setBackgroundImage(ImageIO.read(new File("Background_Images/Title.png")));
@@ -36,22 +43,32 @@ public class TitleScreen extends GameState{
 		}
 		
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
-	}
-	
-	//This constructor should only be called once
-	public TitleScreen(JFrame frame, JPanel rootContainer) {
-		setFrame(frame);
-		setRootContainer(rootContainer);
+		*/
+		
 		try {
-			setBackgroundImage(ImageIO.read(new File("Background_Images/Title.png")));
+			setBackgroundImage(ImageIO.read(new File("Background_Images/Map.png")));
 		} 
 		catch(IOException ex) {
 			
 		}
-		
+		//TODO Maybe move this
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
-		setupResolution(getResolutionSizes(), getNumResolutionSizes());
+
+		makeMap();
+		scaling = (double) getResolutionSizes()[0][0]/ (double) getImageWidth();
 		
+		scaling = scaling*2.25;																			//Added for Ben's testing. Reverted other values
+		
+		scaledBackgroundImageWidth = (int) (getBackgroundImage().getWidth(this) / (scaling));		
+		scaledBackgroundImageHeight = (int) (getBackgroundImage().getHeight(this) / (scaling));	
+		bottomBarYLocation = (getMonitorHeight()-getImageHeight()) / 2 + getImageHeight();
+		rightBarXLocation = (getMonitorWidth()-getImageWidth()) / 2 + getImageWidth();
+		halfDiffDisImgHeight = (getMonitorHeight()-getImageHeight()) / 2;
+		halfDiffDisImgWidth = (getMonitorWidth()-getImageWidth()) / 2;
+		
+		Game.setHero(new Wizard(180, Game.getMapWidth()/2, Game.getMapHeight()/2));
+		Game.setIsTitleScreen(true);
+
 	}
 	
 	public void setupResolution(int[][] resolutionSizes, int numResolutionSizes) {
@@ -114,6 +131,7 @@ public class TitleScreen extends GameState{
 		
 	}
 	
+	/*
 	public void paint(Graphics graphics) {
 		requestFocus();
 		super.paint(graphics);
@@ -131,8 +149,34 @@ public class TitleScreen extends GameState{
 		else
 			graphics.drawImage(getBlankImage(), 0, 0, getFrameWidth(), getFrameHeight(), this);	//resize this to fit current resolution
 		imageGraphics.dispose();
+	}
+	*/
+	
+	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {
+		setImageGraphics(getBlankImage().getGraphics());		//use imageGraphics to draw on the image
+		getImageGraphics().drawImage(this.getBackgroundImage(), 0, 0, this);
 		
-		
+		for(int x = 0;x < drawables.size();x++) {
+			drawables.get(x).paint(getImageGraphics());
+		}	
+	}
+	
+	public void paint(Graphics graphics) {
+		requestFocus();
+		super.paint(graphics);
+		graphics.setColor(Color.black);
+		graphics.fillRect(0, 0, getFrameWidth(), getFrameHeight());		//makes whatever is outside the image black
+		if(getFullScreen()==true) {
+			graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling)+getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+			graphics.fillRect(0, 0, getMonitorWidth(), halfDiffDisImgHeight);																			//top
+			graphics.fillRect(0, bottomBarYLocation, getMonitorWidth(), halfDiffDisImgHeight);														//bottom
+			graphics.fillRect(0, 0, halfDiffDisImgWidth, getMonitorHeight());																			//left
+			graphics.fillRect(rightBarXLocation, 0, halfDiffDisImgWidth, getMonitorHeight());															//right
+		}
+		else{
+			//graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling)+getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+			graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling) + getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+		}
 	}
 
 }
