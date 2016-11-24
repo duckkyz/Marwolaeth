@@ -98,11 +98,11 @@ public class Game {
 		for(int j = 0; j < 10; ++j){
 			for(int i = 0; i < 2; ++i){
 				//Initial new wall
-				spawnGolem = new TikiGolem(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * (mapHeight - 192))/64) * 64)));
+				spawnGolem = new TikiGolem(((int)(Math.floor((Math.random() * (mapWidth - 126))/64) * 64)),((int)(Math.floor((Math.random() * (mapHeight - 192))/64) * 64)));
 
 				//Checks to see if its on top of something else
 				while((checkCanSpawn(spawnGolem) == false) & (drawables.size() < mapWidth*mapHeight)){
-					spawnGolem = new TikiGolem(((int)(Math.floor((Math.random() * mapWidth)/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
+					spawnGolem = new TikiGolem(((int)(Math.floor((Math.random() * (mapWidth - 126))/64) * 64)),((int)(Math.floor((Math.random() * mapHeight)/64) * 64)));
 				}
 				drawables.add(spawnGolem);
 			}

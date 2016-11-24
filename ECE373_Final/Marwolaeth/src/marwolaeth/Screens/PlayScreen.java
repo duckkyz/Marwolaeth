@@ -44,7 +44,7 @@ public class PlayScreen extends GameState{
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
 		scaling = (double) getResolutionSizes()[0][0]/ (double) getImageWidth();
 		
-		//scaling = scaling*1.5;																			//Added for Ben's testing. Reverted other values
+		scaling = scaling*1.5;																			//Added for Ben's testing. Reverted other values
 		
 		scaledBackgroundImageWidth = (int) (getBackgroundImage().getWidth(this) / (scaling));		
 		scaledBackgroundImageHeight = (int) (getBackgroundImage().getHeight(this) / (scaling));	
