@@ -31,6 +31,9 @@ public class Sprite extends Drawable implements willAttack{
 	private int health = 100;
 	private int mana = 100;
 	
+	protected Sprite markedForDeath = Game.getHero();
+
+	
 	public Sprite(int direction, int spawnX, int spawnY) {
 		
 		if(direction < 0){
@@ -181,6 +184,10 @@ public class Sprite extends Drawable implements willAttack{
 	
 	public void setAttackDamage(int attackDamage){
 		this.attackDamage = attackDamage;
+	}
+		
+	public void setMarkedForDeath(Sprite markedForDeath){
+		this.markedForDeath = markedForDeath;
 	}
 	
 	public void ability1Setup() {		

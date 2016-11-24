@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
-import marwolaeth.DrawableClasses.Villain;
+import marwolaeth.DrawableClasses.*;
 
 public class Orc extends Villain {
 
@@ -82,70 +82,89 @@ public class Orc extends Villain {
 	}	
 
 	public void doLogic(){
-		if(Game.getIsTitleScreen() == false){
-			int xDistFromHero = getXPos() - Game.getHero().getXPos();
-			int yDistFromHero = getYPos() - Game.getHero().getYPos();
-			
-			switch(getEffectiveDirection()){
-				case 0:
-					if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < (50 + getAttackRange())))){
-						setIsAttacking(true);
-					}
-					else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-						setDirection(270);
-					}
-					else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-						setDirection(90);
-					}
-					else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero < 0))){
-						setDirection(180);
-					}
-					break;
-				case 90:
-					if(((xDistFromHero > -(50 + getAttackRange())) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
-						setIsAttacking(true);
-					}
-					else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-						setDirection(0);
-					}
-					else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-						setDirection(180);
-					}
-					else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero > 0))){
-						setDirection(270);
-					}
-					break;
-				case 180:
-					if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -(50 + getAttackRange())) & (yDistFromHero < 0))){
-						setIsAttacking(true);
-					}
-					else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-						setDirection(270);
-					}
-					else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-						setDirection(90);
-					}
-					else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0))){
-						setDirection(0);
-					}
-					break;
-				case 270:
-					if(((xDistFromHero > 0) & (xDistFromHero < (50 + getAttackRange()))) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
-						setIsAttacking(true);
-					}
-					else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-						setDirection(0);
-					}
-					else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-						setDirection(180);
-					}
-					else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero < 0))){
-						setDirection(90);
-					}
-					break;
+		int xDistFromHero;
+		int yDistFromHero;
+		
+		if(Game.getIsTitleScreen()){
+			if(markedForDeath == Game.getHero()){
+				Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				while(!(temp instanceof Sprite)){
+					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				}
+				markedForDeath = (Sprite)temp;
+				markedForDeath.setMarkedForDeath(this);
+			}
+			else if(!Game.getDrawables().contains(markedForDeath)){
+				Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				while(!(temp instanceof Sprite)){
+					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				}
+				markedForDeath = (Sprite)temp;
 			}
 		}
-		
+		xDistFromHero = getXPos() - markedForDeath.getXPos();
+		yDistFromHero = getYPos() - markedForDeath.getYPos();
+	
+			
+		switch(getEffectiveDirection()){
+			case 0:
+				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < (50 + getAttackRange())))){
+					setIsAttacking(true);
+				}
+				else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+					setDirection(270);
+				}
+				else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+					setDirection(90);
+				}
+				else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero < 0))){
+					setDirection(180);
+				}
+				break;
+			case 90:
+				if(((xDistFromHero > -(50 + getAttackRange())) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+					setIsAttacking(true);
+				}
+				else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+					setDirection(0);
+				}
+				else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+					setDirection(180);
+				}
+				else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero > 0))){
+					setDirection(270);
+				}
+				break;
+			case 180:
+				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -(50 + getAttackRange())) & (yDistFromHero < 0))){
+					setIsAttacking(true);
+				}
+				else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+					setDirection(270);
+				}
+				else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+					setDirection(90);
+				}
+				else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0))){
+					setDirection(0);
+				}
+				break;
+			case 270:
+				if(((xDistFromHero > 0) & (xDistFromHero < (50 + getAttackRange()))) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+					setIsAttacking(true);
+				}
+				else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+					setDirection(0);
+				}
+				else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+					setDirection(180);
+				}
+				else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero < 0))){
+					setDirection(90);
+				}
+				break;
+		}
+
 		super.doLogic();
 		if(collisionCounter > 5){
 			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));

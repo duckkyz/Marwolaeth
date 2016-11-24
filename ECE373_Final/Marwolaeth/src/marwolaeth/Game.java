@@ -237,7 +237,7 @@ public class Game {
 				drawables.add(new Knight(orcDirection, orcXPos, orcYPos));
 			}
 			else{
-				drawables.add(new Druid(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 			}
 			
 			++spawnCounter;
@@ -758,10 +758,19 @@ public class Game {
 				break;
 			}
 		}
-		if(waveCounter == 0){
-			System.out.println("Spawning new wave");
-			spawnCounter = 0;
-			this.waveDoneSpawning = false;
+		if(isTitleScreen == true){
+			if(waveCounter < 1){
+				System.out.println("Spawning new wave");
+				spawnCounter = 0;
+				this.waveDoneSpawning = false;
+			}
+		}
+		else{
+			if(waveCounter == 0){
+				System.out.println("Spawning new wave");
+				spawnCounter = 0;
+				this.waveDoneSpawning = false;
+			}
 		}
 		spawnNewWave(currentWave);
 		
