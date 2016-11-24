@@ -55,6 +55,12 @@ public class ViewController {
 		rootContainer.doLayout();
 		((TitleScreen) rootContainer.getComponent(0)).prepaint(Game.getHero(), Game.getDrawables());
 		rootContainer.repaint();
+		
+		TitleScreen titleScreen_test = new TitleScreen();
+		rootContainer.remove(rootContainer.getComponent(0));
+		rootContainer.add(titleScreen_test);
+		rootContainer.doLayout();
+		rootContainer.repaint();
 
 		//Next 3 lines: Turn cursor transparent
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);

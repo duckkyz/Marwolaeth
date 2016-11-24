@@ -32,7 +32,7 @@ public class TitleText extends Drawable {
 		setActionStep((int) (0 + Math.floor(Math.random() * 0)));		//column
 		setActionSequence((int) (0 + Math.floor(Math.random() * 0)));	//row
 		this.setTileHeight(64 * 6);
-		this.setTileWidth(64 * 44);
+		this.setTileWidth((64 * 44));
 		setTopHitBox(0);
 		setBotHitBox(0);
 		setLeftHitBox(0);
