@@ -15,7 +15,7 @@ public class Game {
 	private static Hero hero;
 	private static final int mapHeight = 2*1080;
 	private static final int mapWidth = 2*1920;
-	private int currentWave = 0;
+	private static int currentWave = 0;
 	private boolean waveDoneSpawning = true;
 	private int spawnCounter = 0;
 	private boolean debugText = false;
@@ -41,6 +41,9 @@ public class Game {
 		return mapWidth;
 	}
 	
+	public static int getCurrentWave() {
+		return currentWave;
+	}
 	
 	public static boolean getIsTitleScreen() {
 		return isTitleScreen;

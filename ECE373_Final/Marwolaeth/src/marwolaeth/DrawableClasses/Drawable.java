@@ -20,27 +20,21 @@ public class Drawable implements Comparable<Drawable>{
 	private int botHitBox = 0;	
 	private int leftHitBox = 0;
 	private int rightHitBox = 0;
-	private int xPos;
-	private int yPos;
-	private int tileWidth;
-	private int tileHeight;
+	private int xPos = 0;
+	private int yPos = 0;
+	private int tileWidth = 64;
+	private int tileHeight = 64;
 	private int actionSequence = 0;									//The current row.
 	private int actionStep = 0;										//The current column.
 	private BufferedImage graphic;
 	
 	public Drawable() {
-		this.xPos = 0;
-		this.yPos = 0;
 		
-		setTileWidth(64);
-		setTileHeight(64);
 	}
 	
 	public Drawable(int xPos, int yPos){
 		this.xPos = xPos;
 		this.yPos = yPos;
-		setTileWidth(64);
-		setTileHeight(64);
 	}
 	
 	public int getXPos() {
