@@ -25,15 +25,23 @@ public class Speedup extends Modifier {
 	
 	public Speedup(int wavesDuration, int xPos, int yPos, boolean heroOnly, int speedup) {			//If you want a specific speed modifier
 		super(wavesDuration, xPos, yPos, heroOnly);
+		try{
+			setGraphic(ImageIO.read(new File("Drawable_Images/Speedup.png")));
+		}
+		catch(IOException ex){
+			
+		}
+		setTileWidth(32);
+		setTileHeight(32);
 		amountSpeedup = speedup;
 	}
 
 	public void addModifier() {
-		getTarget().setSpeed(getTarget().getSpeed()+amountSpeedup);
+		getTarget().setSpeed(getTarget().getSpeed() + amountSpeedup);
 	}
 
 	public void removeModifier() {
-		getTarget().setSpeed(getTarget().getSpeed()-amountSpeedup);
+		getTarget().setSpeed(getTarget().getSpeed() - amountSpeedup);
 	}
 
 }

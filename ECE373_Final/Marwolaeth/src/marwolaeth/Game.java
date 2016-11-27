@@ -8,6 +8,7 @@ import java.util.Set;
 import marwolaeth.DrawableClasses.*;
 import marwolaeth.FloorTiles.*;
 import marwolaeth.ImplementedEntities.*;
+import marwolaeth.ImplementedModifiers.*;
 import marwolaeth.TitleScreenSpash.TitleText;
 
 public class Game {
@@ -91,6 +92,9 @@ public class Game {
 		drawables.add(new LargeLight(48, mapHeight - (64*3)));
 		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
 		
+		Speedup temp = new Speedup(1, 256, 256, true);
+		temp.activate(Game.getHero(), currentWave);
+		drawables.add(temp);
 		
 		if(isTitleScreen){
 			//TODO: fix image so it doenst look like its breathing

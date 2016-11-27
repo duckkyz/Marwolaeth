@@ -23,12 +23,12 @@ public abstract class Modifier extends Drawable{
 	
 	public void activate(Sprite target, int currentWave) {				//Call this method when a Sprite collides with the modifier and satisfies the heroOnly condition
 		this.target = target;
-		removalWave = currentWave+duration;
+		removalWave = currentWave + duration;
 		activated = true;
 	}
 	
 	public void doLogic() {
-		if(Game.getCurrentWave()==removalWave && activated==true) {
+		if(Game.getCurrentWave() == removalWave && activated == true) {
 			this.removeModifier();										
 			
 			//Removes all references so modifier is garbage collected
@@ -38,8 +38,8 @@ public abstract class Modifier extends Drawable{
 	}
 	
 	public void paint(Graphics imageGraphics) {	
-		if(activated==true)
-			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+		//if(activated==true)
+		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
 	}
 	
 	public Sprite getTarget() {
