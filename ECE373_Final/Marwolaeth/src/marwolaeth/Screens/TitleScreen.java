@@ -25,9 +25,8 @@ import javax.swing.JPanel;
 //
 
 import marwolaeth.Game;
-import marwolaeth.DrawableClasses.Drawable;
-import marwolaeth.DrawableClasses.Hero;
-import marwolaeth.ImplementedEntities.Wizard;
+import marwolaeth.DrawableClasses.*;
+import marwolaeth.ImplementedEntities.*;
 
 
 public class TitleScreen extends GameState{
@@ -153,7 +152,7 @@ public class TitleScreen extends GameState{
 	}
 	*/
 	
-	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {
+	public void prepaint(Sprite hero, ArrayList<Drawable> drawables) {
 		setImageGraphics(getBlankImage().getGraphics());		//use imageGraphics to draw on the image
 		getImageGraphics().drawImage(this.getBackgroundImage(), 0, 0, this);
 		

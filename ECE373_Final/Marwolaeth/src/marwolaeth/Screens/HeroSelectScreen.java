@@ -36,7 +36,8 @@ public class HeroSelectScreen extends GameState{
 			getRootContainer().repaint();
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_A) {
-			Game.setHero(new Archer(180, heroXSpawn, heroYSpawn));
+			//Game.setHero(new Archer(180, heroXSpawn, heroYSpawn));
+			Game.setHero(new Arbiter(180, heroXSpawn, heroYSpawn));
 			PlayScreen playScreen = new PlayScreen();
 			getRootContainer().remove(this);
 			getRootContainer().add(playScreen);

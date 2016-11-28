@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
-import marwolaeth.ViewController;
-import marwolaeth.DrawableClasses.Drawable;
-import marwolaeth.DrawableClasses.Hero;
-import marwolaeth.FloorTiles.GrassTile;
+import marwolaeth.DrawableClasses.*;
 
 public class PlayScreen extends GameState{
 
@@ -44,7 +41,7 @@ public class PlayScreen extends GameState{
 		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
 		scaling = (double) getResolutionSizes()[0][0]/ (double) getImageWidth();
 		
-		scaling = scaling*1.5;																			//Added for Ben's testing. Reverted other values
+		//scaling = scaling*1.5;																			//Added for Ben's testing. Reverted other values
 		
 		scaledBackgroundImageWidth = (int) (getBackgroundImage().getWidth(this) / (scaling));		
 		scaledBackgroundImageHeight = (int) (getBackgroundImage().getHeight(this) / (scaling));	
@@ -86,7 +83,7 @@ public class PlayScreen extends GameState{
 		
 	}
 	
-	public void prepaint(Hero hero, ArrayList<Drawable> drawables) {
+	public void prepaint(Sprite hero, ArrayList<Drawable> drawables) {
 		setImageGraphics(getBlankImage().getGraphics());		//use imageGraphics to draw on the image
 		getImageGraphics().drawImage(this.getBackgroundImage(), 0, 0, this);
 

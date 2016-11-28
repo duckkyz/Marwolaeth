@@ -13,7 +13,7 @@ import marwolaeth.TitleScreenSpash.TitleText;
 
 public class Game {
 	private static ArrayList<Drawable> drawables = new ArrayList<Drawable>();
-	private static Hero hero;
+	private static Sprite hero;
 	private static final int mapHeight = 2*1080;
 	private static final int mapWidth = 2*1920;
 	private static int currentWave = 0;
@@ -26,7 +26,7 @@ public class Game {
 		setUpGame();
 	}
 
-	public static Hero getHero() {
+	public static Sprite getHero() {
 		return hero;
 	}
 	
@@ -54,7 +54,7 @@ public class Game {
 		isTitleScreen = b;		
 	}
 	
-	public static void setHero(Hero newHero) {
+	public static void setHero(Sprite newHero) {
 		hero = newHero;
 	}
 	
@@ -128,15 +128,15 @@ public class Game {
 					spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
 				}
 				
-				//if(i%3 == 0){
+				if(i%3 == 0){
 					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
-				//}
-				//else if(i%3 == 1){
-				//	drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
-				//}
-				//else{
-				//	drawables.add(new Archer(orcDirection, orcXPos, orcYPos));
-				//}
+				}
+				else if(i%3 == 1){
+					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
+				}
+				else{
+					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+				}
 			}
 		}
 	}
@@ -227,7 +227,7 @@ public class Game {
 		if(d instanceof Modifier){
 			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
 			Modifier dModifier = (Modifier) d;
-			if((movingS == Game.getHero()) & (dModifier.getHeroOnly() == true)){
+			if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (dModifier.getHeroOnly() == true)){
 				dModifier.activate(movingS, currentWave);
 				drawables.remove(d);
 			}
@@ -309,7 +309,7 @@ public class Game {
 		}
 	}
 	
-	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Hero hero){
+	public void checkForSpriteCollision(ArrayList<Drawable> drawables, Sprite hero){
 		Collections.sort(drawables, Drawable.PosComparator);				//Sorts drawables so there is no need for spawn order collision casing
 		Drawable movingD;													
 		if(debugText){

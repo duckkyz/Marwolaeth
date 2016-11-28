@@ -7,11 +7,13 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.Set;
 
 import marwolaeth.Game;
-import marwolaeth.ImplementedEntities.Orc;
+import marwolaeth.ImplementedEntities.*;
 import marwolaeth.Interfaces.willAttack;
 
 public class Sprite extends Drawable implements willAttack{
@@ -236,7 +238,32 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public void continueSequence() {
-		setActionStep(getActionStep()+1);												//goes to the next step of the animation
+		if((this instanceof Arbiter) & (getActionSequence() > 21)){						//goes to the next step of the animation for oversized attacks
+			if(getActionStep() == 0){
+				setActionStep(1);
+			}
+			else if(getActionStep() == 1){
+				setActionStep(4);
+			}
+			else if(getActionStep() == 4){
+				setActionStep(7);
+			}
+			else if(getActionStep() == 7){
+				setActionStep(10);
+			}
+			else if(getActionStep() == 10){
+				setActionStep(13);
+			}
+			else if(getActionStep() == 13){
+				setActionStep(16);
+			}
+			else if(getActionStep() == 16){
+				setActionStep(0);
+			}
+		}
+		else{
+			setActionStep(getActionStep()+1);												//goes to the next step of the animation
+		}
 		
 		if(getActionSequence() >= 0 & getActionSequence() <= 3) {						//spell-casting
 			if(getActionStep()>6) {
@@ -287,6 +314,15 @@ public class Sprite extends Drawable implements willAttack{
 				else{
 					Game.removeDrawable(this);
 				}
+			}
+		}
+		else if(getActionSequence() >= 21 & getActionSequence() <= 24){					//Oversized slash
+			if(getActionStep() > 13) {
+				attack();
+				setSequenceWalking();	
+			}
+			if(getActionStep() == 13) {
+				executeAbility(getEffectiveDirection());
 			}
 		}
 	}
@@ -384,21 +420,36 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public void abilitySetupHelper(int actionSelection) {
-		switch(getActionSequence()){																						
+		switch(getActionSequence()){	
 			case 8:
 				setActionSequence(4*actionSelection);
+				if(this instanceof Arbiter){
+					setActionSequence(22);
+				}
 				break;
 			case 9:
 				setActionSequence(4*actionSelection+1);
+				if(this instanceof Arbiter){
+					setActionSequence(26);
+				}	
 				break;
 			case 10:
 				setActionSequence(4*actionSelection+2);
+				if(this instanceof Arbiter){
+					setActionSequence(30);
+				}
 				break;
 			case 11:
 				setActionSequence(4*actionSelection+3);
+				if(this instanceof Arbiter){
+					setActionSequence(34);
+				}
 				break;
 			default:
 				setActionSequence(4*actionSelection);
+				if(this instanceof Arbiter){
+					setActionSequence(4*actionSelection);
+				}
 				break;
 		}
 		if(actionSelection == 5) {
@@ -527,6 +578,93 @@ public class Sprite extends Drawable implements willAttack{
 
 	    return result;
 	}
+	
+	//For Player
+		public void doLogic(Set keySet) {
+			if(getHealth() <= 0){
+				if(getActionSequence() != 20){
+					System.out.println(getClass().getSimpleName() + " is dead, will remove from game.");
+					setActionSequence(20);
+					setActionStep(0);
+					setIsMoving(false);
+				}
+				continueSequence();
+				return;
+			}
+			
+			if(keySet.contains(KeyEvent.VK_SPACE)){ 
+				setStaticMovement(true);
+			}
+			else{
+				setStaticMovement(false);
+			}
+			
+			
+			if(keySet.contains(KeyEvent.VK_Q) & getCompleteingSequence() != true) {
+				setInvokedAbility(1);							//records that the current ability being used is Q
+				ability1Setup();
+			}
+			if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
+				setInvokedAbility(2);							//records that the current ability being used is W
+				ability2Setup();
+			}
+			if(keySet.contains(KeyEvent.VK_E) & getCompleteingSequence() != true) {
+				setInvokedAbility(3);							//records that the current ability being used is E
+				ability3Setup();
+			}
+			if(keySet.contains(KeyEvent.VK_R) & getCompleteingSequence() != true) {
+				setInvokedAbility(4);							//records that the current ability being used is R
+				ability4Setup();
+			}
+			
+			
+			if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
+				continueSequence();								//Moved to Sprite to generalize movement
+			}
+			else
+				setIsMoving(true);
+			
+			if(getMoveCasting() == true)
+				setIsMoving(true);
+			
+			
+			if ((keySet.contains(KeyEvent.VK_UP)) && (!keySet.contains(KeyEvent.VK_DOWN))) {
+				if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
+					doMovementLogic45(9, 8, 315);
+				}
+				else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
+					doMovementLogic45(11, 8, 45);
+				}
+				else {
+					doMovementLogic90(8, 0);
+				}
+			}
+			else if ((!keySet.contains(KeyEvent.VK_UP)) && (keySet.contains(KeyEvent.VK_DOWN))) {
+				if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
+					doMovementLogic45(10, 9, 225);
+				}
+				else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
+					doMovementLogic45(11, 10, 135);
+					
+				}
+				else {
+					doMovementLogic90(10, 180);
+				}
+			}
+			else if ((keySet.contains(KeyEvent.VK_LEFT)) && (!keySet.contains(KeyEvent.VK_RIGHT))) {
+				doMovementLogic90(9, 270);
+			}
+			else if ((!keySet.contains(KeyEvent.VK_LEFT)) && (keySet.contains(KeyEvent.VK_RIGHT))) {
+				doMovementLogic90(11, 90);
+			}
+			else {
+				setIsMoving(false);
+				if(getCompleteingSequence() == false) {
+					if(getActionStep()>0)
+						setActionStep(0);
+				}
+			}
+		}
 	
 	//For AI
 	public void doLogic() {
