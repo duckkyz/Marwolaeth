@@ -93,7 +93,6 @@ public class Game {
 		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
 		
 		Speedup temp = new Speedup(1, 256, 256, true);
-		temp.activate(Game.getHero(), currentWave);
 		drawables.add(temp);
 		
 		if(isTitleScreen){
@@ -220,6 +219,23 @@ public class Game {
 				}
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	public boolean powerUpHandling(Sprite movingS, Drawable d){
+		if(d instanceof Modifier){
+			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
+			Modifier dModifier = (Modifier) d;
+			if((movingS == Game.getHero()) & (dModifier.getHeroOnly() == true)){
+				dModifier.activate(movingS, currentWave);
+				drawables.remove(d);
+			}
+			else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false)){
+				dModifier.activate(movingS, currentWave);
+				drawables.remove(d);
+			}
+			return true;
 		}
 		return false;
 	}
@@ -384,6 +400,10 @@ public class Game {
 							continue;
 						}
 						
+						if(powerUpHandling(movingS, d)){
+							continue;
+						}
+						
 						if(movingS.getDirection() == 0){
 							canGoUp = false;
 						}
@@ -436,6 +456,10 @@ public class Game {
 							continue;
 						}
 					
+						if(powerUpHandling(movingS, d)){
+							continue;
+						}
+						
 						if(movingS.getDirection() == 135){
 							canGoDown = false;
 						}
@@ -487,6 +511,10 @@ public class Game {
 							continue;
 						}
 
+						if(powerUpHandling(movingS, d)){
+							continue;
+						}
+						
 						++collision3Count;												//Single Collision detection
 						collisionX.add(dX);
 						collisionY.add(dMaxY);
@@ -519,6 +547,10 @@ public class Game {
 						//}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
+							continue;
+						}
+						
+						if(powerUpHandling(movingS, d)){
 							continue;
 						}
 						
@@ -761,6 +793,9 @@ public class Game {
 		int waveCounter = 0;
 		for(Drawable d : drawables){
 			if(d instanceof Sprite){
+				if(d instanceof Modifier){
+					continue;
+				}
 				++waveCounter;
 				break;
 			}

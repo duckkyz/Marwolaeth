@@ -25,6 +25,7 @@ public abstract class Modifier extends Drawable{
 		this.target = target;
 		removalWave = currentWave + duration;
 		activated = true;
+		this.addModifier();
 	}
 	
 	public void doLogic() {
@@ -34,6 +35,10 @@ public abstract class Modifier extends Drawable{
 			//Removes all references so modifier is garbage collected
 			target = null;
 			Game.removeDrawable(this);
+		}
+		else if(activated == true){
+			this.setXPos(target.getXPos() + (target.getTileWidth()/2));
+			this.setYPos(target.getYPos() + (target.getTileHeight()/2));
 		}
 	}
 	
