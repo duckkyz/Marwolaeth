@@ -256,9 +256,12 @@ public class Sprite extends Drawable implements willAttack{
 			}
 			else if(getActionStep() == 13){
 				setActionStep(16);
+				executeAbility(getEffectiveDirection());
 			}
 			else if(getActionStep() == 16){
 				setActionStep(0);
+				attack();
+				setSequenceWalking();	
 			}
 		}
 		else{
@@ -308,21 +311,10 @@ public class Sprite extends Drawable implements willAttack{
 				//game ends
 				if(this == Game.getHero()){
 					setActionStep(0);
-					//setActionStep(0);
-					//Game ends
 				}
 				else{
 					Game.removeDrawable(this);
 				}
-			}
-		}
-		else if(getActionSequence() >= 21 & getActionSequence() <= 24){					//Oversized slash
-			if(getActionStep() > 13) {
-				attack();
-				setSequenceWalking();	
-			}
-			if(getActionStep() == 13) {
-				executeAbility(getEffectiveDirection());
 			}
 		}
 	}
