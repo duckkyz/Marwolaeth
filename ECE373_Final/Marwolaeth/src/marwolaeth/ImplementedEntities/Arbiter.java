@@ -23,8 +23,6 @@ public class Arbiter extends Villain {
 		setAttackRange(30);
 		setAttackDamage(20);
 		markedForDeath = null;
-		setActionSequence(1);
-		setActionStep(22);
 		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Arbiter.png")));

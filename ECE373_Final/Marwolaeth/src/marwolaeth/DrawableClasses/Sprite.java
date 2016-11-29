@@ -337,6 +337,26 @@ public class Sprite extends Drawable implements willAttack{
 	public void setSequenceWalking() {				//changes the actionSequence to walking based on current effectiveDirection
 		setActionStep(0);
 		setCompleteingSequence(false);
+		if(this instanceof Arbiter){
+			switch(getActionSequence()%4) {
+			case 0:
+				setActionSequence(8);
+				break;
+			case 1:
+				setActionSequence(9);
+				break;
+			case 2:
+				setActionSequence(10);
+				break;
+			case 3:
+				setActionSequence(11);
+				break;
+			default:
+				setActionSequence(8);
+				break;
+			}
+			return;
+		}
 		switch(getActionSequence()%4) {
 			case 0:
 				setActionSequence(8);
@@ -422,19 +442,19 @@ public class Sprite extends Drawable implements willAttack{
 			case 9:
 				setActionSequence(4*actionSelection+1);
 				if(this instanceof Arbiter){
-					setActionSequence(26);
+					setActionSequence(25);
 				}	
 				break;
 			case 10:
 				setActionSequence(4*actionSelection+2);
 				if(this instanceof Arbiter){
-					setActionSequence(30);
+					setActionSequence(28);
 				}
 				break;
 			case 11:
 				setActionSequence(4*actionSelection+3);
 				if(this instanceof Arbiter){
-					setActionSequence(34);
+					setActionSequence(31);
 				}
 				break;
 			default:
