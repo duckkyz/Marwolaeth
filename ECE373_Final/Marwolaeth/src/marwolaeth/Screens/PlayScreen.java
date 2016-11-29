@@ -95,8 +95,8 @@ public class PlayScreen extends GameState{
 		hero.paint(getImageGraphics());
 		heroX = hero.getXPos()+32;
 		heroY = hero.getYPos()+32;
-		percentHealth = (155*hero.getHealth())/100;			//155 is the px width of the health bar
-		percentMana = (141*hero.getMana())/100;
+		percentHealth = (155*hero.getHealth())/hero.getMaxHealth();			//155 is the px width of the health bar
+		percentMana = (141*hero.getMana())/hero.getMaxMana();
 	}
 	
 	public void paint(Graphics graphics) {

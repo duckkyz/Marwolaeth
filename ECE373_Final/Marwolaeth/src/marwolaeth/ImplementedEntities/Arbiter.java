@@ -15,6 +15,7 @@ public class Arbiter extends Villain {
 		setTileWidth(64);
 		setTileHeight(64);
 		setSpeed(8);
+		maxHealth = 150;
 		setHealth(150);
 		setTopHitBox(15);
 		setBotHitBox(2);

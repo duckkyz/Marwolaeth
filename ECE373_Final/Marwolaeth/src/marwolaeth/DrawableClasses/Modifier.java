@@ -16,41 +16,46 @@ public abstract class Modifier extends Drawable{
 		super(xPos, yPos);
 		this.duration = wavesDuration;
 		this.heroOnly = heroOnly;
+		removalWave = Game.getCurrentWave() + duration;
+
 	}
 	
 	public abstract void addModifier();									//Add modifier to target
 	public abstract void removeModifier();								//Reverse modifier to target if necessary
 	
-	public void activate(Sprite target, int currentWave) {				//Call this method when a Sprite collides with the modifier and satisfies the heroOnly condition
+	public void activate(Sprite target) {				//Call this method when a Sprite collides with the modifier and satisfies the heroOnly condition
 		this.target = target;
-		removalWave = currentWave + duration;
 		activated = true;
 		this.addModifier();
 	}
 	
-	public void doLogic() {
-		if(Game.getCurrentWave() == removalWave && activated == true) {
+	public void move() {
+		if(Game.getCurrentWave() > removalWave) {
 			this.removeModifier();										
 			
 			//Removes all references so modifier is garbage collected
 			target = null;
 			Game.removeDrawable(this);
 		}
-		else if(activated == true){
-			this.setXPos(target.getXPos() + (target.getTileWidth()/2));
-			this.setYPos(target.getYPos() + (target.getTileHeight()/2));
-		}
+	//	else if(activated == true){
+	//		this.setXPos(target.getXPos() + (target.getTileWidth()/2));
+	//		this.setYPos(target.getYPos() + (target.getTileHeight()/2));
+	//	}
 	}
 	
 	public void paint(Graphics imageGraphics) {	
-		//if(activated==true)
-		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+		if(activated == false){
+			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+		}
 	}
 	
 	public Sprite getTarget() {
 		return target;
 	}
 	
+	public boolean getIsActivated(){
+		return activated;
+	}
 	public boolean getHeroOnly() {										//Used for when Sprite collide with modifier
 		return heroOnly;
 	}

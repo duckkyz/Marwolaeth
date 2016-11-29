@@ -227,13 +227,13 @@ public class Game {
 		if(d instanceof Modifier){
 			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
 			Modifier dModifier = (Modifier) d;
-			if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (dModifier.getHeroOnly() == true)){
-				dModifier.activate(movingS, currentWave);
-				drawables.remove(d);
-			}
-			else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false)){
-				dModifier.activate(movingS, currentWave);
-				drawables.remove(d);
+			if(dModifier.getIsActivated() == false){
+				if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (dModifier.getHeroOnly() == true)){
+					dModifier.activate(movingS);
+				}
+				else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false)){
+					dModifier.activate(movingS);
+				}
 			}
 			return true;
 		}
@@ -773,10 +773,10 @@ public class Game {
 			}
 			
 			//Hero heath/mana regain
-			if((hero.getHealth() < 100 & hero.getHealth() > 0)){
+			if((hero.getHealth() < hero.getMaxHealth() & hero.getHealth() > 0)){
 				hero.setHealth(hero.getHealth() + 1);
 			}
-			if((hero.getMana() < 100)){
+			if((hero.getMana() < hero.getMaxMana())){
 				hero.setMana(hero.getMana() + 1);
 			}
 		}
@@ -793,7 +793,7 @@ public class Game {
 		int waveCounter = 0;
 		for(Drawable d : drawables){
 			if(d instanceof Sprite){
-				if(d instanceof Modifier){
+				if(d instanceof Projectile){
 					continue;
 				}
 				++waveCounter;

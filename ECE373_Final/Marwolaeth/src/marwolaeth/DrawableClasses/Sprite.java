@@ -30,8 +30,12 @@ public class Sprite extends Drawable implements willAttack{
 	
 	private boolean isAttacking = false;
 	
+	protected int maxHealth = 100;
+	protected int maxMana = 100;
 	private int health = 100;
 	private int mana = 100;
+	
+	private int animationCounter = 0;
 	
 	protected Sprite markedForDeath = Game.getHero();
 
@@ -100,6 +104,14 @@ public class Sprite extends Drawable implements willAttack{
 		return mana;
 	}
 	
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+	
+	public int getMaxMana() {
+		return maxMana;
+	}
+	
 	public int getAttackRange(){
 		return attackRange;
 	}
@@ -161,8 +173,8 @@ public class Sprite extends Drawable implements willAttack{
 		}
 		else{
 			this.health = health;
-			if(this.health > 100){
-				this.health = 100;
+			if(this.health > maxHealth){
+				this.health = maxHealth;
 			}
 		}
 	
@@ -239,30 +251,25 @@ public class Sprite extends Drawable implements willAttack{
 	
 	public void continueSequence() {
 		if((this instanceof Arbiter) & (getActionSequence() > 21)){						//goes to the next step of the animation for oversized attacks
-			if(getActionStep() == 0){
-				setActionStep(1);
+			if((animationCounter % 2) == 0){
+				if(getActionStep() == 0){
+					setActionStep(1);
+				}
+				if(getActionStep() == 10){
+					executeAbility(getEffectiveDirection());
+				}
+				if(getActionStep() == 16){
+					setActionStep(0);
+					attack();
+					setSequenceWalking();	
+					animationCounter = 0;
+					return;
+				}
+				else{
+					setActionStep(getActionStep() + 3);
+				}
 			}
-			else if(getActionStep() == 1){
-				setActionStep(4);
-			}
-			else if(getActionStep() == 4){
-				setActionStep(7);
-			}
-			else if(getActionStep() == 7){
-				setActionStep(10);
-			}
-			else if(getActionStep() == 10){
-				setActionStep(13);
-			}
-			else if(getActionStep() == 13){
-				setActionStep(16);
-				executeAbility(getEffectiveDirection());
-			}
-			else if(getActionStep() == 16){
-				setActionStep(0);
-				attack();
-				setSequenceWalking();	
-			}
+			animationCounter += 1;
 		}
 		else{
 			setActionStep(getActionStep()+1);												//goes to the next step of the animation
@@ -320,6 +327,20 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public int getEffectiveDirection() {			//gets the direction the hero is facing
+		if(this instanceof Arbiter){
+			switch(getActionSequence()%4) {
+			case 2:
+				return 0;
+			case 1:
+				return 270;
+			case 0:
+				return 180;
+			case 3:
+				return 90;
+			default:
+				return 0;
+			}
+		}
 		switch(getActionSequence()%4) {
 			case 0:
 				return 0;
@@ -339,13 +360,13 @@ public class Sprite extends Drawable implements willAttack{
 		setCompleteingSequence(false);
 		if(this instanceof Arbiter){
 			switch(getActionSequence()%4) {
-			case 0:
+			case 2:
 				setActionSequence(8);
 				break;
 			case 1:
 				setActionSequence(9);
 				break;
-			case 2:
+			case 0:
 				setActionSequence(10);
 				break;
 			case 3:
