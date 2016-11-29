@@ -139,6 +139,11 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 				g.setActionStep((int) (6 + Math.floor(Math.random() * 0)));		//column
 				g.setActionSequence((int) (2 + Math.floor(Math.random() * 0)));	//row
 				g.paint(img.getGraphics());
+				if(Math.random() * 100 > 98){
+					g.setActionStep((int) (15 + Math.floor(Math.random() * 4)));		//column
+					g.setActionSequence((int) (7 + Math.floor(Math.random() * 0)));	//row
+					g.paint(img.getGraphics());
+				}
 			}
 		}
 		setBackgroundImage(img);
