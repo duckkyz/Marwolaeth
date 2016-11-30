@@ -23,8 +23,7 @@ TODO's:
 	</li>
 	<li><s>Simple</s> Sophistocated AI attacking methods - Ben </li>
 	<li><s>Projectile damage methods</s> - Ben</li>
-	<li>Power up's - Sean</li>
-	<li>Create real menu windows and set up GUI (drop down menus ect)</li>
+	<li><s>Power up's</s> - Sean</li>
 	<li>Create more heroes (sprites, abilities)</li>
 	<li>Create more villians (sprites, abilities)</li>
 	<li><s>Create real map (rooms?)</s> Map nows spawns using tiles, need to refactor this to generate cool procedural classes</li>
