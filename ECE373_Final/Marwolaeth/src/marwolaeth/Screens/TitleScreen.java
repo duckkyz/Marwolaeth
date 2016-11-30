@@ -85,7 +85,7 @@ public class TitleScreen extends GameState{
 				}
 		}
 		//TODO remove this later, I want it for testing.
-		getFrame().setSize(1024, 576);
+		//getFrame().setSize(1024, 576);
 		
 		setImageWidth(getFrameWidth());
 		setImageHeight(getFrameHeight());
@@ -117,8 +117,9 @@ public class TitleScreen extends GameState{
 	}
 
 	
-	public void keyReleased(KeyEvent arg0) {
-
+	public void keyReleased(KeyEvent keyEvent) {
+		getKeySet().remove(keyEvent.getKeyCode());
+		
 	}
 
 	

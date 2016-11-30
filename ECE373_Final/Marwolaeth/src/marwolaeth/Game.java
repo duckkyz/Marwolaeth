@@ -92,7 +92,7 @@ public class Game {
 		drawables.add(new LargeLight(48, mapHeight - (64*3)));
 		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
 		
-		Speedup temp = new Speedup(1, 256, 256, true);
+		Modifier temp = new SlowDown(1, 256, 256, true);
 		drawables.add(temp);
 		
 		if(isTitleScreen){
@@ -141,7 +141,7 @@ public class Game {
 		}
 	}
 	
-	public boolean checkCanSpawn(Drawable toSpawn){
+	public static boolean checkCanSpawn(Drawable toSpawn){
 		int newX = ((toSpawn.getXPos() + toSpawn.getLeftHitBox()));
 		int newY = ((toSpawn.getYPos() + toSpawn.getTopHitBox()));
 		int newMaxX = newX + (toSpawn.getTileWidth() - toSpawn.getLeftHitBox() - toSpawn.getRightHitBox());	//Right

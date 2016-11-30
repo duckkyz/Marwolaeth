@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
+import marwolaeth.FloorTiles.TikiGolem;
 import marwolaeth.ImplementedEntities.*;
 
 public class HeroSelectScreen extends GameState{
@@ -23,42 +24,28 @@ public class HeroSelectScreen extends GameState{
 			setBackgroundImage(ImageIO.read(new File("Background_Images/HeroSelect.png")));
 		} catch(IOException ex) {}
 		
-		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
+		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));		
+		
+		Orc test = new Orc(180, heroXSpawn, heroYSpawn);
+		while((Game.checkCanSpawn(test) == false)){
+			heroXSpawn = (int)(Math.floor((Math.random() * 3584)) + 64);
+			heroYSpawn = (int)(Math.floor((Math.random() * 1094)) + 64);
+			test = new Orc(180, heroXSpawn, heroYSpawn);
+		}
 	}
 
 	public void keyPressed(KeyEvent keyEvent) {
 		if (keyEvent.getKeyCode()==KeyEvent.VK_S) {
 			Game.setHero(new Wizard(180, heroXSpawn, heroYSpawn));
-			PlayScreen playScreen = new PlayScreen();
-			getRootContainer().remove(this);
-			getRootContainer().add(playScreen);
-			getRootContainer().doLayout();
-			getRootContainer().repaint();
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_A) {
-			//Game.setHero(new Archer(180, heroXSpawn, heroYSpawn));
-			Game.setHero(new Arbiter(180, heroXSpawn, heroYSpawn));
-			PlayScreen playScreen = new PlayScreen();
-			getRootContainer().remove(this);
-			getRootContainer().add(playScreen);
-			getRootContainer().doLayout();
-			getRootContainer().repaint();
-		}
-		else if (keyEvent.getKeyCode()==KeyEvent.VK_K) {
-			Game.setHero(new Knight(180, heroXSpawn, heroYSpawn));
-			PlayScreen playScreen = new PlayScreen();
-			getRootContainer().remove(this);
-			getRootContainer().add(playScreen);
-			getRootContainer().doLayout();
-			getRootContainer().repaint();
+			Game.setHero(new Archer(180, heroXSpawn, heroYSpawn));
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_D) {
 			Game.setHero(new Druid(180, heroXSpawn, heroYSpawn));
-			PlayScreen playScreen = new PlayScreen();
-			getRootContainer().remove(this);
-			getRootContainer().add(playScreen);
-			getRootContainer().doLayout();
-			getRootContainer().repaint();
+		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_F) {
+			Game.setHero(new Knight(180, heroXSpawn, heroYSpawn));
 		}
 		else if(keyEvent.getKeyCode()==KeyEvent.VK_ESCAPE) {
 				TitleScreen titleScreen = new TitleScreen();
@@ -66,12 +53,21 @@ public class HeroSelectScreen extends GameState{
 				getRootContainer().add(titleScreen);
 				getRootContainer().doLayout();
 				getRootContainer().repaint();
-				
+				return;
+		}
+		else{
+			return;
 		}
 		
+		PlayScreen playScreen = new PlayScreen();
+		getRootContainer().remove(this);
+		getRootContainer().add(playScreen);
+		getRootContainer().doLayout();
+		getRootContainer().repaint();
+		
 	}
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent keyEvent) {
+		getKeySet().remove(keyEvent.getKeyCode());
 		
 	}
 	public void keyTyped(KeyEvent arg0) {

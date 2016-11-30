@@ -6,8 +6,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import marwolaeth.Game;
+import marwolaeth.DrawableClasses.Modifier;
 import marwolaeth.DrawableClasses.Projectile;
 import marwolaeth.DrawableClasses.Sprite;
+import marwolaeth.ImplementedModifiers.SlowDown;
 	
 public class Icicle extends Projectile{			//Using the "CUSTOM" label to show what parameters should be changed when creating a similar projectile.
 	
@@ -105,6 +108,10 @@ public class Icicle extends Projectile{			//Using the "CUSTOM" label to show wha
 			System.out.println(beingAttacked.getClass().getSimpleName() + " died to a Icicle!!!!");
 		}
 		beingAttacked.setHealth(newHealth);
+		//TODO fix this
+		Modifier temp = new SlowDown(1, 256, 256, true);
+		temp.activate(this);
+		Game.getDrawables().add(temp);
 	}
 	
 	public void paint(Graphics imageGraphics) {			

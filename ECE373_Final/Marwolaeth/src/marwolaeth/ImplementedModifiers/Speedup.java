@@ -41,7 +41,9 @@ public class Speedup extends Modifier {
 	}
 
 	public void removeModifier() {
-		getTarget().setSpeed(getTarget().getSpeed() - amountSpeedup);
+		if(getTarget() != null){
+			getTarget().setSpeed(getTarget().getSpeed() - amountSpeedup);
+		}
 	}
 
 }

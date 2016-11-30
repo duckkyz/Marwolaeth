@@ -37,10 +37,6 @@ public abstract class Modifier extends Drawable{
 			target = null;
 			Game.removeDrawable(this);
 		}
-	//	else if(activated == true){
-	//		this.setXPos(target.getXPos() + (target.getTileWidth()/2));
-	//		this.setYPos(target.getYPos() + (target.getTileHeight()/2));
-	//	}
 	}
 	
 	public void paint(Graphics imageGraphics) {	
