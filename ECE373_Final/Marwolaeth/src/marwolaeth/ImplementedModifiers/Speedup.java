@@ -14,19 +14,21 @@ public class Speedup extends Modifier {
 	public Speedup(int wavesDuration, int xPos, int yPos, boolean heroOnly) {						//Uses default +8 speed modifier
 		super(wavesDuration, xPos, yPos, heroOnly);
 		try{
-			setGraphic(ImageIO.read(new File("Drawable_Images/Speedup.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Modifiers.png")));
 		}
 		catch(IOException ex){
 			
 		}
 		setTileWidth(32);
 		setTileHeight(32);
+		setActionStep(0);
+		setActionSequence(0);
 	}
 	
 	public Speedup(int wavesDuration, int xPos, int yPos, boolean heroOnly, int speedup) {			//If you want a specific speed modifier
 		super(wavesDuration, xPos, yPos, heroOnly);
 		try{
-			setGraphic(ImageIO.read(new File("Drawable_Images/Speedup.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Modifiers.png")));
 		}
 		catch(IOException ex){
 			
@@ -34,6 +36,8 @@ public class Speedup extends Modifier {
 		setTileWidth(32);
 		setTileHeight(32);
 		amountSpeedup = speedup;
+		setActionStep(0);
+		setActionSequence(0);
 	}
 
 	public void addModifier() {

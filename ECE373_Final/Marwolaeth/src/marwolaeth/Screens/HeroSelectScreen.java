@@ -47,6 +47,18 @@ public class HeroSelectScreen extends GameState{
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_F) {
 			Game.setHero(new Knight(180, heroXSpawn, heroYSpawn));
 		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_Z) {
+			Game.setHero(new Theif(180, heroXSpawn, heroYSpawn));
+		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_X) {
+			Game.setHero(new Warlock(180, heroXSpawn, heroYSpawn));
+		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_C) {
+			Game.setHero(new Bard(180, heroXSpawn, heroYSpawn));
+		}
+		else if (keyEvent.getKeyCode()==KeyEvent.VK_V) {
+			Game.setHero(new Guildmaster(180, heroXSpawn, heroYSpawn));
+		}
 		else if(keyEvent.getKeyCode()==KeyEvent.VK_ESCAPE) {
 				TitleScreen titleScreen = new TitleScreen();
 				getRootContainer().remove(this);

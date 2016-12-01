@@ -109,8 +109,8 @@ public class Icicle extends Projectile{			//Using the "CUSTOM" label to show wha
 		}
 		beingAttacked.setHealth(newHealth);
 		//TODO fix this
-		Modifier temp = new SlowDown(1, 256, 256, true);
-		temp.activate(this);
+		Modifier temp = new SlowDown(Game.getCurrentWave() + 1, 256, 256, true);
+		temp.activate(beingAttacked);
 		Game.getDrawables().add(temp);
 	}
 	

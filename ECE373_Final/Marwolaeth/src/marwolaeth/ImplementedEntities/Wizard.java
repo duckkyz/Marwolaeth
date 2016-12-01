@@ -69,19 +69,30 @@ public class Wizard extends Hero{
 	}
 
 	public void ability2Execute(int direction) {
-		//TODO implement this
+		if(this.getMana() > 10){
+			if(this == Game.getHero()){
+				Game.addDrawable(new Icicle(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
+			}
+			else{
+				Game.addDrawable(new Icicle(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+			}
+			this.setMana(this.getMana() - 10);
+		}		
 	}
 	
 	public void ability3Execute(int direction) {
-		if(this == Game.getHero()){
-			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Shock(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		}
-		else{
-			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Shock(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+		if(this.getMana() > 30){
+			if(this == Game.getHero()){
+				Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+				Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+				Game.addDrawable(new Shock(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			}
+			else{
+				Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+				Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+				Game.addDrawable(new Shock(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			}
+			this.setMana(this.getMana() - 30);
 		}
 	}
 	
