@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
 
-public class Guildmaster extends Hero{
-	public Guildmaster(int direction, int spawnX, int spawnY) {
+public class DungeonMaster extends Hero{
+	public DungeonMaster(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
 		setTileHeight(64);
