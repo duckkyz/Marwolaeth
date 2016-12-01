@@ -260,7 +260,7 @@ public class Game {
 				drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 			}
 			else{
-				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
 			}
 			
 			++spawnCounter;
