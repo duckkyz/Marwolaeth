@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
 import marwolaeth.ImplementedProjectiles.Arrow;
+import marwolaeth.ImplementedProjectiles.Fireball;
 
 
 public class Archer extends Hero{
@@ -60,23 +61,27 @@ public class Archer extends Hero{
 	
 	public void ability1Execute(int direction) {
 		if(this == Game.getHero()){
-			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
 		}
 		else{
-			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
 		}
 	}
 
 	public void ability2Execute(int direction) {
-		if(this == Game.getHero()){
-			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-			Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-		}
-		else{
-			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+		if(this.getMana() > 15){
+
+			if(this == Game.getHero()){
+				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+				Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+				Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+			}
+			else{
+				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+				Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+				Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			}
+			this.setMana(this.getMana() - 15);
 		}
 	}
 	

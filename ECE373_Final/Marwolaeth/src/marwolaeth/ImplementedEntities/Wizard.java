@@ -62,7 +62,16 @@ public class Wizard extends Hero{
 				Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
 			}
 			else{
-				Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+				int temp = (int)Math.random() * 100;
+				if(temp%3 == 0){
+					Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+				}
+				else if(temp%3 == 1){
+					Game.addDrawable(new Icicle(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+				}
+				else if(temp%3 == 2){
+					Game.addDrawable(new Shock(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+				}
 			}
 			this.setMana(this.getMana() - 10);
 		}		
@@ -97,23 +106,25 @@ public class Wizard extends Hero{
 	}
 	
 	public void ability4Execute(int direction) {
-		if(this == Game.getHero()){
-			for(int i = 0; i < 4; i++){
-				if(i != 0){
-					Game.addDrawable(new Fireball(direction + (i * -30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+		if(this.getMana() > 50){
+			if(this == Game.getHero()){
+				for(int i = 0; i < 4; i++){
+					if(i != 0){
+						Game.addDrawable(new Fireball(direction + (i * -30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+					}
+					Game.addDrawable(new Fireball(direction + (i * 30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 				}
-				Game.addDrawable(new Fireball(direction + (i * 30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 			}
-		}
-		else{
-			for(int i = 0; i < 4; i++){
-				if(i != 0){
-					Game.addDrawable(new Fireball(direction + (i * -30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+			else{
+				for(int i = 0; i < 4; i++){
+					if(i != 0){
+						Game.addDrawable(new Fireball(direction + (i * -30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
+					}
+					Game.addDrawable(new Fireball(direction + (i * 30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
 				}
-				Game.addDrawable(new Fireball(direction + (i * 30), getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
 			}
+			this.setMana(this.getMana() - 50);
 		}
-		
 	}
 
 	public void doLogic(){

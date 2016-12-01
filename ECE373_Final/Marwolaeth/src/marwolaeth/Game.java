@@ -92,7 +92,7 @@ public class Game {
 		drawables.add(new LargeLight(48, mapHeight - (64*3)));
 		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
 		
-		Modifier temp = new SlowDown(1, 256, 256, true);
+		Modifier temp = new Speedup(1, 256, 256, true);
 		drawables.add(temp);
 		
 		if(isTitleScreen){
@@ -132,10 +132,10 @@ public class Game {
 					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 				}
 				else if(i%3 == 1){
-					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
+					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 				}
 				else{
-					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 				}
 			}
 		}
@@ -260,7 +260,7 @@ public class Game {
 				drawables.add(new Knight(orcDirection, orcXPos, orcYPos));
 			}
 			else{
-				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
 			}
 			
 			++spawnCounter;
@@ -778,6 +778,14 @@ public class Game {
 			}
 			if((hero.getMana() < hero.getMaxMana())){
 				hero.setMana(hero.getMana() + 1);
+			}
+			for(Drawable d : drawables){
+				if(d instanceof Sprite){
+					Sprite s = (Sprite) d;
+					if((s.getMana() < s.getMaxMana())){
+						s.setMana(s.getMana() + 1);
+					}
+				}
 			}
 		}
 	
