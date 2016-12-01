@@ -57,7 +57,7 @@ public class Leaf extends Projectile {
 		}
 		
 		setSpeed(20);
-		setDamage(25);
+		setDamage(20);
 	}
 
 	public void doLogic() {

@@ -84,7 +84,7 @@ public class Fireball extends Projectile{			//Using the "CUSTOM" label to show w
 			ySlope = 1;
 		}
 		
-		setDamage(20);											//CUSTOM
+		setDamage(15);											//CUSTOM
 		setSpeed(30);											//CUSTOM
 	}
 
