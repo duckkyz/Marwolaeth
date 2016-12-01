@@ -44,7 +44,7 @@ public class SlowDown extends Modifier {
 	}
 
 	public void addModifier() {
-		if(getTarget().getSpeed() > (amountSlowDown + 5)){
+		if(getTarget().getSpeed() > (amountSlowDown)){
 			getTarget().setSpeed(getTarget().getSpeed() - amountSlowDown);
 		}
 	}
