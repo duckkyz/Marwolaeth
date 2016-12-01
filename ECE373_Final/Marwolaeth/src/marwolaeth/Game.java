@@ -257,7 +257,7 @@ public class Game {
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 			}
 			else if(spawnCounter%3 == 1){
-				drawables.add(new Knight(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 			}
 			else{
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));

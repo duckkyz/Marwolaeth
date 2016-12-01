@@ -47,6 +47,9 @@ public class SlowDown extends Modifier {
 		if(getTarget().getSpeed() > (amountSlowDown)){
 			getTarget().setSpeed(getTarget().getSpeed() - amountSlowDown);
 		}
+		else{
+			Game.removeDrawable(this);
+		}
 	}
 
 	public void removeModifier() {
