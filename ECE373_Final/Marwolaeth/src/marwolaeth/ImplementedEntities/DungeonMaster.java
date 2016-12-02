@@ -42,10 +42,10 @@ public class DungeonMaster extends Hero{
 	@Override
 	public void ability2Setup() {
 		setActionStep(0);
-		setMoveCasting(true);								//whether the hero can move while using this ability
+		setMoveCasting(false);								//whether the hero can move while using this ability
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(3);
+		abilitySetupHelper(0);
 	}
 
 	@Override
@@ -67,8 +67,21 @@ public class DungeonMaster extends Hero{
 
 	@Override
 	public void ability2Execute(int direction) {
-		// TODO Auto-generated method stub
-
+		int blinkDist = (int) ((Math.random() * 128) + 64);
+		int xSlope;
+		int ySlope;
+		int temp = this.getEffectiveDirection();
+		//TODO: finish this
+		if(temp == 0){
+			this.setYPos(this.getYPos() - blinkDist);
+			if(this.getYPos() < 128){
+				this.setYPos(128);
+			}
+			while(Game.checkCanSpawn(this) == false){
+				this.setYPos(this.getYPos() + 10);
+			}
+		}
+		
 	}
 
 	@Override
