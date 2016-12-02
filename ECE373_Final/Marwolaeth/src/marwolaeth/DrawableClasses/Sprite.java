@@ -1,5 +1,6 @@
 package marwolaeth.DrawableClasses;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
@@ -569,7 +570,7 @@ public class Sprite extends Drawable implements willAttack{
 			if(isAttacked){
 				s.setHealth(s.getHealth() - this.getAttackDamage());
 				if(this == Game.getHero()){
-					System.out.println(this.getClass().getSimpleName() + "1 is attacking " + s.getClass().getSimpleName());
+					System.out.println(this.getClass().getSimpleName() + " 1 is attacking " + s.getClass().getSimpleName());
 					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
 				}
 			}
@@ -785,5 +786,13 @@ public class Sprite extends Drawable implements willAttack{
 	
 	public void paint(Graphics imageGraphics) {
 		imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+		if(this != Game.getHero()){
+			int percentHealth = (60*this.getHealth())/this.getMaxHealth();			//155 is the px width of the health bar
+			imageGraphics.setColor(Color.red);
+			imageGraphics.fillRect(this.getXPos(), this.getYPos(), 60, 8);
+			imageGraphics.setColor(Color.green);
+			imageGraphics.fillRect(this.getXPos(), this.getYPos(), percentHealth, 8);
+
+		}
 	}
 }
