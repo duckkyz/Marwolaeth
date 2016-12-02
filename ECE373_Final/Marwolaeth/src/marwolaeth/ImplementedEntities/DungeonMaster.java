@@ -35,7 +35,8 @@ public class DungeonMaster extends Hero{
 		setMoveCasting(true);								//whether the hero can move while using this ability
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(1);
+		abilitySetupHelper(3);
+		setAttackDamage((int)Math.random() * 20);
 	}
 
 	@Override
