@@ -158,14 +158,13 @@ public class TitleScreen extends GameState{
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, 0, getFrameWidth(), getFrameHeight());		//makes whatever is outside the image black
 		if(getFullScreen()==true) {
-			graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling)+getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+			graphics.drawImage(getBlankImage(), (getMonitorWidth()-getImageWidth())/2, (getMonitorHeight()-getImageHeight())/2, getImageWidth(), getImageHeight(), this);
 			graphics.fillRect(0, 0, getMonitorWidth(), halfDiffDisImgHeight);																			//top
 			graphics.fillRect(0, bottomBarYLocation, getMonitorWidth(), halfDiffDisImgHeight);														//bottom
 			graphics.fillRect(0, 0, halfDiffDisImgWidth, getMonitorHeight());																			//left
 			graphics.fillRect(rightBarXLocation, 0, halfDiffDisImgWidth, getMonitorHeight());															//right
 		}
 		else{
-			//graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling)+getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
 			graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling) + getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
 		}
 	}
