@@ -308,6 +308,9 @@ public class Game {
 					d.doLogic();
 				}
 			}
+			if(d instanceof Modifier) {
+				d.doLogic();
+			}
 		}
 	}
 	

@@ -24,7 +24,7 @@ public class SlowDown extends Modifier {
 		}
 		setTileWidth(32);
 		setTileHeight(32);
-		setActionStep(1);
+		setActionStep(0);
 		setActionSequence(0);
 	}
 	
@@ -57,6 +57,8 @@ public class SlowDown extends Modifier {
 		if(getTarget() != null){
 			getTarget().setSpeed(getTarget().getSpeed() + amountSlowDown);
 		}
+		target = null;
+		Game.removeDrawable(this);
 	}
 
 	public void move(){

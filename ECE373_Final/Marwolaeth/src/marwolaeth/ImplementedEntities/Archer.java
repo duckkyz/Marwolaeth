@@ -16,6 +16,9 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.DrawableClasses.Modifier;
+import marwolaeth.ImplementedModifiers.BearTrap;
+import marwolaeth.ImplementedModifiers.SlowDown;
 import marwolaeth.ImplementedProjectiles.Arrow;
 import marwolaeth.ImplementedProjectiles.Fireball;
 
@@ -51,7 +54,9 @@ public class Archer extends Hero{
 	}
 	
 	public void ability3Setup() {	
-		//TODO implement this
+		setActionStep(0);
+		Modifier temp = new SlowDown(Game.getCurrentWave() + 1, 256, 256, true);
+		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), false));
 	}
 	
 	public void ability4Setup() {

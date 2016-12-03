@@ -39,6 +39,10 @@ public abstract class Modifier extends Drawable{
 		}
 	}
 	
+	public void doLogic() {
+		
+	}
+	
 	public void paint(Graphics imageGraphics) {	
 		if(activated == false){
 			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
@@ -54,6 +58,9 @@ public abstract class Modifier extends Drawable{
 	}
 	public boolean getHeroOnly() {										//Used for when Sprite collide with modifier
 		return heroOnly;
+	}
+	public void setActivated(boolean activated) {
+		this.activated = activated;
 	}
 	
 }
