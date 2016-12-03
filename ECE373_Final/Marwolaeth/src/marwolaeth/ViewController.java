@@ -29,7 +29,7 @@ public class ViewController {
 	private static Game game;
 	private JPanel rootContainer;
 	
-	private Timer timer;
+	private static Timer timer;
 	private final int timerDelay = 1;
 	
 	
@@ -100,6 +100,10 @@ public class ViewController {
 			
 		});
 		timer.stop();
+	}
+	
+	public static Timer getTimer() {
+		return timer;
 	}
 
 }

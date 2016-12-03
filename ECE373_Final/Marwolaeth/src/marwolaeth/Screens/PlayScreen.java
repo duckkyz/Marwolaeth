@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
+import marwolaeth.ViewController;
 import marwolaeth.DrawableClasses.*;
 
 public class PlayScreen extends GameState{
@@ -26,7 +27,7 @@ public class PlayScreen extends GameState{
 	private int heroResourcesYLocation = 0;
 	private Image heroResources;			//health/mana bar
 	
-	private boolean testHealthBar = false;	//used for testing. Remove when done
+	private boolean isPaused = false;
 	
 	public PlayScreen() {
 		try {
@@ -62,6 +63,16 @@ public class PlayScreen extends GameState{
 			getRootContainer().add(titleScreen);
 			getRootContainer().doLayout();
 			getRootContainer().repaint();				
+		}
+		else if(keyEvent.getKeyCode()==KeyEvent.VK_P) {
+			if(isPaused == false) {
+				ViewController.getTimer().stop();
+				isPaused = true;
+			}
+			else {
+				ViewController.getTimer().start();
+				isPaused = false;
+			}
 		}
 
 	}
