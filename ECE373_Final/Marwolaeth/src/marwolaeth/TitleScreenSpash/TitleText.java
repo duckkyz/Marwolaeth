@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Drawable;
 
 public class TitleText extends Drawable {
@@ -69,6 +70,10 @@ public class TitleText extends Drawable {
 			}
 		}
 		frameCounter++;
+		
+		if(Game.getCurrentWave() > 1){
+			Game.removeDrawable(this);
+		}
 	}
 	
 	public void paint(Graphics imageGraphics){

@@ -31,19 +31,7 @@ import marwolaeth.ImplementedEntities.*;
 
 public class TitleScreen extends GameState{
 
-	public TitleScreen() {
-		/*
-		//TODO why is this here if theres already a constructor for TitleScreen?
-		try {
-			setBackgroundImage(ImageIO.read(new File("Background_Images/Title.png")));
-		} 
-		catch(IOException ex) {
-			System.out.println("I'm catching");
-		}
-		
-		setBlankImage(new BufferedImage(getBackgroundImage().getWidth(this), getBackgroundImage().getHeight(this), BufferedImage.TYPE_INT_ARGB));
-		*/
-		
+	public TitleScreen() {		
 		try {
 			setBackgroundImage(ImageIO.read(new File("Background_Images/Map.png")));
 		} 
@@ -96,6 +84,8 @@ public class TitleScreen extends GameState{
 	}
 	
 	public void keyPressed(KeyEvent keyEvent) {
+		getKeySet().add(keyEvent.getKeyCode());
+
 		if (keyEvent.getKeyCode()==KeyEvent.VK_S) {
 			HeroSelectScreen heroSelectScreen = new HeroSelectScreen();
 			getRootContainer().remove(this);

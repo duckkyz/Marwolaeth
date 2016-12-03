@@ -9,6 +9,7 @@ import marwolaeth.DrawableClasses.*;
 import marwolaeth.FloorTiles.*;
 import marwolaeth.ImplementedEntities.*;
 import marwolaeth.ImplementedModifiers.*;
+import marwolaeth.ImplementedProjectiles.*;
 import marwolaeth.TitleScreenSpash.TitleText;
 
 public class Game {
@@ -21,6 +22,7 @@ public class Game {
 	private int spawnCounter = 0;
 	private boolean debugText = false;
 	private static boolean isTitleScreen = false;
+	private int tempArrowCount;
 	
 	public Game() {
 		setUpGame();
@@ -257,7 +259,7 @@ public class Game {
 				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 			}
 			else if(spawnCounter%3 == 1){
-				drawables.add(new Knight(orcDirection, orcXPos, orcYPos));
+				drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 			}
 			else{
 				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
@@ -792,6 +794,12 @@ public class Game {
 		//Debug stuff
 		if(keySet.contains(KeyEvent.VK_B)){
 			this.debugText = true;
+			for(int i=0; i<(Game.getMapWidth()/64); ++i){
+				drawables.add(new Arrow(180, i * 64, 128, false));
+			}
+			for(int i=0; i<(Game.getMapHeight()/64); ++i){
+				drawables.add(new Fireball(90, 64, i * 64, false));
+			}
 		}
 		else{
 			this.debugText = false;
