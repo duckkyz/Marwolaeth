@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
 
-public class Theif extends Hero{
-	public Theif(int direction, int spawnX, int spawnY) {
+public class Thief extends Hero{
+	public Thief(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
 		setTileHeight(64);
@@ -22,7 +22,7 @@ public class Theif extends Hero{
 		setAttackDamage(25);
 		
 		try {
-			setGraphic(ImageIO.read(new File("Drawable_Images/Theif.png")));
+			setGraphic(ImageIO.read(new File("Drawable_Images/Thief.png")));
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -33,7 +33,7 @@ public class Theif extends Hero{
 	public void ability1Setup() {
 		setActionStep(0);
 		setMoveCasting(true);								//whether the hero can move while using this ability
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(1);
 	}
@@ -42,7 +42,7 @@ public class Theif extends Hero{
 	public void ability2Setup() {
 		setActionStep(0);
 		setMoveCasting(true);								//whether the hero can move while using this ability
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(3);
 	}

@@ -21,7 +21,7 @@ public class Sprite extends Drawable implements willAttack{
 	private boolean moveCasting = false;
 	private boolean staticMovement = false;
 	private boolean isMoving = false;
-	private boolean completeingSequence = false;	//if the sprite needs to finish performing current action before performing others
+	private boolean completingSequence = false;	//if the sprite needs to finish performing current action before performing others
 	private int invokedAbility = 0;					//used to keep track of which ability was issued for cases when multiple abilities use the same actionSequence
 	private int speed = 12;							//make only divisible by 2
 	private int direction = 0;
@@ -93,8 +93,8 @@ public class Sprite extends Drawable implements willAttack{
 		return isAttacking;
 	}
 	
-	public boolean getCompleteingSequence() {
-		return completeingSequence;
+	public boolean getcompletingSequence() {
+		return completingSequence;
 	}
 	
 	public int getInvokedAbility() {
@@ -164,8 +164,8 @@ public class Sprite extends Drawable implements willAttack{
 		this.isAttacking = isAttacking;
 	}
 	
-	public void setCompleteingSequence(boolean completeingSequence) {
-		this.completeingSequence = completeingSequence;
+	public void setcompletingSequence(boolean completingSequence) {
+		this.completingSequence = completingSequence;
 	}
 	
 	public void setInvokedAbility(int invokedAbility) {
@@ -390,7 +390,7 @@ public class Sprite extends Drawable implements willAttack{
 	
 	public void setSequenceWalking() {				//changes the actionSequence to walking based on current effectiveDirection
 		setActionStep(0);
-		setCompleteingSequence(false);
+		setcompletingSequence(false);
 		if(this instanceof Arbiter){
 			switch(getActionSequence()%4) {
 			case 2:
@@ -431,7 +431,7 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public void doMovementLogic90(int actionSequence, int direction) {			//contains the logic for moving at directions 0, 90, 180, 270
-		if(getCompleteingSequence() == false) {
+		if(getcompletingSequence() == false) {
 			setDirection(direction);
 			if(getStaticMovement() == false) {
 				if(getActionSequence()==actionSequence) {
@@ -457,7 +457,7 @@ public class Sprite extends Drawable implements willAttack{
 	}
 	
 	public void doMovementLogic45(int seq1, int seq2, int direction) {			//contains the logic for moving at directions 45, 135, 225, 315
-		if(getCompleteingSequence() == false) {
+		if(getcompletingSequence() == false) {
 			setDirection(direction);
 			if(getStaticMovement() == false) {
 				if(getActionSequence()!=seq1 & getActionSequence()!=seq2)												//if both keys are pressed at the same time, choose one of the directions
@@ -702,14 +702,14 @@ public class Sprite extends Drawable implements willAttack{
 			}
 			
 			
-			if(keySet.contains(KeyEvent.VK_Q) & getCompleteingSequence() != true) {
+			if(keySet.contains(KeyEvent.VK_Q) & getcompletingSequence() != true) {
 				if(ability1Ready){
 					setInvokedAbility(1);							//records that the current ability being used is Q
 					ability1Setup();
 					ability1Ready = false;
 				}
 			}
-			if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
+			if(keySet.contains(KeyEvent.VK_W) & getcompletingSequence() != true) {
 				if(ability3Ready){
 					setInvokedAbility(2);							//records that the current ability being used is W
 					ability2Setup();
@@ -717,14 +717,14 @@ public class Sprite extends Drawable implements willAttack{
 				}
 
 			}
-			if(keySet.contains(KeyEvent.VK_E) & getCompleteingSequence() != true) {
+			if(keySet.contains(KeyEvent.VK_E) & getcompletingSequence() != true) {
 				if(ability3Ready){
 					setInvokedAbility(3);							//records that the current ability being used is E
 					ability3Setup();
 					ability3Ready = false;
 				}
 			}
-			if(keySet.contains(KeyEvent.VK_R) & getCompleteingSequence() != true) {
+			if(keySet.contains(KeyEvent.VK_R) & getcompletingSequence() != true) {
 				if(ability4Ready){
 					setInvokedAbility(4);							//records that the current ability being used is R
 					ability4Setup();
@@ -733,7 +733,7 @@ public class Sprite extends Drawable implements willAttack{
 			}
 			
 			
-			if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
+			if(getcompletingSequence() == true) {				//prevents other actions while performing ability
 				continueSequence();								//Moved to Sprite to generalize movement
 			}
 			else
@@ -774,7 +774,7 @@ public class Sprite extends Drawable implements willAttack{
 			}
 			else {
 				setIsMoving(false);
-				if(getCompleteingSequence() == false) {
+				if(getcompletingSequence() == false) {
 					if(getActionStep()>0)
 						setActionStep(0);
 				}
@@ -802,7 +802,7 @@ public class Sprite extends Drawable implements willAttack{
 			}
 		}
 		
-		if(getIsAttacking() & getCompleteingSequence() != true) {
+		if(getIsAttacking() & getcompletingSequence() != true) {
 			//int attackSel = (int) (Math.random() * 100);
 			//if(this instanceof Projectile){
 			//	attackSel = 0;
@@ -843,7 +843,7 @@ public class Sprite extends Drawable implements willAttack{
 			*/
 		}
 		
-		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
+		if(getcompletingSequence() == true) {				//prevents other actions while performing ability
 			continueSequence();								//Moved to Sprite to generalize movement
 		}
 		else{
@@ -879,7 +879,7 @@ public class Sprite extends Drawable implements willAttack{
 		}
 		else {
 			setIsMoving(false);
-			if(getCompleteingSequence() == false) {
+			if(getcompletingSequence() == false) {
 				if(getActionStep()>0)
 					setActionStep(0);
 			}

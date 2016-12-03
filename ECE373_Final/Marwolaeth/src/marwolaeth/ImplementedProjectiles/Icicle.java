@@ -32,15 +32,15 @@ public class Icicle extends Projectile{			//Using the "CUSTOM" label to show wha
 		
 		try{
 			setGraphic(ImageIO.read(new File("Drawable_Images/Icicle.png")));
-			int origionalWidth = getGraphic().getWidth();
-			int origionalHeight = getGraphic().getHeight();
-			if(origionalWidth <= origionalHeight) {
-				limitingDimension = origionalWidth;
-				nonlimitingDimension = origionalHeight/numOfFrames-limitingDimension;
+			int originalWidth = getGraphic().getWidth();
+			int originalHeight = getGraphic().getHeight();
+			if(originalWidth <= originalHeight) {
+				limitingDimension = originalWidth;
+				nonlimitingDimension = originalHeight/numOfFrames-limitingDimension;
 			}
 			else {
-				limitingDimension = origionalHeight;
-				nonlimitingDimension = origionalWidth/numOfFrames-limitingDimension;
+				limitingDimension = originalHeight;
+				nonlimitingDimension = originalWidth/numOfFrames-limitingDimension;
 			}
 			setGraphic(rotate(getGraphic(), 90));	//CUSTOM: Make sure to use the second parameter in the method to rotate the image to the 0th degree as a default
 

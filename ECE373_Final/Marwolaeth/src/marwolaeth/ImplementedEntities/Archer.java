@@ -37,7 +37,7 @@ public class Archer extends Hero{
 	public void ability1Setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
 		setMoveCasting(false);								//whether the hero can move while using this ability
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(4);
 	}
@@ -45,7 +45,7 @@ public class Archer extends Hero{
 	public void ability2Setup() {							
 		setActionStep(0);
 		setMoveCasting(false);								//whether the hero can move while using this ability
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(4);
 	}

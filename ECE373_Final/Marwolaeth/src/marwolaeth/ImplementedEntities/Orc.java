@@ -34,7 +34,7 @@ public class Orc extends Villain {
 	public void ability1Setup() {
 		setActionStep(0);
 		setMoveCasting(true);								//whether the hero can move while using this ability
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(3);
 		ability1Ready = true;

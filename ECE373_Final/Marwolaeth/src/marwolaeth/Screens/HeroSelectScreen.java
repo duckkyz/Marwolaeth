@@ -48,7 +48,7 @@ public class HeroSelectScreen extends GameState{
 			Game.setHero(new Knight(180, heroXSpawn, heroYSpawn));
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_Z) {
-			Game.setHero(new Theif(180, heroXSpawn, heroYSpawn));
+			Game.setHero(new Thief(180, heroXSpawn, heroYSpawn));
 		}
 		else if (keyEvent.getKeyCode()==KeyEvent.VK_X) {
 			Game.setHero(new Warlock(180, heroXSpawn, heroYSpawn));

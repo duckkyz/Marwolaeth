@@ -33,7 +33,7 @@ public class Wizard extends Hero{
 	public void ability1Setup() {							//sets the ActionSequence that ability1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
 		setMoveCasting(true);
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(3);
 	}
@@ -41,14 +41,14 @@ public class Wizard extends Hero{
 	public void ability2Setup() {							
 		setActionStep(0);
 		setMoveCasting(true);
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(3);	}
 	
 	public void ability3Setup() {	
 		setActionStep(0);
 		setMoveCasting(true);
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(0);
 	}
@@ -56,7 +56,7 @@ public class Wizard extends Hero{
 	public void ability4Setup() {
 		setActionStep(0);
 		setMoveCasting(false);
-		setCompleteingSequence(true);
+		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(0);
 	}
