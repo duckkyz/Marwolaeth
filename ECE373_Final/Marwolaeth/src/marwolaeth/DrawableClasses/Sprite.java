@@ -38,6 +38,22 @@ public class Sprite extends Drawable implements willAttack{
 	
 	private int animationCounter = 0;
 	
+	protected boolean ability1Ready = true;
+	protected boolean ability2Ready = true;
+	protected boolean ability3Ready = true;
+	protected boolean ability4Ready = true;
+
+	
+	private int ability1Cooldown = 10;
+	private int ability2Cooldown = 10;
+	private int ability3Cooldown = 10;
+	private int ability4Cooldown = 10;
+
+	private int ability1CooldownCounter = 0;
+	private int ability2CooldownCounter = 0;
+	private int ability3CooldownCounter = 0;
+	private int ability4CooldownCounter = 0;
+	
 	protected Sprite markedForDeath = Game.getHero();
 
 	
@@ -203,6 +219,22 @@ public class Sprite extends Drawable implements willAttack{
 		
 	public void setMarkedForDeath(Sprite markedForDeath){
 		this.markedForDeath = markedForDeath;
+	}
+	
+	protected void setAbility1Cooldown(int cooldown){
+		this.ability1Cooldown = cooldown;
+	}
+
+	protected void setAbility2Cooldown(int cooldown){
+		this.ability2Cooldown = cooldown;
+	}
+	
+	protected void setAbility3Cooldown(int cooldown){
+		this.ability3Cooldown = cooldown;
+	}
+	
+	protected void setAbility4Cooldown(int cooldown){
+		this.ability4Cooldown = cooldown;
 	}
 	
 	public void ability1Setup() {		
@@ -451,6 +483,42 @@ public class Sprite extends Drawable implements willAttack{
 			setXPos(getXPos() + (int)(Math.round(Math.sin(Math.toRadians(direction)) * speed)));
 			setYPos(getYPos() + (int)(Math.round(Math.cos(Math.toRadians(direction)) * speed * (-1))));
 		}
+		if(ability1Ready == false){
+			if(ability1CooldownCounter > ability1Cooldown){
+				ability1Ready = true;
+				ability1CooldownCounter = 0;
+			}
+			else{
+				++ability1CooldownCounter;
+			}
+		}
+		if(ability2Ready == false){
+			if(ability2CooldownCounter > ability2Cooldown){
+				ability2Ready = true;
+				ability2CooldownCounter = 0;
+			}
+			else{
+				++ability2CooldownCounter;
+			}
+		}
+		if(ability3Ready == false){
+			if(ability3CooldownCounter > ability3Cooldown){
+				ability3Ready = true;
+				ability3CooldownCounter = 0;
+			}
+			else{
+				++ability3CooldownCounter;
+			}
+		}
+		if(ability4Ready == false){
+			if(ability4CooldownCounter > ability4Cooldown){
+				ability4Ready = true;
+				ability4CooldownCounter = 0;
+			}
+			else{
+				++ability4CooldownCounter;
+			}
+		}
 	}
 	
 	public void abilitySetupHelper(int actionSelection) {
@@ -635,20 +703,33 @@ public class Sprite extends Drawable implements willAttack{
 			
 			
 			if(keySet.contains(KeyEvent.VK_Q) & getCompleteingSequence() != true) {
-				setInvokedAbility(1);							//records that the current ability being used is Q
-				ability1Setup();
+				if(ability1Ready){
+					setInvokedAbility(1);							//records that the current ability being used is Q
+					ability1Setup();
+					ability1Ready = false;
+				}
 			}
 			if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
-				setInvokedAbility(2);							//records that the current ability being used is W
-				ability2Setup();
+				if(ability3Ready){
+					setInvokedAbility(2);							//records that the current ability being used is W
+					ability2Setup();
+					ability2Ready = false;
+				}
+
 			}
 			if(keySet.contains(KeyEvent.VK_E) & getCompleteingSequence() != true) {
-				setInvokedAbility(3);							//records that the current ability being used is E
-				ability3Setup();
+				if(ability3Ready){
+					setInvokedAbility(3);							//records that the current ability being used is E
+					ability3Setup();
+					ability3Ready = false;
+				}
 			}
 			if(keySet.contains(KeyEvent.VK_R) & getCompleteingSequence() != true) {
-				setInvokedAbility(4);							//records that the current ability being used is R
-				ability4Setup();
+				if(ability4Ready){
+					setInvokedAbility(4);							//records that the current ability being used is R
+					ability4Setup();
+					ability4Ready = false;
+				}
 			}
 			
 			
@@ -722,24 +803,45 @@ public class Sprite extends Drawable implements willAttack{
 		}
 		
 		if(getIsAttacking() & getCompleteingSequence() != true) {
-			setInvokedAbility(1);							//records that the current ability being used is Q
-			ability1Setup();
-			setIsAttacking(false);
+			//int attackSel = (int) (Math.random() * 100);
+			//if(this instanceof Projectile){
+			//	attackSel = 0;
+			//}
+			//if(attackSel%4 == 0){
+				if(ability1Ready){
+					setInvokedAbility(1);			
+					ability1Setup();
+					setIsAttacking(false);
+					ability1Ready = false;
+				}
+			//}
+			/* Below doesnt work, it freezes the game...
+			else if(attackSel%4 == 1){
+				if(ability2Ready){
+					setInvokedAbility(2);				
+					ability2Setup();
+					setIsAttacking(false);
+					ability2Ready = false;
+				}
+			}
+			else if(attackSel%4 == 2){
+				if(ability3Ready){
+					setInvokedAbility(3);							
+					ability3Setup();
+					setIsAttacking(false);
+					ability3Ready = false;
+				}
+			}
+			else if(attackSel%4 == 3){
+				if(ability4Ready){
+					setInvokedAbility(4);					
+					ability4Setup();
+					setIsAttacking(false);
+					ability4Ready = false;
+				}
+			}
+			*/
 		}
-		/*
-		if(keySet.contains(KeyEvent.VK_W) & getCompleteingSequence() != true) {
-			setInvokedAbility(2);							//records that the current ability being used is W
-			ability2Setup();
-		}
-		if(keySet.contains(KeyEvent.VK_E) & getCompleteingSequence() != true) {
-			setInvokedAbility(3);							//records that the current ability being used is E
-			ability3Setup();
-		}
-		if(keySet.contains(KeyEvent.VK_R) & getCompleteingSequence() != true) {
-			setInvokedAbility(4);							//records that the current ability being used is R
-			ability4Setup();
-		}
-		*/
 		
 		if(getCompleteingSequence() == true) {				//prevents other actions while performing ability
 			continueSequence();								//Moved to Sprite to generalize movement

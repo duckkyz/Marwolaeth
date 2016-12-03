@@ -132,7 +132,7 @@ public class Game {
 					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 				}
 				else if(i%3 == 1){
-					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+					drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
 				}
 				else{
 					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
@@ -779,12 +779,12 @@ public class Game {
 			if((hero.getMana() < hero.getMaxMana())){
 				hero.setMana(hero.getMana() + 1);
 			}
-			for(Drawable d : drawables){
-				if(d instanceof Sprite){
-					Sprite s = (Sprite) d;
-					if((s.getMana() < s.getMaxMana())){
-						s.setMana(s.getMana() + 1);
-					}
+		}
+		for(Drawable d : drawables){
+			if(d instanceof Sprite){
+				Sprite s = (Sprite) d;
+				if((s.getMana() < s.getMaxMana())){
+					s.setMana(s.getMana() + 1);
 				}
 			}
 		}
@@ -799,7 +799,8 @@ public class Game {
 		
 		//Check if all non hero entities are dead, if so spawn a new wave
 		int waveCounter = 0;
-		for(Drawable d : drawables){
+		for(int x = 0; drawables.size() > x; x++){
+			Drawable d = drawables.get(x);
 			if(d instanceof Sprite){
 				if(d instanceof Projectile){
 					continue;

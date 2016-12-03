@@ -6,7 +6,7 @@ import marwolaeth.Game;
 
 public abstract class Modifier extends Drawable{
 
-	private Sprite target;		//The unit the Modifier is modifying
+	protected Sprite target;		//The unit the Modifier is modifying
 	private int duration;			//The number of waves the target stays modified
 	private boolean activated = false;		//The modifier has been given a target
 	private boolean heroOnly;		//If true, only the hero should be able to activate the modifier

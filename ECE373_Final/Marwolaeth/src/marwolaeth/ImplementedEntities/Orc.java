@@ -37,6 +37,7 @@ public class Orc extends Villain {
 		setCompleteingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(3);
+		ability1Ready = true;
 	}
 
 	@Override

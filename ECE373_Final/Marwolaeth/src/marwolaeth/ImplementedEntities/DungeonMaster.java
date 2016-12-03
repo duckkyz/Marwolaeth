@@ -68,8 +68,6 @@ public class DungeonMaster extends Hero{
 	@Override
 	public void ability2Execute(int direction) {
 		int blinkDist = (int) ((Math.random() * 128) + 64);
-		int xSlope;
-		int ySlope;
 		int temp = this.getEffectiveDirection();
 		//TODO: finish this
 		if(temp == 0){
@@ -79,6 +77,33 @@ public class DungeonMaster extends Hero{
 			}
 			while(Game.checkCanSpawn(this) == false){
 				this.setYPos(this.getYPos() + 10);
+			}
+		}
+		else if(temp == 90){
+			this.setXPos(this.getXPos() + blinkDist);
+			if(this.getXPos() > (Game.getMapWidth() - 64)){
+				this.setXPos(Game.getMapWidth() - 64);
+			}
+			while(Game.checkCanSpawn(this) == false){
+				this.setXPos(this.getXPos() - 10);
+			}
+		}
+		else if(temp == 180){
+			this.setYPos(this.getYPos() + blinkDist);
+			if(this.getYPos() > (Game.getMapHeight() - 64)){
+				this.setYPos(Game.getMapHeight() - 64);
+			}
+			while(Game.checkCanSpawn(this) == false){
+				this.setYPos(this.getYPos() - 10);
+			}
+		}
+		else if(temp == 270){
+			this.setXPos(this.getXPos() - blinkDist);
+			if(this.getXPos() < 32){
+				this.setXPos(32);
+			}
+			while(Game.checkCanSpawn(this) == false){
+				this.setXPos(this.getXPos() + 10);
 			}
 		}
 		
