@@ -88,11 +88,24 @@ public class Arbiter extends Villain {
 	public void doLogic(){
 		int xDistFromHero;
 		int yDistFromHero;
-		
+		int tempNum = (int) (Math.random() * 100);
+
 		if(markedForDeath == null){
 			Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
-			while(!(temp instanceof Sprite)){
+
+			if(tempNum > 50){
+				temp = Game.getHero();
+			}
+			else{
 				temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+			}
+			while(!(temp instanceof Sprite)){
+				if(tempNum > 50){
+					temp = Game.getHero();
+				}
+				else{
+					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				}
 			}
 			markedForDeath = (Sprite)temp;
 			markedForDeath.setMarkedForDeath(this);
@@ -100,7 +113,12 @@ public class Arbiter extends Villain {
 		else if(!Game.getDrawables().contains(markedForDeath)){
 			Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
 			while(!(temp instanceof Sprite)){
-				temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				if(tempNum > 50){
+					temp = Game.getHero();
+				}
+				else{
+					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				}
 			}
 			markedForDeath = (Sprite)temp;
 		}

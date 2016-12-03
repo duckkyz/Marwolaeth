@@ -710,7 +710,7 @@ public class Sprite extends Drawable implements willAttack{
 				}
 			}
 			if(keySet.contains(KeyEvent.VK_W) & getcompletingSequence() != true) {
-				if(ability3Ready){
+				if(ability2Ready){
 					setInvokedAbility(2);							//records that the current ability being used is W
 					ability2Setup();
 					ability2Ready = false;

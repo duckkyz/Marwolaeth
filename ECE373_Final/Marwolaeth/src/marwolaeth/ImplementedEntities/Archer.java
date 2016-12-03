@@ -55,7 +55,6 @@ public class Archer extends Hero{
 	
 	public void ability3Setup() {	
 		setActionStep(0);
-		Modifier temp = new SlowDown(Game.getCurrentWave() + 1, 256, 256, true);
 		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), false));
 	}
 	

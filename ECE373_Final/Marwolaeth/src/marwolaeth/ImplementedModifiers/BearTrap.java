@@ -15,6 +15,7 @@ public class BearTrap extends Modifier {
 	private int trapDuration = 500;
 	private int timeTrapped = 40;
 	private int counter = 0;
+	private int oldSpeed = 0;
 
 	public BearTrap(int wavesDuration, int xPos, int yPos, boolean heroOnly) {
 		super(wavesDuration, xPos, yPos, heroOnly);
@@ -44,6 +45,7 @@ public class BearTrap extends Modifier {
 		setTileHeight(40);
 		setActionStep(0);
 		setActionSequence(0);
+		setTopHitBox(18);
 	}
 	
 	public void doLogic() {
@@ -51,13 +53,15 @@ public class BearTrap extends Modifier {
 			if(counter >= trapDuration) {
 				Game.removeDrawable(this);
 			}
-			else
+			else{
 				counter++;
+			}
 		}
 		else {
 			if(counter <= timeTrapped) {
-				if(getActionStep() < 3)
+				if(getActionStep() < 3){
 					setActionStep(getActionStep()+1);
+				}
 				target.setIsMoving(false);
 				counter++;
 			}
@@ -77,8 +81,7 @@ public class BearTrap extends Modifier {
 	}
 
 	public void addModifier() {
-		getTarget().setIsMoving(false);
-		
+		target.setIsMoving(false);
 	}
 
 	public void removeModifier() {
