@@ -798,10 +798,10 @@ public class Game {
 		if(keySet.contains(KeyEvent.VK_B)){
 			this.debugText = true;
 			for(int i=0; i<(Game.getMapWidth()/64); ++i){
-				drawables.add(new Arrow(180, i * 64, 128, false));
+				drawables.add(new Arrow(180, i * 64, 128, true));
 			}
 			for(int i=0; i<(Game.getMapHeight()/64); ++i){
-				drawables.add(new Fireball(90, 64, i * 64, false));
+				drawables.add(new Fireball(90, 64, i * 64, true));
 			}
 		}
 		else{

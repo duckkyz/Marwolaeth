@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.*;
+import marwolaeth.Interfaces.willAttack;
 
 public class Arbiter extends Villain {
 
@@ -23,7 +24,29 @@ public class Arbiter extends Villain {
 		setRightHitBox(17);
 		setAttackRange(30);
 		setAttackDamage(20);
-		markedForDeath = null;
+		
+		int tempNum = (int) (Math.random() * 100);
+		int counter = 0;
+		for(int x = 0; Game.getDrawables().size() > x; x++){
+			Drawable d = Game.getDrawables().get(x);
+			if(d instanceof Sprite){
+				if(d instanceof Projectile){
+					continue;
+				}
+				++counter;
+			}
+		}
+		if((tempNum > 75) | (counter <= 1)){
+			markedForDeath = Game.getHero();
+		}
+		else{
+			Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+			while((!(temp instanceof Sprite)) & (temp != this)){
+				temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+			}
+			markedForDeath = (Sprite)temp;
+		}
+		
 		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Arbiter.png")));
@@ -90,37 +113,46 @@ public class Arbiter extends Villain {
 		int yDistFromHero;
 		int tempNum = (int) (Math.random() * 100);
 
-		if(markedForDeath == null){
-			Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
-
-			if(tempNum > 50){
-				temp = Game.getHero();
-			}
-			else{
-				temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
-			}
-			while(!(temp instanceof Sprite)){
-				if(tempNum > 50){
-					temp = Game.getHero();
-				}
-				else{
+		if(Game.getIsTitleScreen()){
+			if(markedForDeath == Game.getHero()){
+				Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				while(!(temp instanceof Sprite)){
 					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
 				}
+				markedForDeath = (Sprite)temp;
+				markedForDeath.setMarkedForDeath(this);
 			}
-			markedForDeath = (Sprite)temp;
-			markedForDeath.setMarkedForDeath(this);
+			else if(!Game.getDrawables().contains(markedForDeath)){
+				Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				while(!(temp instanceof Sprite)){
+					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+				}
+				markedForDeath = (Sprite)temp;
+			}
 		}
-		else if(!Game.getDrawables().contains(markedForDeath)){
-			Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
-			while(!(temp instanceof Sprite)){
-				if(tempNum > 50){
-					temp = Game.getHero();
+		else{
+			if(!Game.getDrawables().contains(markedForDeath)){
+				int counter = 0;
+				for(int x = 0; Game.getDrawables().size() > x; x++){
+					Drawable d = Game.getDrawables().get(x);
+					if(d instanceof Sprite){
+						if(d instanceof Projectile){
+							continue;
+						}
+						++counter;
+					}
+				}
+				if((tempNum > 75) | (counter <= 1)){
+					markedForDeath = Game.getHero();
 				}
 				else{
-					temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					while((!(temp instanceof Sprite)) & (temp != this)){
+						temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					}
+					markedForDeath = (Sprite)temp;
 				}
 			}
-			markedForDeath = (Sprite)temp;
 		}
 		
 		xDistFromHero = getXPos() - markedForDeath.getXPos();
