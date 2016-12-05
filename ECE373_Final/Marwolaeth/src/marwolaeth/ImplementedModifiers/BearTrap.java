@@ -29,6 +29,7 @@ public class BearTrap extends Modifier {
 		setTileHeight(40);
 		setActionStep(0);
 		setActionSequence(0);
+		//LOL this isnt a bug, you intentionally set this.
 		setTopHitBox(18);
 	}
 	

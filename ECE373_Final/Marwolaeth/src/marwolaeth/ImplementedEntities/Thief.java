@@ -7,19 +7,21 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.ImplementedProjectiles.Arrow;
+import marwolaeth.ImplementedProjectiles.GrappleArrow;
 
 public class Thief extends Hero{
 	public Thief(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
 		setTileHeight(64);
-		setSpeed(12);
+		setSpeed(18);
 		setTopHitBox(15);
 		setBotHitBox(2);
 		setLeftHitBox(17);
 		setRightHitBox(17);
 		setAttackRange(16);
-		setAttackDamage(25);
+		setAttackDamage(10);
 		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Thief.png")));
@@ -55,8 +57,11 @@ public class Thief extends Hero{
 
 	@Override
 	public void ability4Setup() {
-		// TODO Auto-generated method stub
-
+		setActionStep(0);
+		setMoveCasting(true);								//whether the hero can move while using this ability
+		setcompletingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(4);
 	}
 
 	@Override
@@ -79,7 +84,15 @@ public class Thief extends Hero{
 
 	@Override
 	public void ability4Execute(int direction) {
-		// TODO Auto-generated method stub
+		if(this.getMana() > 15){
+			if(this == Game.getHero()){
+				Game.addDrawable(new GrappleArrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
+			}
+			else{
+				Game.addDrawable(new GrappleArrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+			}
+			this.setMana(this.getMana() - 15);
+		}
 
 	}	
 

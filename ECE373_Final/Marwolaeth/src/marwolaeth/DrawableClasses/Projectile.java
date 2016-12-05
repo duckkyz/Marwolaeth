@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 public class Projectile extends Sprite{
 	
-	private boolean heroProjectile;					//if projectile belongs to hero
+	protected boolean heroProjectile;					//if projectile belongs to hero
 	private int damage;
 	
 	public Projectile(int direction, int spawnX, int spawnY, boolean heroProjectile) {

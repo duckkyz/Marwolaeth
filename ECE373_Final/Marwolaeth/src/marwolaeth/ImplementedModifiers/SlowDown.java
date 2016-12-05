@@ -61,7 +61,7 @@ public class SlowDown extends Modifier {
 		Game.removeDrawable(this);
 	}
 
-	public void move(){
+	public void doLogic(){
 		if(getIsActivated()){
 			if(effectCounter > timeSlowedDown){
 				removeModifier();

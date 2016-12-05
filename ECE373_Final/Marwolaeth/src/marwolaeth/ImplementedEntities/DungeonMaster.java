@@ -7,6 +7,9 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.ImplementedProjectiles.Fireball;
+import marwolaeth.ImplementedProjectiles.Icicle;
+import marwolaeth.ImplementedProjectiles.Shock;
 
 public class DungeonMaster extends Hero{
 	public DungeonMaster(int direction, int spawnX, int spawnY) {
@@ -62,7 +65,24 @@ public class DungeonMaster extends Hero{
 
 	@Override
 	public void ability1Execute(int direction) {
-		// TODO Auto-generated method stub
+		if(this.getMana() > 5){
+			boolean isHero = false;
+			if(this == Game.getHero()){
+				isHero = true;
+			}
+			Game.addDrawable(new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Icicle(direction+30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Icicle(direction-30, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Fireball(direction + 60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Fireball(direction - 60, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Icicle(direction + 90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Icicle(direction - 90, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Fireball(direction + 120, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Fireball(direction - 120, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Icicle(direction + 180, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			Game.addDrawable(new Icicle(direction - 180, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));
+			this.setMana(this.getMana() - 5);
+		}
 	}
 
 	@Override

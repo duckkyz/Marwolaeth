@@ -23,6 +23,8 @@ public class Game {
 	private boolean debugText = false;
 	private static boolean isTitleScreen = false;
 	private int tempArrowCount;
+	private int regainCounter = 0;
+	private int powerUpCounter = 0;
 	
 	public Game() {
 		setUpGame();
@@ -94,7 +96,7 @@ public class Game {
 		drawables.add(new LargeLight(48, mapHeight - (64*3)));
 		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
 		
-		Modifier temp = new Speedup(1, 256, 256, true);
+		Modifier temp = new MindControl(1, 256, 256, true);
 		drawables.add(temp);
 		
 		if(isTitleScreen){
@@ -134,7 +136,7 @@ public class Game {
 					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
 				}
 				else if(i%3 == 1){
-					drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+					drawables.add(new OrcWizard(orcDirection, orcXPos, orcYPos));
 				}
 				else{
 					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
@@ -186,6 +188,10 @@ public class Game {
 	public boolean projectileHandling(Sprite movingS, Drawable d){
 		if(movingS instanceof Projectile){
 			if(d instanceof Wall){
+				if(movingS instanceof GrappleArrow){
+					GrappleArrow temp = (GrappleArrow) movingS;
+					temp.attack(d);
+				}
 				drawables.remove(movingS);
 				return true;
 			}
@@ -227,13 +233,17 @@ public class Game {
 	
 	public boolean powerUpHandling(Sprite movingS, Drawable d){
 		if(d instanceof Modifier){
+			if(d instanceof BearTrap){
+				System.out.println("test");
+			}
 			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
 			Modifier dModifier = (Modifier) d;
 			if(dModifier.getIsActivated() == false){
 				if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (dModifier.getHeroOnly() == true)){
 					dModifier.activate(movingS);
 				}
-				else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false) & (movingS != Game.getHero())){
+				//else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false) & (movingS != Game.getHero())){
+				else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false)){
 					dModifier.activate(movingS);
 				}
 			}
@@ -262,7 +272,7 @@ public class Game {
 				drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 			}
 			else{
-				drawables.add(new Wizard(orcDirection, orcXPos, orcYPos));
+				drawables.add(new OrcWizard(orcDirection, orcXPos, orcYPos));
 			}
 			
 			++spawnCounter;
@@ -270,6 +280,24 @@ public class Game {
 				waveDoneSpawning = true;
 				++this.currentWave;
 			}	
+		}
+	}
+	
+	private void spawnPowerUp(int powerUpCounter) {
+		int willSpawn = (int)(Math.random() * 10000);
+		if(powerUpCounter <= (Game.getCurrentWave()/4))
+		if(willSpawn > 9998){
+			Sprite spawnSprite = new Sprite(0,0,0);
+			int orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+			int orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);				
+			while((checkCanSpawn(spawnSprite) == false) & (drawables.size() < mapWidth*mapHeight)){
+				orcXPos = (int)(Math.floor((Math.random() * (mapWidth - 2*64))/64) * 64);
+				orcYPos = (int)(Math.floor((Math.random() * (mapHeight - 2*64))/64) * 64);
+				spawnSprite = new Sprite(0, orcXPos, orcYPos);
+			}
+			
+			drawables.add(new Speedup(1, orcXPos, orcYPos, true));	
+			++powerUpCounter;
 		}
 	}
 	
@@ -308,7 +336,7 @@ public class Game {
 					d.doLogic();
 				}
 			}
-			if(d instanceof BearTrap) {
+			if(d instanceof Modifier) {
 				d.doLogic();
 			}
 		}
@@ -776,33 +804,43 @@ public class Game {
 					return false;
 				}
 			}
-			
-			//Hero heath/mana regain
-			if((hero.getHealth() < hero.getMaxHealth() & hero.getHealth() > 0)){
-				hero.setHealth(hero.getHealth() + 1);
-			}
-			if((hero.getMana() < hero.getMaxMana())){
-				hero.setMana(hero.getMana() + 1);
-			}
 		}
-		for(Drawable d : drawables){
-			if(d instanceof Sprite){
-				Sprite s = (Sprite) d;
-				if((s.getMana() < s.getMaxMana())){
-					s.setMana(s.getMana() + 1);
+		
+		//Hero heath/mana regain
+		if(regainCounter > 1){
+			if(isTitleScreen == false){
+				if((hero.getHealth() < hero.getMaxHealth() & hero.getHealth() > 0)){
+					hero.setHealth(hero.getHealth() + 1);
+				}
+				if((hero.getMana() < hero.getMaxMana())){
+					hero.setMana(hero.getMana() + 1);
 				}
 			}
+			for(Drawable d : drawables){
+				if(d instanceof Sprite){
+					Sprite s = (Sprite) d;
+					if((s.getMana() < s.getMaxMana())){
+						s.setMana(s.getMana() + 1);
+					}
+				}
+			}
+			regainCounter = 0;
+		}
+		else{
+			++regainCounter;
 		}
 	
 		//Debug stuff
 		if(keySet.contains(KeyEvent.VK_B)){
 			this.debugText = true;
+			/*
 			for(int i=0; i<(Game.getMapWidth()/64); ++i){
 				drawables.add(new Arrow(180, i * 64, 128, true));
 			}
 			for(int i=0; i<(Game.getMapHeight()/64); ++i){
 				drawables.add(new Fireball(90, 64, i * 64, true));
 			}
+			*/
 		}
 		else{
 			this.debugText = false;
@@ -835,7 +873,7 @@ public class Game {
 			}
 		}
 		spawnNewWave(currentWave);
-		
+		spawnPowerUp(powerUpCounter);
 		//Set up movements
 		setUpMovements(keySet);
 		

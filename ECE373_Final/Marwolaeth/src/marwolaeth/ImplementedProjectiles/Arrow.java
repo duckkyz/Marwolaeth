@@ -52,7 +52,7 @@ public class Arrow extends Projectile{
 		}
 		
 		setSpeed(20);
-		setDamage(25);
+		setDamage(10);
 	}
 
 	public void doLogic() {

@@ -21,6 +21,7 @@ import marwolaeth.ImplementedModifiers.BearTrap;
 import marwolaeth.ImplementedModifiers.SlowDown;
 import marwolaeth.ImplementedProjectiles.Arrow;
 import marwolaeth.ImplementedProjectiles.Fireball;
+import marwolaeth.ImplementedProjectiles.Icicle;
 
 
 public class Archer extends Hero{
@@ -39,7 +40,7 @@ public class Archer extends Hero{
 
 	public void ability1Setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
-		setMoveCasting(false);								//whether the hero can move while using this ability
+		setMoveCasting(true);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(4);
@@ -59,22 +60,28 @@ public class Archer extends Hero{
 	}
 	
 	public void ability4Setup() {
-		//TODO implement this
+		setActionStep(0);
+		setMoveCasting(true);								//whether the hero can move while using this ability
+		setcompletingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(4);
 	}
 	
 	
 	public void ability1Execute(int direction) {
-		if(this == Game.getHero()){
-			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
-		}
-		else{
-			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+		if(this.getMana() > 5){
+			if(this == Game.getHero()){
+				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
+			}
+			else{
+				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
+			}
+			this.setMana(this.getMana() - 5);
 		}
 	}
 
 	public void ability2Execute(int direction) {
 		if(this.getMana() > 15){
-
 			if(this == Game.getHero()){
 				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
 				Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
@@ -94,7 +101,19 @@ public class Archer extends Hero{
 	}
 	
 	public void ability4Execute(int direction) {
-		//TODO implement this
+		if(this.getMana() > 20){
+			boolean isFromHero = false;
+			if(this == Game.getHero()){
+				isFromHero = true;
+			}
+			Icicle slow = new Icicle(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero);
+			Arrow damage = new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero);
+			slow.setDamage(0);
+			slow.setSpeed(damage.getSpeed());
+			Game.addDrawable(damage);	//math gives the created object a reference to the center of the hero
+			Game.addDrawable(slow);	//math gives the created object a reference to the center of the hero
+			this.setMana(this.getMana() - 20);
+		}	
 	}
 
 	public void doLogic(){

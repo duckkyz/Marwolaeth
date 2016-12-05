@@ -38,7 +38,7 @@ public class Druid extends Hero{
 		setMoveCasting(true);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(0);
+		abilitySetupHelper(3);
 	}
 
 	@Override
@@ -47,23 +47,41 @@ public class Druid extends Hero{
 		setMoveCasting(true);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(3);
+		abilitySetupHelper(0);
 	}
 
 	@Override
 	public void ability3Setup() {
-		// TODO Auto-generated method stub
-
+		setActionStep(0);
+		setMoveCasting(true);								//whether the hero can move while using this ability
+		setcompletingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(3);
 	}
 
 	@Override
 	public void ability4Setup() {
-		// TODO Auto-generated method stub
-
+		setActionStep(0);
+		setMoveCasting(true);								//whether the hero can move while using this ability
+		setcompletingSequence(true);
+		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
+		abilitySetupHelper(3);
 	}
 
 	@Override
 	public void ability1Execute(int direction) {
+		if(this.getMana() > 10){
+			boolean isHero = false;
+			if(this == Game.getHero()){
+				isHero = true;
+			}
+			Game.addDrawable(new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));	//math gives the created object a reference to the center of the enemy
+			this.setMana(this.getMana() - 10);
+		}
+	}
+
+	@Override
+	public void ability2Execute(int direction) {
 		setHealth(getHealth() + 10);
 		Leaf tempLeaf = new Leaf(0, this.getXPos() - 10, this.getYPos() - 10, true);
 		tempLeaf.setIsMoving(false);
@@ -71,27 +89,37 @@ public class Druid extends Hero{
 	}
 
 	@Override
-	public void ability2Execute(int direction) {
-		Leaf leafBolt = new Leaf(0,0,0,false);
-		if(this == Game.getHero()){
-			leafBolt = new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true);	//math gives the created object a reference to the center of the hero
-		}
-		else{
-			leafBolt = new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false);	//math gives the created object a reference to the center of the enemy
-		}
-		Game.addDrawable(leafBolt);	
-	}
-
-	@Override
 	public void ability3Execute(int direction) {
-		// TODO Auto-generated method stub
-
+		if(this.getMana() > 20){
+			boolean isFromHero = false;
+			if(this == Game.getHero()){
+				isFromHero = true;
+			}
+			Fireball heat = new Fireball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero);
+			Leaf damage = new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero);
+			heat.setDamage(5);
+			heat.setSpeed(damage.getSpeed());
+			Game.addDrawable(heat);	//math gives the created object a reference to the center of the hero
+			Game.addDrawable(damage);	//math gives the created object a reference to the center of the hero
+			this.setMana(this.getMana() - 20);
+		}	
 	}
 
 	@Override
 	public void ability4Execute(int direction) {
-		// TODO Auto-generated method stub
-
+		if(this.getMana() > 20){
+			boolean isFromHero = false;
+			if(this == Game.getHero()){
+				isFromHero = true;
+			}
+			Icicle slow = new Icicle(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero);
+			Leaf damage = new Leaf(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero);
+			slow.setDamage(0);
+			slow.setSpeed(damage.getSpeed());
+			Game.addDrawable(slow);	//math gives the created object a reference to the center of the hero
+			Game.addDrawable(damage);	//math gives the created object a reference to the center of the hero
+			this.setMana(this.getMana() - 20);
+		}	
 	}	
 
 	public void move(){
