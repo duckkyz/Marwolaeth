@@ -42,6 +42,7 @@ public abstract class GameState extends JPanel implements ActionListener, KeyLis
 	public GameState() {
 		addKeyListener(this);
 		isInGame = false;
+		keySet.clear();
 	}
 	
 	public BufferedImage getBlankImage() {
