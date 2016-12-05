@@ -896,6 +896,6 @@ public class Sprite extends Drawable implements willAttack{
 			imageGraphics.fillRect(this.getXPos(), this.getYPos(), percentHealth, 8);
 
 		}
-//		imageGraphics.drawRect(getXPos(), getYPos(), getTileWidth(), getTileHeight());
+		imageGraphics.drawRect(getXPos(), getYPos(), getTileWidth(), getTileHeight());
 	}
 }

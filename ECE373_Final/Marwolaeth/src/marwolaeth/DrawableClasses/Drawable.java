@@ -148,7 +148,6 @@ public class Drawable implements Comparable<Drawable>{
 	}
 	
 	public void paint(Graphics graphics) {
-		
 	}
 
 }

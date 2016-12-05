@@ -96,7 +96,7 @@ public class Game {
 		drawables.add(new LargeLight(48, mapHeight - (64*3)));
 		drawables.add(new LargeLight(64*2, mapHeight - (64*2)));
 		
-		Modifier temp = new MindControl(1, 256, 256, true);
+		Modifier temp = new Speedup(1, 256, 256, true);
 		drawables.add(temp);
 		
 		if(isTitleScreen){
@@ -420,14 +420,21 @@ public class Game {
 				dY = ((d.getYPos() + d.getTopHitBox()));
 				dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
 				dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
-				
+				if((movingS == Game.getHero()) & (d instanceof BearTrap)){
+					if(debugText){
+						System.out.println(dX + " " + dMaxX);
+						System.out.println(dY + " " + dMaxY);
+						System.out.println(newX + " " + newMaxX);
+						System.out.println(newY + " " + newMaxY);
+					}
+				}
 				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
 						//if(movingS == hero){
-							if(debugText){
+							//if(debugText){
 								System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							}
+							//}
 						//}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -481,9 +488,9 @@ public class Game {
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
 						//if(movingS == hero){
-							if(debugText){
+							//if(debugText){
 								System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							}
+							//}
 						//}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -535,9 +542,9 @@ public class Game {
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//if(movingS == hero){
-							if(debugText){
+							//if(debugText){
 								System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							}
+							//}
 						//}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
@@ -574,9 +581,9 @@ public class Game {
 					}
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//if(movingS == hero){
-							if(debugText){
+							//if(debugText){
 								System.out.println("collision 4 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							}
+							//}
 						//}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){

@@ -46,6 +46,7 @@ public abstract class Modifier extends Drawable{
 	public void paint(Graphics imageGraphics) {	
 		if(activated == false){
 			imageGraphics.drawImage(getGraphic(), getXPos(), getYPos(), getXPos()+getTileWidth(), getYPos()+getTileHeight(), getActionStep()*getTileWidth(), getActionSequence()*getTileHeight(), getActionStep()*getTileWidth()+getTileWidth(), getActionSequence()*getTileHeight()+getTileHeight(), null);
+			imageGraphics.drawRect(getXPos(), getYPos(), getTileWidth(), getTileHeight());
 		}
 	}
 	
