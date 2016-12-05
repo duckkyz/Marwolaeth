@@ -242,8 +242,7 @@ public class Game {
 				if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (dModifier.getHeroOnly() == true)){
 					dModifier.activate(movingS);
 				}
-				//else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false) & (movingS != Game.getHero())){
-				else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false)){
+				else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false) & (movingS != Game.getHero())){
 					dModifier.activate(movingS);
 				}
 			}
