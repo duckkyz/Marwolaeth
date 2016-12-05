@@ -56,7 +56,7 @@ public class Archer extends Hero{
 	
 	public void ability3Setup() {	
 		setActionStep(0);
-		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), false));
+		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), true));
 	}
 	
 	public void ability4Setup() {
@@ -70,28 +70,24 @@ public class Archer extends Hero{
 	
 	public void ability1Execute(int direction) {
 		if(this.getMana() > 5){
+			boolean isFromHero = false;
 			if(this == Game.getHero()){
-				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));	//math gives the created object a reference to the center of the hero
+				isFromHero = true;
 			}
-			else{
-				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));	//math gives the created object a reference to the center of the enemy
-			}
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero));	//math gives the created object a reference to the center of the enemy
 			this.setMana(this.getMana() - 5);
 		}
 	}
 
 	public void ability2Execute(int direction) {
 		if(this.getMana() > 15){
+			boolean isFromHero = false;
 			if(this == Game.getHero()){
-				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-				Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
-				Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, true));
+				isFromHero = true;
 			}
-			else{
-				Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-				Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-				Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, false));
-			}
+			Game.addDrawable(new Arrow(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero));
+			Game.addDrawable(new Arrow(direction+45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero));
+			Game.addDrawable(new Arrow(direction-45, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isFromHero));
 			this.setMana(this.getMana() - 15);
 		}
 	}

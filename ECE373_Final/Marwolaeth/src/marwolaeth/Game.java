@@ -419,15 +419,19 @@ public class Game {
 				dY = ((d.getYPos() + d.getTopHitBox()));
 				dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
 				dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
-				if((movingS == Game.getHero()) & (d instanceof BearTrap)){
-					if(debugText){
+
+				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
+					if((movingS == Game.getHero()) & (d instanceof BearTrap)){
 						System.out.println(dX + " " + dMaxX);
 						System.out.println(dY + " " + dMaxY);
 						System.out.println(newX + " " + newMaxX);
 						System.out.println(newY + " " + newMaxY);
+						
+						//If the d object is inside of the other one that could be a case to check for
+						// I guess, need to refactor the fuck out of code, but maybe it can just look for 
+						// if its a projectile or a powerup... or just make the image 64x64 and then have the
+						// hitboxes come in?
 					}
-				}
-				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
 						//if(movingS == hero){
@@ -539,6 +543,12 @@ public class Game {
 					}
 				}
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
+					if((movingS == Game.getHero()) & (d instanceof BearTrap)){
+						System.out.println(dX + " " + dMaxX);
+						System.out.println(dY + " " + dMaxY);
+						System.out.println(newX + " " + newMaxX);
+						System.out.println(newY + " " + newMaxY);
+					}
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//if(movingS == hero){
 							//if(debugText){
