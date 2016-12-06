@@ -40,7 +40,19 @@ public class Knockback extends Modifier {
 			}
 			
 			getTarget().setIsMoving(true);
-			getTarget().setDirection(getTarget().getEffectiveDirection()*-1);
+			int direction = getTarget().getEffectiveDirection();
+			if(direction == 0){
+				getTarget().setDirection(180);
+			}
+			else if(direction == 90){
+				getTarget().setDirection(270);
+			}
+			else if(direction == 180){
+				getTarget().setDirection(0);
+			}
+			else if(direction == 270){
+				getTarget().setDirection(90);
+			}
 			getTarget().setStaticMovement(true);
 			if((effectCounter > 10)){
 				removeModifier();

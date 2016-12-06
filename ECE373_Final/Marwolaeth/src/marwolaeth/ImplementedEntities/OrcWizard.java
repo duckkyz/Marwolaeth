@@ -17,7 +17,7 @@ public class OrcWizard extends Villain {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
 		setTileHeight(64);
-		setSpeed(12);
+		setSpeed(8);
 		setTopHitBox(15);
 		setBotHitBox(2);
 		setLeftHitBox(17);

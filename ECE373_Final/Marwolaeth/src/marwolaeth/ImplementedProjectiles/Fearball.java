@@ -105,6 +105,9 @@ public class Fearball extends Projectile{			//Using the "CUSTOM" label to show w
 		if(heroProjectile == true){
 			Fear scare = new Fear(0,this.getXPos(), this.getYPos(), true);
 			scare.activate(beingAttacked);
+			Poison drain = new Poison(0, this.getXPos(), this.getYPos(), true);
+			drain.activate(beingAttacked);
+			Game.addDrawable(drain);
 			Game.addDrawable(scare);
 		}
 		
