@@ -6,9 +6,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
+import marwolaeth.DrawableClasses.Drawable;
 import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.DrawableClasses.Projectile;
+import marwolaeth.DrawableClasses.Sprite;
+import marwolaeth.ImplementedModifiers.*;
 
 public class Bard extends Hero{
+	
+	private boolean isAttack1 = false;
+	
 	public Bard(int direction, int spawnX, int spawnY) {
 		super(direction, spawnX, spawnY);
 		setTileWidth(64);
@@ -35,7 +42,8 @@ public class Bard extends Hero{
 		setMoveCasting(true);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(1);
+		abilitySetupHelper(3);
+		isAttack1 = true;
 	}
 
 	@Override
@@ -82,77 +90,93 @@ public class Bard extends Hero{
 		// TODO Auto-generated method stub
 
 	}	
-
-
-	public void doLogic(){
-		int xDistFromHero = getXPos() - Game.getHero().getXPos();
-		int yDistFromHero = getYPos() - Game.getHero().getYPos();
+	
+	public void attack(){
+		int newX = ((this.getXPos() + this.getLeftHitBox()));
+		int newY = ((this.getYPos() + this.getTopHitBox()));
+		int newMaxX = newX + (this.getTileWidth() - this.getLeftHitBox() - this.getRightHitBox());	//Right
+		int newMaxY = newY + (this.getTileHeight() - this.getTopHitBox() - this.getBotHitBox());	//Bottom
 		
-		switch(getEffectiveDirection()){
-			case 0:
-				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < (50 + getAttackRange())))){
-					setIsAttacking(true);
-				}
-				else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-					setDirection(270);
-				}
-				else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-					setDirection(90);
-				}
-				else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero < 0))){
-					setDirection(180);
-				}
-				break;
-			case 90:
-				if(((xDistFromHero > -(50 + getAttackRange())) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
-					setIsAttacking(true);
-				}
-				else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-					setDirection(0);
-				}
-				else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-					setDirection(180);
-				}
-				else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero > 0))){
-					setDirection(270);
-				}
-				break;
-			case 180:
-				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -(50 + getAttackRange())) & (yDistFromHero < 0))){
-					setIsAttacking(true);
-				}
-				else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-					setDirection(270);
-				}
-				else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
-					setDirection(90);
-				}
-				else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0))){
-					setDirection(0);
-				}
-				break;
-			case 270:
-				if(((xDistFromHero > 0) & (xDistFromHero < (50 + getAttackRange()))) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
-					setIsAttacking(true);
-				}
-				else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-					setDirection(0);
-				}
-				else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
-					setDirection(180);
-				}
-				else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero < 0))){
-					setDirection(90);
-				}
-				break;
+		int dX;
+		int dY;
+		int dMaxX;
+		int dMaxY;
+		
+		switch(this.getEffectiveDirection()){
+		case 0:
+			newY = newY - getAttackRange();
+			break;
+		case 90:
+			newMaxX = newMaxX + getAttackRange();
+			break;
+		case 180:
+			newMaxY = newMaxY + getAttackRange();
+			break;
+		case 270:
+			newX = newX - getAttackRange();
+			break;
 		}
 		
-		super.doLogic();
-		if(collisionCounter > 5){
-			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
-		}
-		if(getIsAttacking() == true){
-			setIsMoving(false);
+		Sprite s = new Sprite(0,0,0);
+		
+		boolean heroChecked = false;
+		boolean isAttacked = false;
+		for(int x = 0; Game.getDrawables().size() > x; x++){
+			Drawable d = Game.getDrawables().get(x);
+			if(!(d instanceof Sprite)){
+				if(heroChecked == false){
+					d = Game.getHero();
+					heroChecked = true;
+				}
+				else{
+					continue;
+				}
+			}
+			if(d == this){
+				continue;
+			}
+			if(d instanceof Projectile){
+				continue;
+			}
+			
+			isAttacked = false;
+			
+			s = (Sprite)d;
+			
+			dX = ((d.getXPos() + d.getLeftHitBox()));
+			dY = ((d.getYPos() + d.getTopHitBox()));
+			dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
+			dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
+			
+
+			if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
+				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
+					isAttacked = true;
+				}
+				
+				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
+					isAttacked = true;
+				}
+			}
+			
+			else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
+				if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
+					isAttacked = true;
+				}
+				
+				else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
+					isAttacked = true;
+				}
+			}
+			if(isAttacked){
+				s.setHealth(s.getHealth() - this.getAttackDamage());
+				if(isAttack1){
+					Knockback push = new Knockback(0, s.getXPos(), s.getYPos(), false);
+					push.activate(s);
+					Game.addDrawable(push);
+					isAttack1 = false;
+				}
+			}
 		}
 	}
 }

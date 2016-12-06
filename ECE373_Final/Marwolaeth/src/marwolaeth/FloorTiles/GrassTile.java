@@ -18,8 +18,7 @@ public class GrassTile extends Drawable{
 			setGraphic(ImageIO.read(new File("Background_Images/dungeon_sheet.png")));
 		}
 		catch(IOException ex){
-			System.out.println("error");
-			
+		
 		}
 	}
 	public void paint(Graphics imageGraphics) {

@@ -637,10 +637,6 @@ public class Sprite extends Drawable implements willAttack{
 			}
 			if(isAttacked){
 				s.setHealth(s.getHealth() - this.getAttackDamage());
-				if(this == Game.getHero()){
-					System.out.println(this.getClass().getSimpleName() + " 1 is attacking " + s.getClass().getSimpleName());
-					System.out.println(s.getClass().getSimpleName() + " new health = " + s.getHealth());
-				}
 			}
 		}
 	}
@@ -685,7 +681,6 @@ public class Sprite extends Drawable implements willAttack{
 		public void doLogic(Set keySet) {
 			if(getHealth() <= 0){
 				if(getActionSequence() != 20){
-					System.out.println(getClass().getSimpleName() + " is dead, will remove from game.");
 					setActionSequence(20);
 					setActionStep(0);
 					setIsMoving(false);
@@ -786,7 +781,6 @@ public class Sprite extends Drawable implements willAttack{
 		//Check to see if dead
 		if(getHealth() <= 0){
 			if(getActionSequence() != 20){
-				System.out.println(getClass().getSimpleName() + " is dead, will remove from game.");
 				setActionSequence(20);
 				setActionStep(0);
 				setIsMoving(false);

@@ -132,14 +132,15 @@ public class Game {
 					spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
 				}
 				
-				if(i%3 == 0){
-					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+				if(i%15 == 0){
+					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 				}
 				else if(i%3 == 1){
 					drawables.add(new OrcWizard(orcDirection, orcXPos, orcYPos));
 				}
 				else{
-					drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
+					drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+
 				}
 			}
 		}
@@ -199,7 +200,6 @@ public class Game {
 				return true;
 			}
 			else{
-				System.out.println(d.getClass().getSimpleName() + " was hit by a projectile");
 				if(d instanceof Sprite){
 					Projectile p = (Projectile) movingS;
 					Sprite dSprite = (Sprite) d;
@@ -234,9 +234,7 @@ public class Game {
 	public boolean powerUpHandling(Sprite movingS, Drawable d){
 		if(movingS instanceof Modifier){
 			if(movingS instanceof BearTrap){
-				System.out.println("test");
 			}
-			System.out.println(d.getClass().getSimpleName() + " picked up a powerup!");
 			Modifier movingModifier = (Modifier) movingS;
 			if(d instanceof Sprite){
 				Sprite spriteD = (Sprite) d;
@@ -252,7 +250,6 @@ public class Game {
 			return true;
 		}
 		else if(d instanceof Modifier){
-			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
 			Modifier movingModifier = (Modifier) d;
 			if(d instanceof Sprite){
 				if(movingModifier.getIsActivated() == false){
@@ -282,14 +279,15 @@ public class Game {
 				spawnSprite = new Sprite(orcDirection, orcXPos, orcYPos);
 			}
 			
-			if(spawnCounter%3 == 0){
-				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
-			}
-			else if(spawnCounter%3 == 1){
+			if(spawnCounter%15 == 14){
 				drawables.add(new Arbiter(orcDirection, orcXPos, orcYPos));
 			}
-			else{
+			else if(spawnCounter%3 == 1){
 				drawables.add(new OrcWizard(orcDirection, orcXPos, orcYPos));
+			}
+			else{
+				drawables.add(new Orc(orcDirection, orcXPos, orcYPos));
+
 			}
 			
 			++spawnCounter;
@@ -320,22 +318,18 @@ public class Game {
 	
 	public boolean checkForOutsideMap(Drawable d){
 		if(d.getXPos() > mapWidth){
-			System.out.println("Removing " + d.toString());
 			removeDrawable(d);
 			return true;
 		}
 		else if(d.getXPos() < 0){
-			System.out.println("Removing " + d.toString());
 			removeDrawable(d);
 			return true;
 		}
 		else if(d.getYPos() > mapHeight){
-			System.out.println("Removing " + d.toString());
 			removeDrawable(d);
 			return true;
 		}
 		else if(d.getYPos() < 0) {
-			System.out.println("Removing " + d.toString());
 			removeDrawable(d);
 			return true;
 		}
@@ -363,8 +357,6 @@ public class Game {
 		Collections.sort(drawables, Drawable.PosComparator);				//Sorts drawables so there is no need for spawn order collision casing
 		Drawable movingD;													
 		if(debugText){
-			System.out.println();
-			System.out.println("New cycle:");
 		}
 		for(int y = 0; (drawables.size() + 1) > y; y++){					//Iterates through all drawables and hero
 			if(y == drawables.size()){										//Un-intrusively inserts hero into check
@@ -439,23 +431,12 @@ public class Game {
 				dMaxY = dY + (d.getTileHeight() - d.getTopHitBox() - d.getBotHitBox());	//Bottom
 
 				if((newX >= dX) & (newX <= dMaxX)){ 			//Collision from the left
-					if((movingS == Game.getHero()) & (d instanceof BearTrap)){
-						System.out.println(dX + " " + dMaxX);
-						System.out.println(dY + " " + dMaxY);
-						System.out.println(newX + " " + newMaxX);
-						System.out.println(newY + " " + newMaxY);
-						
-						//If the d object is inside of the other one that could be a case to check for
-						// I guess, need to refactor the fuck out of code, but maybe it can just look for 
-						// if its a projectile or a powerup... or just make the image 64x64 and then have the
-						// hitboxes come in?
-					}
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//Projectile handling happens here, if it should continue it will
 						//if(movingS == hero){
-							//if(debugText){
+							if(debugText){
 								System.out.println("collision 1 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							//}
+							}
 						//}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -509,9 +490,9 @@ public class Game {
 					else if((newMaxY >= dY) & (newMaxY <= dMaxY)){	//Collision from top
 						//Projectile handling happens here, if it should continue it will
 						//if(movingS == hero){
-							//if(debugText){
+							if(debugText){
 								System.out.println("collision 2 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							//}
+							}
 						//}
 						if(projectileHandling(movingS, d)){
 							continue;
@@ -561,17 +542,11 @@ public class Game {
 					}
 				}
 				else if ((newMaxX >= dX) & (newMaxX <= dMaxX)){	//Collision from the right
-					if((movingS == Game.getHero()) & (d instanceof BearTrap)){
-						System.out.println(dX + " " + dMaxX);
-						System.out.println(dY + " " + dMaxY);
-						System.out.println(newX + " " + newMaxX);
-						System.out.println(newY + " " + newMaxY);
-					}
 					if((newY >= dY) & (newY <= dMaxY)){		//Collision from the bottom
 						//if(movingS == hero){
-							//if(debugText){
+							if(debugText){
 								System.out.println("collision 3 for " + d.getClass().getSimpleName() + ": " + d.getXPos() + ", " + d.getYPos() + ", " + movingS.getDirection());
-							//}
+							}
 						//}
 						//Projectile handling happens here, if it should continue it will
 						if(projectileHandling(movingS, d)){
@@ -867,14 +842,14 @@ public class Game {
 		//Debug stuff
 		if(keySet.contains(KeyEvent.VK_B)){
 			this.debugText = true;
-			/*
+			
 			for(int i=0; i<(Game.getMapWidth()/64); ++i){
 				drawables.add(new Arrow(180, i * 64, 128, true));
 			}
 			for(int i=0; i<(Game.getMapHeight()/64); ++i){
 				drawables.add(new Fireball(90, 64, i * 64, true));
 			}
-			*/
+			
 		}
 		else{
 			this.debugText = false;
@@ -894,14 +869,12 @@ public class Game {
 		}
 		if(isTitleScreen == true){
 			if(waveCounter < 1){
-				System.out.println("Spawning new wave");
 				spawnCounter = 0;
 				this.waveDoneSpawning = false;
 			}
 		}
 		else{
 			if(waveCounter == 0){
-				System.out.println("Spawning new wave");
 				spawnCounter = 0;
 				this.waveDoneSpawning = false;
 			}

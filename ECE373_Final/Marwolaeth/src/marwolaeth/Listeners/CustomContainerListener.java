@@ -36,8 +36,6 @@ public class CustomContainerListener implements ContainerListener {
 				}
 		} 
   	  	catch (ArrayIndexOutOfBoundsException ev) {
-
-			    //System.out.println("ArrayIndexOutOfBoundsException: " + e.getMessage());
   	  	} 
 	}
 
