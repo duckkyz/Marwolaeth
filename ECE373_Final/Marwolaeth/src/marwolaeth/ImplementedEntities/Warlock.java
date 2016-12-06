@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
 import marwolaeth.DrawableClasses.Hero;
+import marwolaeth.ImplementedProjectiles.*;
 
 public class Warlock extends Hero{
 	public Warlock(int direction, int spawnX, int spawnY) {
@@ -59,10 +60,16 @@ public class Warlock extends Hero{
 
 	}
 
-	@Override
 	public void ability1Execute(int direction) {
-		// TODO Auto-generated method stub
+		if(this.getMana() > 10){
+			boolean isHero = false;
+			if(this == Game.getHero()){
+				isHero = true;
+			}
+			Game.addDrawable(new Fearball(direction, getXPos()+getTileWidth()/2, getYPos()+getTileHeight()/2, isHero));	//math gives the created object a reference to the center of the enemy
 
+			this.setMana(this.getMana() - 10);
+		}
 	}
 
 	@Override

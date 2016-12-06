@@ -43,6 +43,10 @@ public class MindControl extends Modifier {
 
 	public void doLogic(){
 		if(getIsActivated()){
+			if(getTarget() == null){
+				Game.removeDrawable(this);
+				return;
+			}
 			int xDist = this.getXPos() - getTarget().getXPos();
 			int yDist = this.getYPos() - getTarget().getYPos();
 			
