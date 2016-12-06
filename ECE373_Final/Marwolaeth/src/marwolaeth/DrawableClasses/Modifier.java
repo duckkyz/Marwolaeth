@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import marwolaeth.Game;
 
-public abstract class Modifier extends Drawable{
+public abstract class Modifier extends Sprite{
 
 	protected Sprite target;		//The unit the Modifier is modifying
 	private int duration;			//The number of waves the target stays modified
@@ -13,7 +13,7 @@ public abstract class Modifier extends Drawable{
 	private int removalWave;		//The wave that the modifier should end
 	
 	public Modifier(int wavesDuration, int xPos, int yPos, boolean heroOnly) {
-		super(xPos, yPos);
+		super(0, xPos, yPos);
 		this.duration = wavesDuration;
 		this.heroOnly = heroOnly;
 		removalWave = Game.getCurrentWave() + duration;

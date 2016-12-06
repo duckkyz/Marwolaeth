@@ -36,6 +36,9 @@ public class Archer extends Hero{
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		if(!(this == Game.getHero())){
+			setAttackRange(2000);
+		}
 	}
 
 	public void ability1Setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
@@ -56,7 +59,7 @@ public class Archer extends Hero{
 	
 	public void ability3Setup() {	
 		setActionStep(0);
-		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), true));
+		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), false));
 	}
 	
 	public void ability4Setup() {
@@ -110,38 +113,5 @@ public class Archer extends Hero{
 			Game.addDrawable(slow);	//math gives the created object a reference to the center of the hero
 			this.setMana(this.getMana() - 20);
 		}	
-	}
-
-	public void doLogic(){
-		int xDistFromHero = getXPos() - Game.getHero().getXPos();
-		int yDistFromHero = getYPos() - Game.getHero().getYPos();
-		
-		switch(getEffectiveDirection()){
-			case 0:
-				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < 2000))){
-					setIsAttacking(true);
-				}
-				break;
-			case 90:
-				if(((xDistFromHero > -2000) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
-					setIsAttacking(true);
-				}
-				break;
-			case 180:
-				if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -2000) & (yDistFromHero < 0))){
-					setIsAttacking(true);
-				}
-				break;
-			case 270:
-				if(((xDistFromHero > 0) & (xDistFromHero < 2000)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
-					setIsAttacking(true);
-				}
-				break;
-		}
-		
-		super.doLogic();
-		if(getIsAttacking() == true){
-			setIsMoving(false);
-		}
 	}
 }

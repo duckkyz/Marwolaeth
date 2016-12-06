@@ -795,6 +795,161 @@ public class Sprite extends Drawable implements willAttack{
 			return;
 		}
 		
+		int xDistFromHero;
+		int yDistFromHero;
+		if(this instanceof Arbiter){
+			int tempNum = (int) (Math.random() * 100);
+		
+			if(Game.getIsTitleScreen()){
+				if(markedForDeath == Game.getHero()){
+					Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					while(!(temp instanceof Sprite)){
+						temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					}
+					markedForDeath = (Sprite)temp;
+					markedForDeath.setMarkedForDeath(this);
+				}
+				else if(!Game.getDrawables().contains(markedForDeath)){
+					Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					while(!(temp instanceof Sprite)){
+						temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					}
+					markedForDeath = (Sprite)temp;
+				}
+			}
+			else{
+				if(!Game.getDrawables().contains(markedForDeath)){
+					int counter = 0;
+					for(int x = 0; Game.getDrawables().size() > x; x++){
+						Drawable d = Game.getDrawables().get(x);
+						if(d instanceof Sprite){
+							if(d instanceof Projectile){
+								continue;
+							}
+							++counter;
+						}
+					}
+					if((tempNum > 75) | (counter <= 1)){
+						markedForDeath = Game.getHero();
+					}
+					else{
+						Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+						while((!(temp instanceof Sprite)) & (temp != this)){
+							temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+						}
+						markedForDeath = (Sprite)temp;
+					}
+				}
+			}
+		}		
+		else{		
+			if(Game.getIsTitleScreen()){
+				if(markedForDeath == Game.getHero()){
+					Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					while(!(temp instanceof Sprite) & !(temp instanceof Modifier)){
+						temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					}
+					markedForDeath = (Sprite)temp;
+					markedForDeath.setMarkedForDeath(this);
+				}
+				else if(!Game.getDrawables().contains(markedForDeath)){
+					Drawable temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					while(!(temp instanceof Sprite) & !(temp instanceof Modifier)){
+						temp = Game.getDrawables().get((int)(Math.random() * Game.getDrawables().size()));
+					}
+					markedForDeath = (Sprite)temp;
+				}
+			}
+		}
+		xDistFromHero = getXPos() - markedForDeath.getXPos();
+		yDistFromHero = getYPos() - markedForDeath.getYPos();
+	
+		 if(this instanceof OrcWizard){
+				
+				switch(getEffectiveDirection()){
+					case 0:
+						if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < 2000))){
+							setIsAttacking(true);
+						}
+						break;
+					case 90:
+						if(((xDistFromHero > -2000) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+							setIsAttacking(true);
+						}
+						break;
+					case 180:
+						if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -2000) & (yDistFromHero < 0))){
+							setIsAttacking(true);
+						}
+						break;
+					case 270:
+						if(((xDistFromHero > 0) & (xDistFromHero < 2000)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+							setIsAttacking(true);
+						}
+						break;
+				}
+			}
+		 else{
+			 switch(getEffectiveDirection()){
+				case 0:
+					if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0) & (yDistFromHero < (50 + getAttackRange())))){
+						setIsAttacking(true);
+					}
+					else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+						setDirection(270);
+					}
+					else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+						setDirection(90);
+					}
+					else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero < 0))){
+						setDirection(180);
+					}
+					break;
+				case 90:
+					if(((xDistFromHero > -(50 + getAttackRange())) & (xDistFromHero < 0)) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+						setIsAttacking(true);
+					}
+					else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+						setDirection(0);
+					}
+					else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+						setDirection(180);
+					}
+					else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero > 0))){
+						setDirection(270);
+					}
+					break;
+				case 180:
+					if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > -(50 + getAttackRange())) & (yDistFromHero < 0))){
+						setIsAttacking(true);
+					}
+					else if((xDistFromHero > 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+						setDirection(270);
+					}
+					else if((xDistFromHero < 0) & ((yDistFromHero > 0) & (yDistFromHero < getAttackRange()))){
+						setDirection(90);
+					}
+					else if(((xDistFromHero > -50) & (xDistFromHero < 50)) & ((yDistFromHero > 0))){
+						setDirection(0);
+					}
+					break;
+				case 270:
+					if(((xDistFromHero > 0) & (xDistFromHero < (50 + getAttackRange()))) & ((yDistFromHero > -50) & (yDistFromHero < 50))){
+						setIsAttacking(true);
+					}
+					else if((yDistFromHero > 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+						setDirection(0);
+					}
+					else if((yDistFromHero < 0) & ((xDistFromHero > 0) & (xDistFromHero < getAttackRange()))){
+						setDirection(180);
+					}
+					else if(((yDistFromHero > -50) & (yDistFromHero < 50)) & ((xDistFromHero < 0))){
+						setDirection(90);
+					}
+					break;
+			}
+		 }
+		
 		//randomize direction 
 		if(!(Game.getHero() == this)){
 			if((getIsMoving() == false) & (getIsAttacking() == false) & (!(this instanceof Orc))){
@@ -883,6 +1038,13 @@ public class Sprite extends Drawable implements willAttack{
 				if(getActionStep()>0)
 					setActionStep(0);
 			}
+		}
+		
+		if(collisionCounter > 5){
+			setDirection((int) (45 * (Math.floor(((Math.random() * 360) / 45)))));
+		}
+		if(getIsAttacking() == true){
+			setIsMoving(false);
 		}
 	}
 	

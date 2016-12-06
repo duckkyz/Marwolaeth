@@ -232,18 +232,36 @@ public class Game {
 	}
 	
 	public boolean powerUpHandling(Sprite movingS, Drawable d){
-		if(d instanceof Modifier){
-			if(d instanceof BearTrap){
+		if(movingS instanceof Modifier){
+			if(movingS instanceof BearTrap){
 				System.out.println("test");
 			}
-			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
-			Modifier dModifier = (Modifier) d;
-			if(dModifier.getIsActivated() == false){
-				if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (dModifier.getHeroOnly() == true)){
-					dModifier.activate(movingS);
+			System.out.println(d.getClass().getSimpleName() + " picked up a powerup!");
+			Modifier movingModifier = (Modifier) movingS;
+			if(d instanceof Sprite){
+				Sprite spriteD = (Sprite) d;
+				if(movingModifier.getIsActivated() == false){
+					if(((spriteD == Game.getHero() | (spriteD instanceof Arbiter))) & (movingModifier.getHeroOnly() == true)){
+						movingModifier.activate(spriteD);
+					}
+					else if((spriteD instanceof Sprite) & (movingModifier.getHeroOnly() == false) & (spriteD != Game.getHero())){
+						movingModifier.activate(spriteD);
+					}
 				}
-				else if((movingS instanceof Sprite) & (dModifier.getHeroOnly() == false) & (movingS != Game.getHero())){
-					dModifier.activate(movingS);
+			}
+			return true;
+		}
+		else if(d instanceof Modifier){
+			System.out.println(movingS.getClass().getSimpleName() + " picked up a powerup!");
+			Modifier movingModifier = (Modifier) d;
+			if(d instanceof Sprite){
+				if(movingModifier.getIsActivated() == false){
+					if(((movingS == Game.getHero() | (movingS instanceof Arbiter))) & (movingModifier.getHeroOnly() == true)){
+						movingModifier.activate(movingS);
+					}
+					else if((movingS instanceof Sprite) & (movingModifier.getHeroOnly() == false) & (movingS != Game.getHero())){
+						movingModifier.activate(movingS);
+					}
 				}
 			}
 			return true;
@@ -414,7 +432,7 @@ public class Game {
 				if(d == movingS){								//Skip yourself because obvious
 					continue;
 				}
-
+				
 				dX = ((d.getXPos() + d.getLeftHitBox()));
 				dY = ((d.getYPos() + d.getTopHitBox()));
 				dMaxX = dX + (d.getTileWidth() - d.getLeftHitBox() - d.getRightHitBox());	//Right
@@ -867,7 +885,7 @@ public class Game {
 		for(int x = 0; drawables.size() > x; x++){
 			Drawable d = drawables.get(x);
 			if(d instanceof Sprite){
-				if(d instanceof Projectile){
+				if(d instanceof Projectile | d instanceof Modifier){
 					continue;
 				}
 				++waveCounter;
