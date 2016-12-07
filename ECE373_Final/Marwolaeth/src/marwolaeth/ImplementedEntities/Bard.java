@@ -28,6 +28,7 @@ public class Bard extends Hero{
 		setRightHitBox(17);
 		setAttackRange(16);
 		setAttackDamage(25);
+		this.setAbility2Cooldown(0);
 		
 		try {
 			setGraphic(ImageIO.read(new File("Drawable_Images/Bard.png")));
