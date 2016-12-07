@@ -86,10 +86,13 @@ public class Druid extends Hero{
 
 	@Override
 	public void ability2Execute(int direction) {
-		setHealth(getHealth() + 10);
-		Leaf tempLeaf = new Leaf(0, this.getXPos() - 10, this.getYPos() - 10, true);
-		tempLeaf.setIsMoving(false);
-		Game.addDrawable(tempLeaf);
+		if(this.getMana() > 100){
+			setHealth(getHealth() + 10);
+			Leaf tempLeaf = new Leaf(0, this.getXPos() - 10, this.getYPos() - 10, true);
+			tempLeaf.setIsMoving(false);
+			Game.addDrawable(tempLeaf);
+			this.setMana(this.getMana() - 100);
+		}
 	}
 
 	@Override
