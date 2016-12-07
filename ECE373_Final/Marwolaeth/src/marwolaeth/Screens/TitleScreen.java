@@ -3,6 +3,7 @@ package marwolaeth.Screens;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -163,9 +164,19 @@ public class TitleScreen extends GameState{
 			graphics.fillRect(0, bottomBarYLocation, getMonitorWidth(), halfDiffDisImgHeight);														//bottom
 			graphics.fillRect(0, 0, halfDiffDisImgWidth, getMonitorHeight());																			//left
 			graphics.fillRect(rightBarXLocation, 0, halfDiffDisImgWidth, getMonitorHeight());															//right
+			
+			graphics.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
+			graphics.setColor(Color.BLACK);
+			graphics.drawString("Start (s)", getMonitorWidth()/2-75, (int)(getMonitorHeight()/1.5));
+			graphics.drawString("Help (h)", getMonitorWidth()/2-75, (int)(getMonitorHeight()/1.4+10));
 		}
 		else{
 			graphics.drawImage(getBlankImage(), (int) ((-1)*(Game.getMapWidth()/2)/(scaling) + getImageWidth()/2), (int) ((-1)*(Game.getMapHeight()/2)/(scaling)+getImageHeight()/2), scaledBackgroundImageWidth, scaledBackgroundImageHeight, this);
+			
+			graphics.setFont(new Font("TimesRoman", Font.PLAIN, 40)); 
+			graphics.setColor(Color.BLACK);
+			graphics.drawString("Start (s)", getImageWidth()/2-75, (int)(getImageHeight()/1.5));
+			graphics.drawString("Help (h)", getImageWidth()/2-75, (int)(getImageHeight()/1.4+10));
 		}
 	}
 

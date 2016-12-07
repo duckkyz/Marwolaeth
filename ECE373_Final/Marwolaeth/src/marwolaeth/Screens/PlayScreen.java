@@ -1,6 +1,7 @@
 package marwolaeth.Screens;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -131,5 +132,13 @@ public class PlayScreen extends GameState{
 		graphics.drawImage(heroResources, 0, 0, scaledHeroResourcesImageWidth, scaledHeroResourcesImageHeight, 0, 0, heroResources.getWidth(this), 198, this);
 		graphics.drawImage(heroResources, (int)(122/scaling), (int)(42/scaling), (int)((122 + percentHealth)/scaling), (int)(75/scaling), 0, 200, percentHealth, 232, this);
 		graphics.drawImage(heroResources, (int)(102/scaling), (int)(86/scaling), (int)((102 + percentMana)/scaling), (int)(112/scaling), 0, 233, percentMana, 259, this);
+		
+		//Wave Counter
+		graphics.setFont(new Font("TimesRoman", Font.PLAIN, (int)(25/scaling))); 
+		graphics.setColor(Color.WHITE);
+		if(Game.getCurrentWave() < 10)
+			graphics.drawString(Integer.toString(Game.getCurrentWave()), (int)(100/scaling), (int)(160/scaling));
+		else
+			graphics.drawString(Integer.toString(Game.getCurrentWave()), (int)(94/scaling), (int)(160/scaling));
 	}
 }
