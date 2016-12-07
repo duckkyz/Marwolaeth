@@ -424,6 +424,7 @@ public class Game {
 				if(d == movingS){								//Skip yourself because obvious
 					continue;
 				}
+				
 				if(d == null){
 					continue;
 				}
