@@ -424,6 +424,9 @@ public class Game {
 				if(d == movingS){								//Skip yourself because obvious
 					continue;
 				}
+				if(d == null){
+					continue;
+				}
 				
 				dX = ((d.getXPos() + d.getLeftHitBox()));
 				dY = ((d.getYPos() + d.getTopHitBox()));
