@@ -43,7 +43,7 @@ public class Archer extends Hero{
 
 	public void ability1Setup() {							//sets the ActionSequence that ability_1 invokes (based off which direction hero is currently facing)
 		setActionStep(0);
-		setMoveCasting(true);								//whether the hero can move while using this ability
+		setMoveCasting(false);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(4);
@@ -59,12 +59,12 @@ public class Archer extends Hero{
 	
 	public void ability3Setup() {	
 		setActionStep(0);
-		Game.addDrawable(new BearTrap(1, getXPos()+60, getYPos(), false));
+		Game.addDrawable(new BearTrap(1, getXPos(), getYPos(), false));
 	}
 	
 	public void ability4Setup() {
 		setActionStep(0);
-		setMoveCasting(true);								//whether the hero can move while using this ability
+		setMoveCasting(false);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
 		abilitySetupHelper(4);

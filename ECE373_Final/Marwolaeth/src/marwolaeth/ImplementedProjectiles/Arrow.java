@@ -51,8 +51,8 @@ public class Arrow extends Projectile{
 			setRightHitBox(1+32*(int)Math.abs(Math.sin(Math.toRadians(direction))));	
 		}
 		
-		setSpeed(20);
-		setDamage(10);
+		setSpeed(35);
+		setDamage(15);
 	}
 
 	public void doLogic() {
