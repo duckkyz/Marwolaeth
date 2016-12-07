@@ -149,6 +149,9 @@ public class TitleScreen extends GameState{
 		getImageGraphics().drawImage(this.getBackgroundImage(), 0, 0, this);
 		
 		for(int x = 0;x < drawables.size();x++) {
+			if(drawables.get(x) == null){
+				continue;
+			}
 			drawables.get(x).paint(getImageGraphics());
 		}	
 	}
