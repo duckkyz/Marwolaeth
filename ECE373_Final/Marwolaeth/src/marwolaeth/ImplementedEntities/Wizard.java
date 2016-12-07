@@ -6,9 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import marwolaeth.Game;
-import marwolaeth.DrawableClasses.Drawable;
 import marwolaeth.DrawableClasses.Hero;
-import marwolaeth.DrawableClasses.Sprite;
 import marwolaeth.ImplementedProjectiles.*;
 
 

@@ -11,6 +11,7 @@ import marwolaeth.DrawableClasses.Hero;
 import marwolaeth.DrawableClasses.Projectile;
 import marwolaeth.DrawableClasses.Sprite;
 import marwolaeth.ImplementedModifiers.*;
+import marwolaeth.Items.*;
 
 public class Bard extends Hero{
 	
@@ -52,7 +53,7 @@ public class Bard extends Hero{
 		setMoveCasting(true);								//whether the hero can move while using this ability
 		setcompletingSequence(true);
 		// (0)Spell-cast, (1)Thrusting, (2)NA, (3)Slashing, (4)Shooting
-		abilitySetupHelper(3);
+		abilitySetupHelper(0);
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class Bard extends Hero{
 
 	@Override
 	public void ability2Execute(int direction) {
-		// TODO Auto-generated method stub
+		Game.addDrawable(new Bomb(0, this.getXPos() + 32, this.getYPos() + 32, false) );
 
 	}
 
