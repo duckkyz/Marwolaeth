@@ -72,7 +72,7 @@ public class Game {
 		
 	public void setUpGame(){
 		//Removes all things from game so it starts fresh
-		currentWave = 100;
+		currentWave = 0;
 		drawables.removeAll(drawables);
 
 		//This makes the walls around the edge.
